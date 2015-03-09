@@ -99,9 +99,9 @@ class AdminTranslation
         }
 
         //if not exist translation for this language - return source
-        if(!isset($translation[AdminLanguage::getInstance()->get()])){return $source;}
+        if(!isset($translation[AdminLanguage::getInstance()->lng])){return $source;}
 
         //return translation
-        return $translation[AdminLanguage::getInstance()->get()];
+        return $translation[AdminLanguage::getInstance()->lng];
     }
 }

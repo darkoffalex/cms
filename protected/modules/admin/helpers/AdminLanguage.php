@@ -3,7 +3,7 @@
 class AdminLanguage
 {
     protected static $_instance; //instance
-    private $lng; //language prefix
+    public $lng; //language prefix
 
     /**
      * Singleton - get instance
@@ -20,29 +20,7 @@ class AdminLanguage
     }
 
     /**
-     * Returns current admin language (already set in cookies or user's state)
-     * @return mixed|string
-     */
-    public function get()
-    {
-        $objUser = Yii::app()->user;
-        $request = Yii::app()->request;
-
-        //if set in state
-        if ($objUser->hasState('admin_language')) {
-            return $objUser->getState('admin_language');
-        }
-
-        //if set in cookies
-        elseif (isset($request->cookies['admin_language'])) {
-            return $request->cookies['admin_language']->value;
-        }
-
-        return $this->lng;
-    }
-
-    /**
-     * Sets admin language to cookies ad user's state
+     * Sets admin language (also to cookies ad user's state)
      * @param $language
      */
     public function set($language)
@@ -53,13 +31,7 @@ class AdminLanguage
         $this->lng = $language;
         $objUser->setState('admin_language', $language);
         $request->cookies['admin_language'] = new CHttpCookie('a_lng', $language);
-
-        if ($objUser->hasState('admin_language')) {
-            $this->lng = $objUser->getState('admin_language');
-        }
-        elseif (isset($request->cookies['admin_language'])) {
-            $this->lng = $request->cookies['admin_language']->value;
-        }
+        $this->lng = $language;
     }
 
     /**
@@ -69,6 +41,19 @@ class AdminLanguage
     {
         //set language by default
         $this->lng = Yii::app()->params['defaultAdminLanguage'];
+
+        $objUser = Yii::app()->user;
+        $request = Yii::app()->request;
+
+        //if set in state
+        if ($objUser->hasState('admin_language')) {
+            $this->lng = $objUser->getState('admin_language');
+        }
+
+        //if set in cookies
+        elseif (isset($request->cookies['admin_language'])) {
+            $this->lng = $request->cookies['admin_language']->value;
+        }
     }
 
 

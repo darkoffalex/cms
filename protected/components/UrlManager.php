@@ -16,7 +16,7 @@ class UrlManager extends CUrlManager
     public function createAdminUrl($route,$params=array(),$ampersand='&')
     {
         if (!isset($params['language'])) {
-            $params['language']= AdminLanguage::getInstance()->get();
+            $params['language']= AdminLanguage::getInstance()->lng;
         }
         return parent::createUrl($route, $params, $ampersand);
     }
