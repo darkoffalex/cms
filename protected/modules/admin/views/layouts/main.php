@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<?php $this->widget('admin.widgets.AdminControllersMenu',array('current' => Yii::app()->controller->id)); ?>
 <?php echo $content; ?>
 </body>
 

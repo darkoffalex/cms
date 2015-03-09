@@ -7,9 +7,9 @@ class AdminModule extends CWebModule
      * @var array
      */
 
-    public $menu = array(
+    public static $menu = array(
 
-        'main' => array('title' => 'Main', 'actions' => array(
+        'main' => array('title' => 'Main', 'default' => 'index', 'actions' => array(
             'index' => array('title' => 'Information', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
             'logout' => array('title' => 'Exit', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
             'tree' => array('title' => 'Tree', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => '')
@@ -28,7 +28,8 @@ class AdminModule extends CWebModule
             'admin.models.orm.*',
             'admin.models.ormex.*',
 			'admin.components.*',
-            'admin.helpers.*'
+            'admin.helpers.*',
+            'admin.widgets.*'
 		));
 	}
 

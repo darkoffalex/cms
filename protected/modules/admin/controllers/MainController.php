@@ -7,6 +7,11 @@ class MainController extends ControllerAdmin
         $this->render('index');
 	}
 
+    public function actionTree()
+    {
+        $this->render('tree');
+    }
+
     /**
      * Login action
      */
