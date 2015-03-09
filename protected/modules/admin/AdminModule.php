@@ -2,6 +2,20 @@
 
 class AdminModule extends CWebModule
 {
+    /**
+     * Structure of admin-menu
+     * @var array
+     */
+
+    public $menu = array(
+
+        'main' => array('title' => 'Main', 'actions' => array(
+            'index' => array('title' => 'Information', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
+            'logout' => array('title' => 'Exit', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
+            'tree' => array('title' => 'Tree', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => '')
+        )),
+    );
+
 	public function init()
 	{
 		// this method is called when the module is being created
