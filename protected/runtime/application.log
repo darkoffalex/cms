@@ -510,3 +510,141 @@ Stack trace:
 #3 {main}
 REQUEST_URI=/favicon.ico
 ---
+2015/05/17 13:17:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/17 13:17:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/21 22:55:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/21 22:55:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/21 21:56:14 [error] [php] include(AdminLanguage.php): failed to open stream: No such file or directory (C:\OpenServer\domains\_GIT\cms\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php(19): spl_autoload_call()
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): UrlManager->createAdminUrl()
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(306): MainController->beforeAction()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): MainController->runAction()
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): MainController->runActionWithFilters()
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): MainController->run()
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\OpenServer\domains\_GIT\cms\index.php(15): CWebApplication->run()
+REQUEST_URI=/admin
+in C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php (19)
+in C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php (40)
+in C:\OpenServer\domains\_GIT\cms\index.php (15)
+2015/05/22 00:07:28 [error] [php] include(AdminLanguage.php): failed to open stream: No such file or directory (C:\OpenServer\domains\_GIT\cms\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php(19): spl_autoload_call()
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): UrlManager->createAdminUrl()
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(306): MainController->beforeAction()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): MainController->runAction()
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): MainController->runActionWithFilters()
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): MainController->run()
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\OpenServer\domains\_GIT\cms\index.php(15): CWebApplication->run()
+REQUEST_URI=/admin
+in C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php (19)
+in C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php (40)
+in C:\OpenServer\domains\_GIT\cms\index.php (15)
+2015/05/22 00:10:06 [error] [php] include(AdminLanguage.php): failed to open stream: No such file or directory (C:\OpenServer\domains\_GIT\cms\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php(19): spl_autoload_call()
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): UrlManager->createAdminUrl()
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(306): MainController->beforeAction()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): MainController->runAction()
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): MainController->runActionWithFilters()
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): MainController->run()
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\OpenServer\domains\_GIT\cms\index.php(15): CWebApplication->run()
+REQUEST_URI=/admin
+in C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php (19)
+in C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php (40)
+in C:\OpenServer\domains\_GIT\cms\index.php (15)
+2015/05/22 00:12:32 [error] [php] include(AdminLanguage.php): failed to open stream: No such file or directory (C:\OpenServer\domains\_GIT\cms\framework\YiiBase.php:432)
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php(19): spl_autoload_call()
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): UrlManager->createAdminUrl()
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(306): MainController->beforeAction()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): MainController->runAction()
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): MainController->runActionWithFilters()
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): MainController->run()
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#7 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\OpenServer\domains\_GIT\cms\index.php(15): CWebApplication->run()
+REQUEST_URI=/admin
+in C:\OpenServer\domains\_GIT\cms\protected\components\UrlManager.php (19)
+in C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php (40)
+in C:\OpenServer\domains\_GIT\cms\index.php (15)
+2015/05/22 00:13:23 [error] [exception.CException] exception 'CException' with message 'UrlManager and its behaviors do not have a method or closure named "createAdminUrl".' in C:\OpenServer\domains\_GIT\cms\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): CComponent->__call('createAdminUrl', Array)
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\components\ControllerAdmin.php(40): UrlManager->createAdminUrl('/admin/main/log...')
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(306): ControllerAdmin->beforeAction(Object(CInlineAction))
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): CController->run('index')
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('admin/main/inde...')
+#7 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#8 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#9 {main}
+REQUEST_URI=/admin
+---
+2015/05/22 00:28:13 [error] [exception.CException] exception 'CException' with message 'UrlManager and its behaviors do not have a method or closure named "createAdminUrl".' in C:\OpenServer\domains\_GIT\cms\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\controllers\MainController.php(28): CComponent->__call('createAdminUrl', Array)
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\controllers\MainController.php(28): UrlManager->createAdminUrl('/admin/main/ind...')
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\actions\CInlineAction.php(49): MainController->actionLogin()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): CController->run('login')
+#7 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('admin/main/logi...')
+#8 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#9 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/en/admin/main/login
+HTTP_REFERER=http://cms.loc/en/admin/main/login
+---
+2015/05/22 00:28:37 [error] [exception.CException] exception 'CException' with message 'MainController cannot find the requested view "index".' in C:\OpenServer\domains\_GIT\cms\framework\web\CController.php:878
+Stack trace:
+#0 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(782): CController->renderPartial('index', NULL, true)
+#1 C:\OpenServer\domains\_GIT\cms\protected\modules\admin\controllers\MainController.php(7): CController->render('index')
+#2 C:\OpenServer\domains\_GIT\cms\framework\web\actions\CInlineAction.php(49): MainController->actionIndex()
+#3 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\OpenServer\domains\_GIT\cms\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(282): CController->run('index')
+#7 C:\OpenServer\domains\_GIT\cms\framework\web\CWebApplication.php(141): CWebApplication->runController('admin/main/inde...')
+#8 C:\OpenServer\domains\_GIT\cms\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#9 C:\OpenServer\domains\_GIT\cms\index.php(15): CApplication->run()
+#10 {main}
+REQUEST_URI=/en/admin
+HTTP_REFERER=http://cms.loc/en/admin/main/login
+---

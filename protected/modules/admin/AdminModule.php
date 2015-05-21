@@ -2,19 +2,6 @@
 
 class AdminModule extends CWebModule
 {
-    /**
-     * Structure of admin-menu
-     * @var array
-     */
-
-    public static $menu = array(
-
-        'main' => array('title' => 'Main', 'default' => 'index', 'actions' => array(
-            'index' => array('title' => 'Information', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
-            'logout' => array('title' => 'Exit', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => ''),
-            'tree' => array('title' => 'Tree', 'html_id' => '', 'html_class' => '', 'html_style' => '', 'icon' => '')
-        )),
-    );
 
 	public function init()
 	{
@@ -25,8 +12,6 @@ class AdminModule extends CWebModule
 		$this->setImport(array(
 			'admin.models.*',
             'admin.models.forms.*',
-            'admin.models.orm.*',
-            'admin.models.ormex.*',
 			'admin.components.*',
             'admin.helpers.*',
             'admin.widgets.*'

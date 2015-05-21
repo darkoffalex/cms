@@ -1,11 +1,13 @@
 <?php
 
+const DS = DIRECTORY_SEPARATOR;
+
 /**
  * Debug variable
  * @param $var
  * @param string $title
  */
-function debug($var, $title = '')
+function debugvar($var, $title = '')
 {
     $arrIps = array(
         '127.0.0.1',
@@ -35,17 +37,7 @@ function debug($var, $title = '')
  */
 function __($label)
 {
-    return Translation::getInstance()->translate($label);
-}
-
-/**
- * Short equivalent of admin-translation function
- * @param $label
- * @return mixed
- */
-function __a($label)
-{
-    return AdminTranslation::getInstance()->translate($label);
+    return Trl::getInstance()->translate($label);
 }
 
 /**

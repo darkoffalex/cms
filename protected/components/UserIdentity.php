@@ -17,15 +17,14 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-        /* @var $user UsersEx */
+        /* @var $user UserEx */
 
-        $user = UsersEx::model()->findByAttributes(array('login' => $this->username));
+        $user = UserEx::model()->findByAttributes(array('login' => $this->username));
 
         //if user found
         if(!empty($user))
         {
-            $salt = $user->salt;
-            $hashed_pass = md5($this->password.$salt);
+            $hashed_pass = md5($this->password);
 
             //if password not correct
             if($user->password !== $hashed_pass)
@@ -42,14 +41,8 @@ class UserIdentity extends CUserIdentity
                 //write params to session
                 $this->setState('id',$user->id);
                 $this->setState('login',$user->login);
-                $this->setState('name',$user->info->name);
-                $this->setState('last_name',$user->info->last_name);
-                $this->setState('nick_name',$user->info->nick_name);
-                $this->setState('group_id',$user->group_id);
-                $this->setState('group_name',$user->group->name);
-                $this->setState('language_id',$user->info->preferred_langauge_id);
-                $this->setState('country_id',$user->info->preferred_country_id);
-                $this->setState('city_id',$user->info->preferred_city_id);
+                $this->setState('role_id', $user->role_id);
+                $this->setState('role_name', $user->role->label);
             }
         }
         //if user not found

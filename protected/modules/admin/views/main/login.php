@@ -4,19 +4,21 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array('id' =>'login-form','enableAjaxValidation'=>false,'htmlOptions'=>array())); ?>
 
-<?php echo $form->textField($form_mdl,'username',array('placeholder' => __a('Login')));?>
-<?php echo $form->passwordField($form_mdl, 'password', array('placeholder' => __a('Password'))); ?>
+<?php echo $form->textField($form_mdl,'username',array('placeholder' => __('Login')));?>
+<?php echo $form->passwordField($form_mdl, 'password', array('placeholder' => __('Password'))); ?>
 
-<input type="submit" value="<?php echo __a("Enter"); ?>">
+<input type="submit" value="<?php echo __("Enter"); ?>">
 
 <?php if($form_mdl->hasErrors()): ?>
     <?php $passwordErr = $form->error($form_mdl,'password'); ?>
     <?php $usernameErr = $form->error($form_mdl,'username'); ?>
     <?php if($usernameErr): ?>
-        <?php echo __a($usernameErr); ?>
+        <?php echo $usernameErr; ?>
     <?php elseif($passwordErr): ?>
-        <?php echo __a($passwordErr); ?>
+        <?php echo $passwordErr; ?>
     <?php endif ?>
 <?php endif; ?>
 
 <?php $this->endWidget(); ?>
+
+<?php debugvar($form_mdl->errors); ?>

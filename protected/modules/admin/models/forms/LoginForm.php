@@ -49,15 +49,15 @@ class LoginForm extends CFormModel
             {
                 if($this->_identity->errorCode == UserIdentity::ERROR_PASSWORD_INVALID)
                 {
-                    $this->addError('password','Incorrect password');
+                    $this->addError('password',__('Incorrect password'));
                 }
                 elseif($this->_identity->errorCode == UserIdentity::ERROR_USERNAME_INVALID)
                 {
-                    $this->addError('username','User not found in database');
+                    $this->addError('username',__('User not found in database'));
                 }
                 elseif($this->_identity->errorCode == UserIdentity::ERROR_UNKNOWN_IDENTITY)
                 {
-                    $this->addError('username','Unknown error. Authentication failed');
+                    $this->addError('username',__('Unknown error. Authentication failed'));
                 }
             }
         }

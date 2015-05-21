@@ -4,13 +4,8 @@ class MainController extends ControllerAdmin
 {
 	public function actionIndex()
 	{
-        $this->render('index');
+        $this->renderText('index');
 	}
-
-    public function actionTree()
-    {
-        $this->render('tree');
-    }
 
     /**
      * Login action
@@ -19,7 +14,7 @@ class MainController extends ControllerAdmin
     {
         if(!Yii::app()->user->isGuest)
         {
-            $this->redirect(Yii::app()->urlManager->createAdminUrl('/admin/main/index'));
+            $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/index'));
         }
 
         $form = new LoginForm();
@@ -30,7 +25,7 @@ class MainController extends ControllerAdmin
 
             if($form->validate() && $form->login())
             {
-                $this->redirect(Yii::app()->urlManager->createAdminUrl('/admin/main/index'));
+                $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/index'));
             }
         }
 
@@ -43,6 +38,6 @@ class MainController extends ControllerAdmin
     public function actionLogout()
     {
         Yii::app()->user->logout(false);
-        $this->redirect(Yii::app()->urlManager->createAdminUrl('/admin/main/login'));
+        $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/login'));
     }
 }

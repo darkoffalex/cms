@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'=>'BiCycle CMS',
+    'name'=>'D.W.CMS 2.0',
 
     // preloading 'log' component
     'preload'=>array('log'),
@@ -16,8 +16,7 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.models.orm.*',
-        'application.models.ormex.*',
-        'application.models.forms.*',
+        'application.models.orm.ex.*',
         'application.components.*',
         'application.helpers.*',
         'application.extensions.*',
@@ -84,17 +83,7 @@ return array(
         ),
 
         'db'=>array(
-            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/main.db',
-            'class'=>'CDbConnection'
-        ),
-
-        'main'=>array(
-            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/main.db',
-            'class'=>'CDbConnection'
-        ),
-
-        'trans'=>array(
-            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/translations.db',
+            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/cms.db',
             'class'=>'CDbConnection'
         ),
 
@@ -108,6 +97,7 @@ return array(
             'charset' => 'utf8',
         ),
         */
+
         'errorHandler'=>array(
             // use 'site/error' action to display errors
             'errorAction'=>'site/error',
@@ -135,7 +125,7 @@ return array(
     'params'=>array(
         // this is used in contact page
         'sourceLanguage' => 'en',
-        'defaultLanguage' => 'ru',
+        'defaultLanguage' => 'en',
         'defaultAdminLanguage' => 'en'
     ),
 );
