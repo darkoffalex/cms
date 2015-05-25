@@ -648,3 +648,37 @@ Stack trace:
 REQUEST_URI=/en/admin
 HTTP_REFERER=http://cms.loc/en/admin/main/login
 ---
+2015/05/25 16:36:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "css/main.css".' in C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php(141): CWebApplication->runController('css/main.css')
+#1 C:\OpenServer\domains\_git\BCIW\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\BCIW\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/css/main.css
+HTTP_REFERER=http://bciw.loc/
+---
+2015/05/25 16:36:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_git\BCIW\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\BCIW\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/25 16:36:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_git\BCIW\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\BCIW\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/05/25 16:37:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "css/admin/main.css".' in C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\BCIW\framework\web\CWebApplication.php(141): CWebApplication->runController('css/admin/main....')
+#1 C:\OpenServer\domains\_git\BCIW\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\BCIW\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/css/admin/main.css
+HTTP_REFERER=http://bciw.loc/en/admin
+---

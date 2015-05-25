@@ -11,6 +11,7 @@ class AdminModule extends CWebModule
 		// import the module-level models and components
 		$this->setImport(array(
 			'admin.models.*',
+            'admin.helpers.*',
             'admin.models.forms.*',
 			'admin.components.*',
             'admin.helpers.*',
@@ -29,4 +30,34 @@ class AdminModule extends CWebModule
 		else
 			return false;
 	}
+
+    public $menu = array(
+
+        array(
+            'url' => '#',
+            'icon' => '',
+            'html_class' => 'dashboard',
+            'title' => 'Dashboard',
+        ),
+
+        array(
+            'url' => '#',
+            'icon' => '',
+            'html_class' => 'dashboard',
+            'title' => 'Site tree',
+        ),
+
+        array(
+            'url' => '#',
+            'icon' => '',
+            'html_class' => 'widgets',
+            'title' => 'Widgets',
+
+            'sub' => array(
+                array('controller' => 'menu', 'action' => 'list', 'title' => 'Menus', 'roles' => array(1), 'url' => '#'),
+                array('controller' => 'widgets', 'action' => 'list', 'title' => 'Widgets', 'roles' =>  array(1), 'url' => '#')
+            ),
+        ),
+
+    );
 }

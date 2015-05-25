@@ -2,7 +2,10 @@
 
 class MainController extends ControllerAdmin
 {
-	public function actionIndex()
+    /**
+     * Main entry point to admin panel
+     */
+    public function actionIndex()
 	{
         $this->renderText('index');
 	}
@@ -12,23 +15,34 @@ class MainController extends ControllerAdmin
      */
     public function actionLogin()
     {
+        //switch to login layout
+        $this->layout = '/layouts/login';
+
+        //if user logged in
         if(!Yii::app()->user->isGuest)
         {
+            //not show login form to them - just redirect him to index
             $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/index'));
         }
 
+        //login form validation model
         $form = new LoginForm();
 
-        if($_POST['LoginForm'])
+        //if got post from form
+        if(!empty($_POST['LoginForm']))
         {
+            //get attributes
             $form->attributes = $_POST['LoginForm'];
 
+            //if data valid and logged in
             if($form->validate() && $form->login())
             {
+                //send user to index
                 $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/index'));
             }
         }
 
+        //render form
         $this->render('login',array('form_mdl' => $form));
     }
 

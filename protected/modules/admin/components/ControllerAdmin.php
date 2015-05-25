@@ -2,10 +2,9 @@
 
 class ControllerAdmin extends CController
 {
-
-    public $title = "D.W.CMS";
-    public $description = "Panel";
-    public $version = "2.0";
+    public $title = "CMS";
+    public $description = "";
+    public $assets = "";
 
     /**
      * Override constructor
@@ -32,6 +31,9 @@ class ControllerAdmin extends CController
      * @return bool|void
      */
     protected function beforeAction($action) {
+
+        //publish assets
+        $this->assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('admin.assets'));
 
         //if current action - not login
         if($action->id != 'login' && Yii::app()->user->isGuest)
