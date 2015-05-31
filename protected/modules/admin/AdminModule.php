@@ -67,8 +67,9 @@ class AdminModule extends CWebModule
                 'title' => 'Widgets',
 
                 'sub' => array(
-                    array('title' => 'Menus', 'roles' => array(1), 'url' => '#'),
-                    array('title' => 'Widgets', 'roles' =>  array(1), 'url' => '#')
+                    array('title' => 'Menus', 'url' => '#'),
+                    array('title' => 'Widgets', 'url' => '#'),
+                    array('title' => 'Positions', 'url' => '#')
                 ),
             ),
 
