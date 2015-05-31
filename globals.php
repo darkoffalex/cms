@@ -58,3 +58,14 @@ function __lng()
 {
     return Yii::app()->language;
 }
+
+/**
+ * Returns expression value - if it's not empty, or returns default value
+ * @param $expression
+ * @param null $default
+ * @return null
+ */
+function getif($expression, $default = null)
+{
+    return !empty($expression) ? $expression : $default;
+}

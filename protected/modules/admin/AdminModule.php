@@ -31,33 +31,89 @@ class AdminModule extends CWebModule
 			return false;
 	}
 
-    public $menu = array(
+    /**
+     * Returns main menu
+     * @return array
+     */
+    public static function menu()
+    {
+        return array(
 
-        array(
-            'url' => '#',
-            'icon' => '',
-            'html_class' => 'dashboard',
-            'title' => 'Dashboard',
-        ),
-
-        array(
-            'url' => '#',
-            'icon' => '',
-            'html_class' => 'dashboard',
-            'title' => 'Site tree',
-        ),
-
-        array(
-            'url' => '#',
-            'icon' => '',
-            'html_class' => 'widgets',
-            'title' => 'Widgets',
-
-            'sub' => array(
-                array('controller' => 'menu', 'action' => 'list', 'title' => 'Menus', 'roles' => array(1), 'url' => '#'),
-                array('controller' => 'widgets', 'action' => 'list', 'title' => 'Widgets', 'roles' =>  array(1), 'url' => '#')
+            array(
+                'url' => Yii::app()->createUrl('admin/statistics/index'),
+                'icon' => '',
+                'html_class' => 'icon dashboard',
+                'title' => 'Statistics',
             ),
-        ),
 
-    );
+            array(
+                'url' => '#',
+                'icon' => '',
+                'html_class' => 'icon pages',
+                'title' => 'Categories',
+            ),
+
+            array(
+                'url' => '#',
+                'icon' => '',
+                'html_class' => 'icon products',
+                'title' => 'Content blocks',
+            ),
+
+            array(
+                'url' => '#',
+                'icon' => '',
+                'html_class' => 'icon edit-menu',
+                'title' => 'Widgets',
+
+                'sub' => array(
+                    array('title' => 'Menus', 'roles' => array(1), 'url' => '#'),
+                    array('title' => 'Widgets', 'roles' =>  array(1), 'url' => '#')
+                ),
+            ),
+
+            array(
+                'url' => '#',
+                'icon' => '',
+                'html_class' => 'icon settings',
+                'title' => 'Settings',
+            ),
+
+        );
+    }
+
+    /**
+     * Returns language menu
+     * @return array
+     */
+    public static function languages()
+    {
+        $currentUrl = Yii::app()->request->url;
+        $lng = Yii::app()->language;
+
+        $menu = array(
+            'en' => array(
+                'title' => 'EN',
+                'class' => '',
+                'icon' => '',
+                'url' => '#'
+            ),
+
+            'ru' => array(
+                'title' => 'РУ',
+                'class' => '',
+                'icon' => '',
+                'url' => '#'
+            )
+        );
+
+        foreach($menu as $prefix => $arr)
+        {
+            $resultUrl = str_replace('/'.$lng.'/','/'.$prefix.'/',$currentUrl);
+            $menu[$prefix]['url'] = $resultUrl;
+        }
+
+        return $menu;
+    }
+
 }

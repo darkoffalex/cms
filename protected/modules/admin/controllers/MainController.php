@@ -7,7 +7,8 @@ class MainController extends ControllerAdmin
      */
     public function actionIndex()
 	{
-        $this->renderText('index');
+        //send user to statistics page
+        $this->redirect(Yii::app()->createUrl('admin/statistics/index'));
 	}
 
     /**

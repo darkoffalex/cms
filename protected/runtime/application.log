@@ -1203,3 +1203,37 @@ Stack trace:
 REQUEST_URI=/css/admin/main.css
 HTTP_REFERER=http://constructor.loc/en/admin
 ---
+2015/06/01 00:51:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "css/main.css".' in C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php(141): CWebApplication->runController('css/main.css')
+#1 C:\OpenServer\domains\_git\constructor.loc\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\constructor.loc\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/css/main.css
+HTTP_REFERER=http://constructor.loc/
+---
+2015/06/01 00:51:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_git\constructor.loc\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\constructor.loc\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/06/01 00:51:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 C:\OpenServer\domains\_git\constructor.loc\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\constructor.loc\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2015/06/01 01:24:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "css/main.css".' in C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\OpenServer\domains\_git\constructor.loc\framework\web\CWebApplication.php(141): CWebApplication->runController('css/main.css')
+#1 C:\OpenServer\domains\_git\constructor.loc\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 C:\OpenServer\domains\_git\constructor.loc\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/css/main.css
+HTTP_REFERER=http://constructor.loc/
+---
