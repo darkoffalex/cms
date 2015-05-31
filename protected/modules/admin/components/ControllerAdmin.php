@@ -2,7 +2,7 @@
 
 class ControllerAdmin extends CController
 {
-    public $title = "CMS";
+    public $title = "Web Constructor";
     public $description = "";
     public $assets = "";
 
@@ -33,13 +33,13 @@ class ControllerAdmin extends CController
     protected function beforeAction($action) {
 
         //publish assets
-        $this->assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('admin.assets'));
+        $this->assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('admin.design'));
 
         //if current action - not login
         if($action->id != 'login' && Yii::app()->user->isGuest)
         {
             //redirect to login
-            $this->redirect(Yii::app()->urlManager->createUrl('/admin/main/login'));
+            $this->redirect(Yii::app()->createUrl('/admin/main/login'));
         }
 
         return parent::beforeAction($action);

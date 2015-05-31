@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trans>
+    <block>
+        <source>Label</source>
+        <ru>Метка</ru>
+        <en>Label</en>
+    </block>
+    <block>
+        <source>Source</source>
+        <ru>Исходный</ru>
+        <en>Source</en>
+    </block>
+</trans>

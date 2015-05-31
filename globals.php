@@ -41,6 +41,16 @@ function __($label)
 }
 
 /**
+ * Short equivalent of admin translation function
+ * @param $label
+ * @return string
+ */
+function __a($label)
+{
+    return ATrl::getInstance()->translate($label);
+}
+
+/**
  * Returns current language
  * @return string
  */
