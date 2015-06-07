@@ -47,7 +47,7 @@ class AdminModule extends CWebModule
             ),
 
             array(
-                'url' => '#',
+                'url' => Yii::app()->createUrl('admin/categories/index'),
                 'icon' => '',
                 'html_class' => 'icon pages',
                 'title' => 'Categories',

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<?php echo $this->assets; ?>/css/vendor.css" rel="stylesheet">
     <link href="<?php echo $this->assets; ?>/css/vendor.dashboard.css" rel="stylesheet">
-    <title>Sigma</title>
+    <title><?php echo $this->title; ?></title>
 </head>
 <body>
 <div class="fluid">
@@ -48,5 +48,11 @@
 <script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
 <script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
+<script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
+<script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
+
+<input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">
+<input type="hidden" id="confirmation-yes" value="<?php echo __a('Yes');?>">
+<input type="hidden" id="confirmation-no" value="<?php echo __a('Cancel');?>">
 </body>
 </html>

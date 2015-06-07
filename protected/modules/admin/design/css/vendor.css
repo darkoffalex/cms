@@ -1223,8 +1223,8 @@ body
 	}
 .popup-box > .popup-content .button.confirm
 	{
-		border: 1px solid #0084c6;
-		background-color: #149fe4;
+		border: 1px solid #CA9633;
+		background-color: #ECBD62;
 		border-radius: 3px;
 		color: #fff;
 		font-weight: bold;
@@ -1234,8 +1234,8 @@ body
 .popup-box > .popup-content button.button.confirm,
 .popup-box > .popup-content input.button.confirm
 	{
-		border: 1px solid #0084c6;
-		background-color: #149fe4;
+    border: 1px solid #CA9633;
+    background-color: #ECBD62;
 		border-radius: 3px;
 		color: #fff;
 		font-weight: bold;
@@ -1287,3 +1287,34 @@ body
 		height: 250px;
 		padding: 15px;
 	}
+
+.overlay-pre-load
+{
+    top: 0;
+    left: 0;
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+
+    background: url(../images/overlay.png);
+    background-position: 0 0;
+
+    animation-name: overlay-move;
+    animation-duration: 30s;
+
+    opacity: 0.7;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes overlay-move {
+    0%   {background-position: 0 0;}
+    100% {background-position: 1200px 0;}
+}
+
+/* Standard syntax */
+@keyframes overlay-move {
+    0%   {background-position: 0 0;}
+    100% {background-position: 1200px 0;}
+}
