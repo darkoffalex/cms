@@ -33,15 +33,15 @@
                         <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
                             <tr>
                                 <td class="label"><?php echo __a('Name'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><input type="text" name="TreeEx[name][<?php echo $lng->id; ?>]" value=""></td>
+                                <td class="value"><input type="text" name="TreeEx[name][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->name; ?>"></td>
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Description'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><input type="text" name="TreeEx[description][<?php echo $lng->id; ?>]" value=""></td>
+                                <td class="value"><input type="text" name="TreeEx[description][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->description; ?>"></td>
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Text'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><input type="text" name="TreeEx[text][<?php echo $lng->id; ?>]" value=""></td>
+                                <td class="value"><input type="text" name="TreeEx[text][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->text; ?>"></td>
                             </tr>
                         </table>
                     <?php endforeach;?>
@@ -58,7 +58,7 @@
                     </tr>
                     <tr>
                         <td class="label"><?php echo $form->labelEx($model,'parent_id'); ?></td>
-                        <td class="value"><?php echo $form->dropDownList($model,'parent_id',$parents);?></td>
+                        <td class="value"><?php echo $form->dropDownList($model,'parent_id',$parents,array('options' => array($model->id=>array('disabled' => true))));?></td>
                     </tr>
                     <tr>
                         <td class="label"><?php echo $form->labelEx($model,'template_name'); ?></td>

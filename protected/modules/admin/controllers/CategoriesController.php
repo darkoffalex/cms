@@ -198,4 +198,118 @@ class CategoriesController extends ControllerAdmin
             'item_templates' => $item_templates
         ));
     }
+
+
+    public function actionEdit($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //get all site languages
+        $languages = Language::model()->findAll();
+
+        //get all available parent items
+        $parents = TreeEx::model()->listAllItemsForForms(0,'-',true,__a('None'));
+
+        //get statuses
+        $statuses = Constants::statusList();
+
+        //templates
+        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme);
+        $item_templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+
+        //find category
+        $model = TreeEx::model()->findByPk((int)$id);
+
+        //if not found
+        if(empty($model)){
+            throw new CHttpException(404);
+        }
+
+        //get form params from request
+        $formParams = Yii::app()->request->getPost('TreeEx',null);
+
+        //if got something from form
+        if(!empty($formParams)){
+
+            //if selected other parent - we need new priority
+            $needNewPriority = $model->parent_id != getif($formParams['parent_id'],0);
+
+            //store main attributes
+            $model->attributes = $formParams;
+
+            //if valid data
+            if($model->validate()){
+
+                //open transaction
+                $connection = Yii::app()->db;
+                $transaction = $connection->beginTransaction();
+
+                try
+                {
+                    //set main params and save
+                    $model->updated_by_id = Yii::app()->user->id;
+                    $model->updated_time = time();
+                    $model->readonly = 0;
+
+                    //if parent changed
+                    if($needNewPriority){
+                        $model->priority = Sort::GetNextPriority('TreeEx',array('parent_id' => $model->parent_id));
+                    }
+
+                    //update
+                    $model->update();
+
+                    //set branch and update
+                    $model->branch = $model->findBranch(true);
+                    $model->update();
+
+                    //save translatable data
+                    foreach($languages as $lng)
+                    {
+                        $name = getif($formParams['name'][$lng->id],'');
+                        $description = getif($formParams['description'][$lng->id],'');
+                        $text = getif($formParams['text'][$lng->id],'');
+
+                        $trl = $model->getOrCreateTrl($lng->id,true);
+                        $trl->name = $name;
+                        $trl->description = $description;
+                        $trl->text = $text;
+
+                        if($trl->isNewRecord){
+                            $trl->save();
+                        }else{
+                            $trl->update();
+                        }
+                    }
+
+                    //apply changes
+                    $transaction->commit();
+
+                    //success message
+                    Yii::app()->user->setFlash('msg_info',__a('All data saved'));
+                }
+                catch(Exception $ex)
+                {
+                    //discard changes
+                    $transaction->rollback();
+
+                    //exit script and show error message
+                    exit($ex->getMessage());
+                }
+            }
+        }
+
+        //render form
+        $this->render('edit',array(
+                'languages' => $languages,
+                'parents' => $parents,
+                'statuses' => $statuses,
+                'model' => $model,
+                'templates' => $templates,
+                'item_templates' => $item_templates
+            ));
+    }
 }

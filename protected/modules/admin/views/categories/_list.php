@@ -14,9 +14,9 @@
                         <div class="row root" data-id="<?php echo $item->id; ?>">
                             <div class="name"><?php echo $item->label; ?></div>
                             <div class="sequen"></div>
-                            <div class="type"></div>
+                            <div class="type"><?php echo $item->template_name; ?></div>
                             <div class="action">
-                                <a href="#" class="edit"><span class="ficoned pencil"></span></a>
+                                <a href="<?php echo Yii::app()->createUrl('admin/categories/edit',array('id' => $item->id)); ?>" class="edit"><span class="ficoned pencil"></span></a>
                                 <a href="<?php echo Yii::app()->createUrl('admin/categories/delete',array('id' => $item->id)); ?>" class="delete confirm-box ajax"><span class="ficoned trash-can"></span></a>
                             </div>
                         </div><!--/row root-->
@@ -29,7 +29,7 @@
                                     <a href="<?php echo Yii::app()->createUrl('admin/categories/move',array('id' => $item->id, 'dir' => 'down')); ?>" class="go-down ajax"><span class="ficoned arrow-down"></span></a>
                                 <?php endif;?>
                             </div><!--/sequen-->
-                            <div class="type"></div>
+                            <div class="type"><?php echo $item->template_name; ?></div>
                             <div class="action">
                                 <a href="<?php echo Yii::app()->createUrl('admin/categories/edit',array('id' => $item->id)); ?>" class="edit"><span class="ficoned pencil"></span></a>
                                 <a href="<?php echo Yii::app()->createUrl('admin/categories/delete',array('id' => $item->id)); ?>" class="delete confirm-box ajax"><span class="ficoned trash-can"></span></a>
