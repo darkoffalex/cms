@@ -35,6 +35,9 @@ class ControllerAdmin extends CController
         //publish assets
         $this->assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('admin.design'));
 
+        //enable foreign keys (for cascade operations in SQLITE)
+        $con = Yii::app()->db->createCommand("PRAGMA foreign_keys = ON")->execute();
+
         //if current action - not login
         if($action->id != 'login' && Yii::app()->user->isGuest)
         {

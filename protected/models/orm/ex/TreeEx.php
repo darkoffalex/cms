@@ -93,6 +93,13 @@ class TreeEx extends Tree
         //current step's item
         $current = $this;
 
+        //if this item is saved in db - branch will include id of this item, if not - append 'X' symbol
+        if(!$this->isNewRecord){
+            $branch[] = $this->id;
+        }else{
+            $branch[] = 'X';
+        }
+
         //while current item has parent
         while(!empty($current->parent_id) && $current->parent_id !== 0){
             $branch[] = $current->parent_id; //add id of parent to branch

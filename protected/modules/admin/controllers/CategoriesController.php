@@ -96,6 +96,9 @@ class CategoriesController extends ControllerAdmin
         }
     }
 
+    /**
+     * Adding a category
+     */
     public function actionAdd()
     {
         //register all necessary styles
@@ -125,46 +128,67 @@ class CategoriesController extends ControllerAdmin
         //if got something from form
         if(!empty($formParams)){
             $model->attributes = $formParams;
+
             if($model->validate()){
 
-                $model->created_by_id = Yii::app()->user->id;
-                $model->updated_by_id = Yii::app()->user->id;
-                $model->created_time = time();
-                $model->updated_time = time();
-                $model->branch = $model->findBranch(true);
-                $model->readonly = 0;
-                $model->priority = Sort::GetNextPriority('TreeEx',array('parent_id' => $model->parent_id));
+                //open transaction
+                $connection = Yii::app()->db;
+                $transaction = $connection->beginTransaction();
 
-                //debugvar($model);
-                //exit();
-
-                $model->save();
-
-
-
-                foreach($languages as $lng)
+                try
                 {
-                    $name = getif($formParams['name'][$lng->id],'');
-                    $description = getif($formParams['description'][$lng->id],'');
-                    $text = getif($formParams['text'][$lng->id],'');
+                    //set main params and sav
+                    $model->created_by_id = Yii::app()->user->id;
+                    $model->updated_by_id = Yii::app()->user->id;
+                    $model->created_time = time();
+                    $model->updated_time = time();
+                    $model->status_id = Constants::STATUS_VISIBLE;
+                    $model->readonly = 0;
+                    $model->priority = Sort::GetNextPriority('TreeEx',array('parent_id' => $model->parent_id));
+                    $model->save();
 
-                    $trl = $model->getOrCreateTrl($lng->id,true);
-                    $trl->name = $name;
-                    $trl->description = $description;
-                    $trl->text = $text;
+                    //set branch and update
+                    $model->branch = $model->findBranch(true);
+                    $model->update();
 
-                    if($trl->isNewRecord){
-                        $trl->save();
-                    }else{
-                        $trl->update();
+                    //save translatable data
+                    foreach($languages as $lng)
+                    {
+                        $name = getif($formParams['name'][$lng->id],'');
+                        $description = getif($formParams['description'][$lng->id],'');
+                        $text = getif($formParams['text'][$lng->id],'');
+
+                        $trl = $model->getOrCreateTrl($lng->id,true);
+                        $trl->name = $name;
+                        $trl->description = $description;
+                        $trl->text = $text;
+
+                        if($trl->isNewRecord){
+                            $trl->save();
+                        }else{
+                            $trl->update();
+                        }
                     }
-                }
 
-                $this->redirect(Yii::app()->createUrl('admin/categories/list'));
+                    //apply changes
+                    $transaction->commit();
+
+                    //redirect to list
+                    $this->redirect(Yii::app()->createUrl('admin/categories/list'));
+                }
+                catch(Exception $ex)
+                {
+                    //discard changes
+                    $transaction->rollback();
+
+                    //exit script and show error message
+                    exit($ex->getMessage());
+                }
             }
         }
 
 
+        //render form
         $this->render('add',array(
             'languages' => $languages,
             'parents' => $parents,
