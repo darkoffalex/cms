@@ -14,6 +14,7 @@
  * @property string $predefined_template_name
  *
  * The followings are the available model relations:
+ * @property ContentItem[] $contentItems
  * @property ContentItemField[] $contentItemFields
  */
 class ContentType extends CActiveRecord
@@ -50,6 +51,7 @@ class ContentType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'contentItems' => array(self::HAS_MANY, 'ContentItem', 'content_type_id'),
 			'contentItemFields' => array(self::HAS_MANY, 'ContentItemField', 'content_type_id'),
 		);
 	}

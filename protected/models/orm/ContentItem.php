@@ -15,8 +15,10 @@
  * @property integer $created_time
  * @property integer $updated_time
  * @property integer $readonly
+ * @property integer $content_type_id
  *
  * The followings are the available model relations:
+ * @property ContentType $contentType
  * @property Tree $tree
  * @property ContentItemFieldValue[] $contentItemFieldValues
  * @property ContentItemTrl[] $contentItemTrls
@@ -39,11 +41,11 @@ class ContentItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tree_id, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
+			array('tree_id, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly, content_type_id', 'numerical', 'integerOnly'=>true),
 			array('label, template_name, priority', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, tree_id, label, template_name, priority, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
+			array('id, tree_id, label, template_name, priority, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly, content_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +57,7 @@ class ContentItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'contentType' => array(self::BELONGS_TO, 'ContentType', 'content_type_id'),
 			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
 			'contentItemFieldValues' => array(self::HAS_MANY, 'ContentItemFieldValue', 'content_item_id'),
 			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'item_id'),
@@ -78,6 +81,7 @@ class ContentItem extends CActiveRecord
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
 			'readonly' => 'Readonly',
+			'content_type_id' => 'Content Type',
 		);
 	}
 
@@ -110,6 +114,7 @@ class ContentItem extends CActiveRecord
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('readonly',$this->readonly);
+		$criteria->compare('content_type_id',$this->content_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
