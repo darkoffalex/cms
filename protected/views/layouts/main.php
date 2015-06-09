@@ -1,3 +1,9 @@
+<?php
+/*
+ * TemplateType:Layout
+ * TemplateName:Default layout
+ */
+?>
 <?php /* @var $this Controller */ ?>
 <?php /* @var $content string */ ?>
 

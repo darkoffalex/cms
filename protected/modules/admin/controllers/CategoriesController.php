@@ -116,8 +116,8 @@ class CategoriesController extends ControllerAdmin
         $statuses = Constants::statusList();
 
         //templates
-        $templates = array('default.php' => __a('Default')); //TODO: get real list of templates
-        $item_templates = array('default.php' => __a('Default')); //TODO: get real list of templates
+        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme);
+        $item_templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
 
         //model
         $model = new TreeEx();

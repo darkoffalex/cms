@@ -2,9 +2,25 @@
 
 class ControllerAdmin extends CController
 {
+    /**
+     * @var string
+     */
     public $title = "Web Constructor";
+
+    /**
+     * @var string
+     */
     public $description = "";
+
+    /**
+     * @var string
+     */
     public $assets = "";
+
+    /**
+     * @var GlobalSettingsEx
+     */
+    public $global_settings = null;
 
     /**
      * Override constructor
@@ -34,6 +50,9 @@ class ControllerAdmin extends CController
 
         //publish assets
         $this->assets = Yii::app()->assetManager->publish(Yii::getPathOfAlias('admin.design'));
+
+        //get global settings
+        $this->global_settings = GlobalSettingsEx::model()->find();
 
         //enable foreign keys (for cascade operations in SQLITE)
         $con = Yii::app()->db->createCommand("PRAGMA foreign_keys = ON")->execute();

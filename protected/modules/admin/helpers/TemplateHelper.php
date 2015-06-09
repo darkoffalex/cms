@@ -45,11 +45,12 @@ class TemplateHelper
      * @param $themeName
      * @param string $type
      * @param string $directory
+     * @return array
      */
     public static function getStandardTemplates($themeName, $type = 'Page', $directory = 'pages')
     {
         $keys = array('type' => 'TemplateType','name' => 'TemplateName');
-        $templates = array();
+        $templates = array('' => __a('None'));
 
         //get theme by name
         $theme = Yii::app()->getThemeManager()->getTheme($themeName);
@@ -69,20 +70,31 @@ class TemplateHelper
             //get list of all files
             $files = scandir($dir);
 
+
             foreach($files as $filename){
                 if($filename != '..' && $filename != '.'){
 
+                    //get full path to template
                     $path = $dir.DS.$filename;
-                    $info = self::getFileData($path,$keys);
 
-                    $templates[$dir.DS.$filename] = $filename;
+                    //if file exist
+                    if(file_exists($path)){
+
+                        //get info
+                        $info = self::getFileData($path,$keys);
+
+                        //if has correct type
+                        if(!empty($info['type']) && $info['type'] == $type){
+                            //store in array filename without extension
+                            $name_w_extension = str_replace('.php','',$filename);
+                            $templates[$name_w_extension] = !empty($info['name']) ? $info['name'] : $filename;
+                        }
+                    }
                 }
             }
 
         }
-        //if directory not found
-        else{
-            $templates = array('' => __a('None'));
-        }
+
+        return $templates;
     }
 }
