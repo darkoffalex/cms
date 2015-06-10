@@ -6,6 +6,16 @@
 <?php /* @var $form CActiveForm */ ?>
 <?php /* @var $model TreeEx */ ?>
 
+
+<?php $success = Yii::app()->user->getFlash('success',null); ?>
+<?php $error = Yii::app()->user->getFlash('error',null); ?>
+
+<?php if(!empty($success)): ?>
+    <div class="notice"><?php echo $success; ?></div>
+<?php elseif(!empty($error)):?>
+    <div class="notice error"><?php echo $error; ?></div>
+<?php endif;?>
+
 <main>
     <div class="title-bar world">
         <h1><?php echo __a('Categories'); ?></h1>
@@ -17,7 +27,7 @@
     <div class="content menu-content">
 
         <div class="header">
-            <span><?php echo __a('Add category'); ?></span>
+            <span><?php echo __a('Edit category'); ?></span>
         </div><!--/header-->
 
         <div class="tab-line">
@@ -41,7 +51,16 @@
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Text'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><input type="text" name="TreeEx[text][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->text; ?>"></td>
+                                <td class="value"><textarea name="TreeEx[text][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->text; ?></textarea></td>
+                            </tr>
+
+                            <tr>
+                                <td class="label"><?php echo __a('Meta title'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                                <td class="value"><input type="text" name="TreeEx[meta_title][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->meta_title; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><?php echo __a('Meta keywords'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                                <td class="value"><input type="text" name="TreeEx[meta_keywords][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->meta_keywords; ?>"></td>
                             </tr>
                         </table>
                     <?php endforeach;?>

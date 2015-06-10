@@ -157,11 +157,16 @@ class CategoriesController extends ControllerAdmin
                         $name = getif($formParams['name'][$lng->id],'');
                         $description = getif($formParams['description'][$lng->id],'');
                         $text = getif($formParams['text'][$lng->id],'');
+                        $meta_title = getif($formParams['meta_title'][$lng->id],'');
+                        $meta_keywords = getif($formParams['meta_keywords'][$lng->id],'');
+
 
                         $trl = $model->getOrCreateTrl($lng->id,true);
                         $trl->name = $name;
                         $trl->description = $description;
                         $trl->text = $text;
+                        $trl->meta_title = $meta_title;
+                        $trl->meta_keywords = $meta_keywords;
 
                         if($trl->isNewRecord){
                             $trl->save();
@@ -200,6 +205,11 @@ class CategoriesController extends ControllerAdmin
     }
 
 
+    /**
+     * Editing category
+     * @param $id
+     * @throws CHttpException
+     */
     public function actionEdit($id)
     {
         //register all necessary styles
@@ -272,11 +282,15 @@ class CategoriesController extends ControllerAdmin
                         $name = getif($formParams['name'][$lng->id],'');
                         $description = getif($formParams['description'][$lng->id],'');
                         $text = getif($formParams['text'][$lng->id],'');
+                        $meta_title = getif($formParams['meta_title'][$lng->id],'');
+                        $meta_keywords = getif($formParams['meta_keywords'][$lng->id],'');
 
                         $trl = $model->getOrCreateTrl($lng->id,true);
                         $trl->name = $name;
                         $trl->description = $description;
                         $trl->text = $text;
+                        $trl->meta_title = $meta_title;
+                        $trl->meta_keywords = $meta_keywords;
 
                         if($trl->isNewRecord){
                             $trl->save();
@@ -289,7 +303,7 @@ class CategoriesController extends ControllerAdmin
                     $transaction->commit();
 
                     //success message
-                    Yii::app()->user->setFlash('msg_info',__a('All data saved'));
+                    Yii::app()->user->setFlash('success',__a('Success: All data saved'));
                 }
                 catch(Exception $ex)
                 {
@@ -299,6 +313,9 @@ class CategoriesController extends ControllerAdmin
                     //exit script and show error message
                     exit($ex->getMessage());
                 }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__('Error : Some of fields not valid'));
             }
         }
 

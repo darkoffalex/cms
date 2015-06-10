@@ -62,7 +62,7 @@ class AdminModule extends CWebModule
                 'sub' => array(
                     array('title' => 'Blocks', 'url' => Yii::app()->createUrl('admin/blocks/list')),
                     array('title' => 'Types', 'url' => Yii::app()->createUrl('admin/blocks/types')),
-                    array('title' => 'Fields')
+                    array('title' => 'Fields', 'url' => Yii::app()->createUrl('admin/blocks/fields'))
                 ),
             ),
 

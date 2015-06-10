@@ -941,6 +941,22 @@ body
 		font-family: "Open_sans";
 	}
 
+.content.menu-content .inner-content textarea,
+.content .inner-content .form-zone textarea
+    {
+        width: 360px;
+        height: 150px;
+        padding-left: 3px;
+        padding-right: 3px;
+        background-color: #fff;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+        color: #968b8b;
+        font-size: 15px;
+        font-family: "Open_sans";
+        resize: none;
+    }
+
 .content.menu-content .inner-content input[type=text],
 .content .inner-content .form-zone input[type=text]
 	{
@@ -1317,4 +1333,24 @@ body
 @keyframes overlay-move {
     0%   {background-position: 0 0;}
     100% {background-position: 1200px 0;}
+}
+
+/* Notices (error, success, etc.) */
+.notice
+{
+    display: block;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    min-width: 300px;
+    font-size: 20px;
+    background-color: #19c34a;
+    color: white;
+    border-bottom-left-radius: 10px;
+}
+.notice.error
+{
+    background-color: #ff0000;
 }

@@ -41,7 +41,16 @@
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Text'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><input type="text" name="TreeEx[text][<?php echo $lng->id; ?>]" value=""></td>
+                                <td class="value"><textarea name="TreeEx[text][<?php echo $lng->id; ?>]"></textarea></td>
+                            </tr>
+
+                            <tr>
+                                <td class="label"><?php echo __a('Meta title'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                                <td class="value"><input type="text" name="TreeEx[meta_title][<?php echo $lng->id; ?>]" value=""></td>
+                            </tr>
+                            <tr>
+                                <td class="label"><?php echo __a('Meta keywords'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                                <td class="value"><input type="text" name="TreeEx[meta_keywords][<?php echo $lng->id; ?>]" value=""></td>
                             </tr>
                         </table>
                     <?php endforeach;?>
