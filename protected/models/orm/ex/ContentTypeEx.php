@@ -14,6 +14,34 @@ class ContentTypeEx extends ContentType
         return parent::model($className);
     }
 
+
+    /**
+     * Append some new rules
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = array('label','required');
+        return $rules;
+    }
+
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
+    }
+
     /**
      * Override, relate with extended models
      * @return array relational rules.
