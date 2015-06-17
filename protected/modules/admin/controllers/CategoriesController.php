@@ -285,7 +285,7 @@ class CategoriesController extends ControllerAdmin
                         $meta_title = getif($formParams['meta_title'][$lng->id],'');
                         $meta_keywords = getif($formParams['meta_keywords'][$lng->id],'');
 
-                        $trl = $model->getOrCreateTrl($lng->id,true);
+                        $trl = $model->getOrCreateTrl($lng->id);
                         $trl->name = $name;
                         $trl->description = $description;
                         $trl->text = $text;

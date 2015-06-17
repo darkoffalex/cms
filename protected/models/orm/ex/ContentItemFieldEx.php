@@ -16,6 +16,57 @@ class ContentItemFieldEx extends ContentItemField
         return parent::model($className);
     }
 
+
+    /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return ContentItemFieldTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        $trl = ContentItemFieldTrl::model()->findByAttributes(array('field_id' => $this->id,'lng_id' => $lng_id));
+
+        if(empty($trl)){
+            $trl = new ContentItemFieldTrl();
+            $trl -> lng_id = $lng_id;
+            $trl -> field_id = $this->id;
+
+            if($save){
+                $trl->save();
+            }
+        }
+
+        return $trl;
+    }
+
+    /**
+     * Append some new rules
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = array('label, field_name','required');
+        return $rules;
+    }
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
+    }
+
+
     /**
      * Override, relate with extended models
      * @return array relational rules.

@@ -7,15 +7,6 @@
 <?php /* @var $model TreeEx */ ?>
 
 
-<?php $success = Yii::app()->user->getFlash('success',null); ?>
-<?php $error = Yii::app()->user->getFlash('error',null); ?>
-
-<?php if(!empty($success)): ?>
-    <div class="notice"><?php echo $success; ?></div>
-<?php elseif(!empty($error)):?>
-    <div class="notice error"><?php echo $error; ?></div>
-<?php endif;?>
-
 <main>
     <div class="title-bar world">
         <h1><?php echo __a('Categories'); ?></h1>

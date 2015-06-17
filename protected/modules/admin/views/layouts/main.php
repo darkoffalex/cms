@@ -51,8 +51,19 @@
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 
+<!-- S P E C I A L  P A R T -->
 <input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">
 <input type="hidden" id="confirmation-yes" value="<?php echo __a('Yes');?>">
 <input type="hidden" id="confirmation-no" value="<?php echo __a('Cancel');?>">
+
+<?php $success = Yii::app()->user->getFlash('success',null); ?>
+<?php $error = Yii::app()->user->getFlash('error',null); ?>
+
+<?php if(!empty($success)): ?>
+    <div class="notice"><?php echo $success; ?></div>
+<?php elseif(!empty($error)):?>
+    <div class="notice error"><?php echo $error; ?></div>
+<?php endif;?>
+
 </body>
 </html>
