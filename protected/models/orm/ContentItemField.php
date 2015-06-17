@@ -15,6 +15,7 @@
  * @property integer $created_time
  * @property integer $updated_time
  * @property integer $readonly
+ * @property integer $use_wysiwyg
  *
  * The followings are the available model relations:
  * @property ContentType $contentType
@@ -39,11 +40,11 @@ class ContentItemField extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
+			array('content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly, use_wysiwyg', 'numerical', 'integerOnly'=>true),
 			array('label, field_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, field_name, content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
+			array('id, label, field_name, content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly, use_wysiwyg', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +79,7 @@ class ContentItemField extends CActiveRecord
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
 			'readonly' => 'Readonly',
+			'use_wysiwyg' => 'Use Wysiwyg',
 		);
 	}
 
@@ -110,6 +112,7 @@ class ContentItemField extends CActiveRecord
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('readonly',$this->readonly);
+		$criteria->compare('use_wysiwyg',$this->use_wysiwyg);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

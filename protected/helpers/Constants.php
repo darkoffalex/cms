@@ -15,6 +15,7 @@ class Constants
     const FIELD_TYPE_IMAGE = 5;
     const FIELD_TYPE_FILE = 6;
     const FIELD_TYPE_BOOLEAN = 7;
+    const FIELD_TYPE_PRICE = 8;
 
     /**
      * Returns list of basic statuses
@@ -50,6 +51,7 @@ class Constants
     {
         return array(
             self::FIELD_TYPE_NUMERIC => __a('Numeric'),
+            self::FIELD_TYPE_PRICE => __('Price'),
             self::FIELD_TYPE_TEXT => __a('Text'),
             self::FIELD_TYPE_TEXT_TRL  => __a('Translatable text'),
             self::FIELD_TYPE_DATE => __a('Date-Time'),

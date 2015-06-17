@@ -55,6 +55,10 @@
                     <td class="value"><?php echo $form->dropDownList($model,'field_type_id',$fieldTypes);?></td>
                 </tr>
                 <tr>
+                    <td class="label"><?php echo $form->labelEx($model,'use_wysiwyg'); ?></td>
+                    <td class="value"><?php echo $form->checkBox($model,'use_wysiwyg')?></td>
+                </tr>
+                <tr>
                     <td class="label">&nbsp;</td>
                     <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
                 </tr>
