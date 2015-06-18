@@ -1335,6 +1335,8 @@ body
     100% {background-position: 1200px 0;}
 }
 
+
+
 /* Notices (error, success, etc.) */
 .notice
 {
@@ -1353,4 +1355,35 @@ body
 .notice.error
 {
     background-color: #ff0000;
+}
+
+.filter-drop-down
+{
+    min-width: 220px;
+    height: 40px;
+    font-size: 14px;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    margin-right: 10px;
+    display: block;
+    float: right;
+}
+
+.filter-submit
+{
+    background: #f6f6f6 url(../images/icon-refresh.png) center center no-repeat;
+    border: 1px solid #dddddd;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    display:block;
+    float: right;
+    cursor: pointer;
+}
+
+.special-filter-form
+{
+    display: block;
+    height: 40px;
+    width: 550px;
 }

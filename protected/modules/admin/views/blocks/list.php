@@ -8,14 +8,31 @@
     <div class="title-bar">
         <h1><?php echo __a('Content blocks'); ?></h1>
         <ul class="actions">
-            <select name="category" class="float-left filter-drop-down">
-                <option value="1">Category 1</option>
-                <option value="2">Category 2</option>
-<!--                --><?php //foreach($categories as $id => $label): ?>
-<!--                    <option value="--><?php //echo $id ?><!--">--><?php //echo $label; ?><!--</option>-->
-<!--                --><?php //endforeach;?>
-            </select>
-            <li><a href="" class="action add"></a></li>
+            <li>
+                <form method="get" class="special-filter-form">
+                    <button type="submit" class="filter-submit"></button>
+                    <select name="cid" class="float-left filter-drop-down">
+                        <option value="0"><?php echo __a('Select category'); ?></option>
+                        <?php foreach($categories as $id => $title):
+                            $selected = (!empty($selectedCategory) && $selectedCategory->id == $id);
+                            ?>
+                            <option <?php if($selected): ?> selected <?php endif;?> value="<?php echo $id ?>"><?php echo $title; ?></option>
+                        <?php endforeach;?>
+                    </select>
+                    <select name="tid" class="float-left filter-drop-down">
+                        <option value="0"><?php echo __a('Select type'); ?></option>
+                        <?php foreach($types as $index => $type):
+                            $selected = (!empty($selectedType) && $selectedType->id == $type->id);
+                            ?>
+                            <option <?php if($selected): ?> selected <?php endif;?> value="<?php echo $type->id ?>"><?php echo $type->label; ?></option>
+                        <?php endforeach;?>
+                    </select>
+                </form>
+            </li>
+            <?php if(!empty($types)): ?>
+                <?php $params = !empty($selectedCategory) ? array('cid' => $selectedCategory->id) : array(); ?>
+                <li><a href="<?php echo Yii::app()->createUrl('admin/blocks/add', $params); ?>" class="action add"></a></li>
+            <?php endif;?>
         </ul>
     </div><!--/title-bar-->
 
