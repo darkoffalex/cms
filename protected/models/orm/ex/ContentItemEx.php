@@ -16,6 +16,35 @@ class ContentItemEx extends ContentItem
         return parent::model($className);
     }
 
+
+    /**
+     * Append some new rules
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = array('label, content_type_id','required');
+        return $rules;
+    }
+
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
+    }
+
+
     /**
      * Override, relate with extended models
      * @return array relational rules.

@@ -55,4 +55,36 @@ class BlocksController extends ControllerAdmin
                 'selectedCategory' => $selectedCategory
             ));
     }
+
+    public function actionAdd($cid = 0)
+    {
+        //all content types (assoc array for drop-downs)
+        $contentTypes = ContentTypeEx::model()->listAllItemsForForms();
+        //all categories (assoc array for drop-downs)
+        $categoriesList = TreeEx::model()->listAllItemsForForms(0,'-');
+        //selected category
+        $selectedCategory = TreeEx::model()->findByPk((int)$cid);
+
+        //new content item model
+        $block = new ContentItemEx();
+
+        //get data from form
+        $form = Yii::app()->request->getPost('ContentItemEx',array());
+
+        //if form not empty
+        if(!empty($form)){
+            $block->attributes = $form;
+            if($block->validate()){
+                //TODO: create an item
+            }
+        }
+
+        $this->render('add',array(
+                'model' => $block,
+                'types' => $contentTypes,
+                'categories' => $categoriesList,
+                'selectedCategory' => $selectedCategory
+            )
+        );
+    }
 }

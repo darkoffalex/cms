@@ -14,6 +14,21 @@ class ContentTypeEx extends ContentType
         return parent::model($className);
     }
 
+    /**
+     * Array for drop-downs
+     * @return array
+     */
+    public function listAllItemsForForms()
+    {
+        $result = array();
+        $all = self::model()->findAll();
+
+        foreach ($all as $type) {
+            $result[$type->id] = $type->label;
+        }
+
+        return $result;
+    }
 
     /**
      * Append some new rules
