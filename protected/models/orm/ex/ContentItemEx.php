@@ -3,6 +3,7 @@
  * Class ContentItemEx
  * @property TreeEx $tree
  * @property ContentItemFieldValueEx[] $contentItemFieldValues
+ * @property ContentTypeEx $contentType
  * @property ContentItemTrl $trl
  */
 class ContentItemEx extends ContentItem
@@ -23,7 +24,7 @@ class ContentItemEx extends ContentItem
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = array('label, content_type_id','required');
+        $rules[] = array('label, tree_id','required');
         return $rules;
     }
 

@@ -19,6 +19,34 @@ class ContentItemFieldValueEx extends ContentItemFieldValue
     }
 
     /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return ContentItemFieldValueTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        if(!$this->isNewRecord)
+        {
+            $trl = ContentItemFieldValueTrl::model()->findByAttributes(array('value_id' => $this->id,'lng_id' => $lng_id));
+
+            if(empty($trl)){
+                $trl = new ContentItemFieldValueTrl();
+                $trl -> lng_id = $lng_id;
+                $trl -> value_id = $this->id;
+
+                if($save){
+                    $trl->save();
+                }
+            }
+
+            return $trl;
+        }
+
+        return new ContentItemFieldValueTrl();
+    }
+
+    /**
      * Override, relate with extended models
      * @return array relational rules.
      */

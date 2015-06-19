@@ -18,6 +18,24 @@ class ContentItemFieldEx extends ContentItemField
 
 
     /**
+     * Returns value object for specified content item
+     * @param $item_id
+     * @return ContentItemFieldValueEx
+     */
+    public function getValueFor($item_id)
+    {
+        $values = $this->contentItemFieldValues;
+
+        foreach ($values as $valueObj) {
+            if($valueObj->content_item_id = $item_id){
+                return $valueObj;
+            }
+        }
+
+        return new ContentItemFieldValueEx();
+    }
+
+    /**
      * Finds or creates Trl of this item
      * @param $lng_id
      * @param bool $save

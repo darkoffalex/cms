@@ -9,7 +9,7 @@
         <h1><?php echo __a('Content blocks'); ?></h1>
         <ul class="actions">
             <li>
-                <form method="get" class="special-filter-form">
+                <form method="get" action="<?php echo Yii::app()->createUrl('admin/blocks/list'); ?>" class="special-filter-form">
                     <button type="submit" class="filter-submit"></button>
                     <select name="cid" class="float-left filter-drop-down">
                         <option value="0"><?php echo __a('Select category'); ?></option>
@@ -29,7 +29,7 @@
                     </select>
                 </form>
             </li>
-            <?php if(!empty($types)): ?>
+            <?php if(!empty($types) && !empty($categories)): ?>
                 <?php $params = !empty($selectedCategory) ? array('cid' => $selectedCategory->id) : array(); ?>
                 <li><a href="<?php echo Yii::app()->createUrl('admin/blocks/add', $params); ?>" class="action add"></a></li>
             <?php endif;?>
@@ -45,8 +45,8 @@
                 <div class="cell action"><?php echo __a('Actions'); ?></div>
             </div><!--/list-row-->
 
-            <div class="list-row">
-                <?php foreach($items as $item): ?>
+            <?php foreach($items as $item): ?>
+                <div class="list-row">
                     <div class="cell"><?php echo $item->label; ?></div>
                     <div class="cell type"><?php echo $item->contentType->label; ?></div>
                     <div class="cell type"><?php echo $item->tree->label; ?></div>
@@ -54,8 +54,8 @@
                         <a href="<?php echo Yii::app()->createUrl('admin/blocks/edit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
                         <a href="<?php echo Yii::app()->createUrl('admin/blocks/delete',array('id' => $item->id)); ?>" class="action delete delete-page confirm-box"></a>
                     </div>
-                <?php endforeach;?>
-            </div><!--/list-row-->
+                </div><!--/list-row-->
+            <?php endforeach;?>
         </div><!--/content-->
 
         <?php if(CPager::getInstance()->getTotalPages() > 1): ?>
