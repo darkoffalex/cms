@@ -47,12 +47,15 @@
 </div><!--fluid-->
 
 <script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
-<script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
+<script src="<?php echo $this->assets; ?>/js/jquery.numeric.min.js"></script>
+<script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 
 <script>$('input.date-picker-block').datepicker();</script>
+<script>$('input.numeric-input-block').numeric({decimal:false});</script>
+<script>$('input.numeric-input-price').numeric({negative:false,decimalPlaces:2});</script>
 
 <!-- S P E C I A L  P A R T -->
 <input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">
