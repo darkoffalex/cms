@@ -20,7 +20,7 @@
     <?php else: ?>
         <tr>
             <td class="label"><?php echo __a($field->label); ?>:</td>
-            <td class="value"><textarea name="ContentItemEx[dynamic][<?php echo $field->id; ?>]"><?php echo $field->getValueFor($item->id)->text_value; ?></textarea></td>
+            <td class="value"><textarea class="editor-area" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]"><?php echo $field->getValueFor($item->id)->text_value; ?></textarea></td>
         </tr>
     <?php endif; ?>
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_BOOLEAN): ?>

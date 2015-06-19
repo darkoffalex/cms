@@ -10,6 +10,9 @@
     <link href="<?php echo $this->assets; ?>/css/vendor.css" rel="stylesheet">
     <link href="<?php echo $this->assets; ?>/css/vendor.dashboard.css" rel="stylesheet">
     <link href="<?php echo $this->assets; ?>/css/jquery-ui.css" rel="stylesheet">
+
+    <link href="<?php echo $this->assets; ?>/js/imperavi-redactor/redactor.css" rel="stylesheet">
+
     <title><?php echo $this->title; ?></title>
 </head>
 <body>
@@ -52,11 +55,27 @@
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
-<script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
+
+<script src="<?php echo $this->assets; ?>/js/imperavi-redactor/redactor.js"></script>
+<script src="<?php echo $this->assets; ?>/js/imperavi-redactor/plugins/fontsize/fontsize.js"></script>
+<script src="<?php echo $this->assets; ?>/js/imperavi-redactor/plugins/fontcolor/fontcolor.js"></script>
+<script src="<?php echo $this->assets; ?>/js/imperavi-redactor/plugins/fullscreen/fullscreen.js"></script>
 
 <script>$('input.date-picker-block').datepicker();</script>
 <script>$('input.numeric-input-block').numeric({decimal:false});</script>
 <script>$('input.numeric-input-price').numeric({negative:false,decimalPlaces:2});</script>
+
+<script>
+    $('textarea.editor-area').redactor({
+        minHeight : 180,
+        maxHeight : 180,
+        toolbarFixed : false,
+        scroll : true,
+        autoSize : false,
+        plugins: ['fontsize','fontcolor', 'fullscreen']
+    });
+</script>
+
 
 <!-- S P E C I A L  P A R T -->
 <input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">

@@ -48,7 +48,7 @@
                                 <?php else: ?>
                                     <tr>
                                         <td class="label"><?php echo __a($field->label); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                        <td class="value"><textarea name="ContentItemEx[dynamic_trl][<?php echo $field->id; ?>][<?php $lng->id; ?>]"><?php echo $trlTextValue; ?></textarea></td>
+                                        <td class="value"><textarea class="editor-area" name="ContentItemEx[dynamic_trl][<?php echo $field->id; ?>][<?php $lng->id; ?>]"><?php echo $trlTextValue; ?></textarea></td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endif;?>
