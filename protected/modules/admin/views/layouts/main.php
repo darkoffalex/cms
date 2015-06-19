@@ -47,6 +47,7 @@
 </div><!--fluid-->
 
 <script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
+<script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
 <script src="<?php echo $this->assets; ?>/js/jquery.numeric.min.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
