@@ -31,6 +31,21 @@ class ContentTypeEx extends ContentType
     }
 
     /**
+     * Check if type contains translatable fields
+     * @return bool
+     */
+    public function hasTranslatableFields()
+    {
+        foreach($this->contentItemFields as $field){
+            if($field->field_type_id == Constants::FIELD_TYPE_TEXT_TRL){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Append some new rules
      */
     public function rules()

@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<?php echo $this->assets; ?>/css/vendor.css" rel="stylesheet">
     <link href="<?php echo $this->assets; ?>/css/vendor.dashboard.css" rel="stylesheet">
+    <link href="<?php echo $this->assets; ?>/css/jquery-ui.css" rel="stylesheet">
     <title><?php echo $this->title; ?></title>
 </head>
 <body>
@@ -50,6 +51,8 @@
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
+
+<script>$('input.date-picker-block').datepicker();</script>
 
 <!-- S P E C I A L  P A R T -->
 <input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">

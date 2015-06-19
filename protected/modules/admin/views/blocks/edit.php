@@ -20,23 +20,26 @@
             <span><?php echo __a('Edit block'); ?></span>
         </div><!--/header-->
 
-        <div class="tab-line">
-            <?php foreach($languages as $index => $lng): ?>
-                <span <?php if($index == 0): ?>class="active"<?php endif;?> data-lang="<?php echo $lng->id; ?>"><?php echo $lng->name; ?></span>
-            <?php endforeach; ?>
-        </div><!--/tab-line-->
+        <?php if($model->contentType->hasTranslatableFields()): ?>
+            <div class="tab-line">
+                <?php foreach($languages as $index => $lng): ?>
+                    <span <?php if($index == 0): ?>class="active"<?php endif;?> data-lang="<?php echo $lng->id; ?>"><?php echo $lng->name; ?></span>
+                <?php endforeach; ?>
+            </div><!--/tab-line-->
+        <?php endif; ?>
 
         <div class="inner-content">
-            <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array(),'clientOptions' => array('validateOnSubmit'=>true))); ?>
+            <?php $form=$this->beginWidget('CActiveForm', array('id' =>'edit-form','enableAjaxValidation'=>false,'htmlOptions'=>array('enctype' => 'multipart/form-data'),'clientOptions' => array('validateOnSubmit'=>true))); ?>
 
-            <div class="tabs">
-                <?php foreach($languages as $index => $lng): ?>
-                    <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
-                        <?php foreach($model->contentType->contentItemFields as $field):
-                            $trlTextValue = getif($field->getValueFor($model->id)->getOrCreateTrl($lng->id)->text,'');
-                            ?>
+            <?php if($model->contentType->hasTranslatableFields()): ?>
+                <div class="tabs">
+                    <?php foreach($languages as $index => $lng): ?>
+                        <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
+                            <?php foreach($model->contentType->contentItemFields as $field):
+                                $trlTextValue = getif($field->getValueFor($model->id)->getOrCreateTrl($lng->id)->text,'');
+                                ?>
 
-                            <?php if($field->field_type_id == Constants::FIELD_TYPE_TEXT_TRL): ?>
+                                <?php if($field->field_type_id == Constants::FIELD_TYPE_TEXT_TRL): ?>
                                 <?php if(!$field->use_wysiwyg): ?>
                                     <tr>
                                         <td class="label"><?php echo __a($field->label); ?> [<?php echo $lng->prefix; ?>]:</td>
@@ -49,41 +52,47 @@
                                     </tr>
                                 <?php endif; ?>
                             <?php endif;?>
-                        <?php endforeach; ?>
-                    </table>
-                <?php endforeach;?>
-            </div><!--/tabs-->
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endforeach;?>
+                </div><!--/tabs-->
+            <?php endif; ?>
 
-            <table>
-                <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'label'); ?></td>
-                    <td class="value"><?php echo $form->textField($model,'label',array('placeholder' => __a('Label'))); ?></td>
-                </tr>
-                <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'status_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'status_id',$statuses);?></td>
-                </tr>
-                <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'tree_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'tree_id',$categories);?></td>
-                </tr>
+            <div class="separate-block">
+                <table>
+                    <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'label'); ?></td>
+                        <td class="value"><?php echo $form->textField($model,'label',array('placeholder' => __a('Label'))); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'status_id'); ?></td>
+                        <td class="value"><?php echo $form->dropDownList($model,'status_id',$statuses);?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'tree_id'); ?></td>
+                        <td class="value"><?php echo $form->dropDownList($model,'tree_id',$categories);?></td>
+                    </tr>
+                </table>
+            </div>
 
-                <?php foreach($model->contentType->contentItemFields as $field): ?>
-                    <?php $this->renderPartial('_dynamic_field',array('field' => $field, 'item' => $model)); ?>
-                <?php endforeach; ?>
-
-                <tr>
-                    <td class="label">&nbsp;</td>
-                    <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
-                </tr>
-                <tr>
-                    <td class="label">&nbsp;</td>
-                    <td class="value">
-                        <?php echo $form->error($model,'label',array('class'=>'error')); ?>
-                        <?php echo $form->error($model,'tree_id',array('class'=>'error')); ?>
-                    </td>
-                </tr>
-            </table>
+            <div class="form-zone">
+                <table>
+                    <?php foreach($model->contentType->contentItemFields as $field): ?>
+                        <?php $this->renderPartial('_dynamic_field',array('field' => $field, 'item' => $model)); ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <td class="label">&nbsp;</td>
+                        <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label">&nbsp;</td>
+                        <td class="value">
+                            <?php echo $form->error($model,'label',array('class'=>'error')); ?>
+                            <?php echo $form->error($model,'tree_id',array('class'=>'error')); ?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
             <?php $this->endWidget(); ?>
 

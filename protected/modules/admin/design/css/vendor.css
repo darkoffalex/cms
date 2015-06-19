@@ -1387,3 +1387,10 @@ body
     height: 40px;
     width: 550px;
 }
+
+.separate-block
+{
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #DDD;
+}

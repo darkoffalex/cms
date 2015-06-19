@@ -143,10 +143,16 @@ class BlocksController extends ControllerAdmin
 
         //get data from form
         $form = Yii::app()->request->getPost('ContentItemEx',array());
+        $files = $_FILES;
 
         if(!empty($form)){
-            debugvar($form);
-            exit();
+            $block->attributes = $form;
+            if($block->validate())
+            {
+                debugvar($form);
+                debugvar($files);
+                exit();
+            }
         }
 
         $this->render('edit',array(
