@@ -17,6 +17,28 @@ class ContentItemEx extends ContentItem
         return parent::model($className);
     }
 
+    /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return ContentItemTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        $trl = ContentItemTrl::model()->findByAttributes(array('item_id' => $this->id,'lng_id' => $lng_id));
+
+        if(empty($trl)){
+            $trl = new ContentItemTrl();
+            $trl -> lng_id = $lng_id;
+            $trl -> item_id = $this->id;
+
+            if($save){
+                $trl->save();
+            }
+        }
+
+        return $trl;
+    }
 
     /**
      * Append some new rules

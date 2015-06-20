@@ -3,6 +3,7 @@
 <?php /* @var $types array */ ?>
 <?php /* @var $categories array */ ?>
 <?php /* @var $statuses array */ ?>
+<?php /* @var $languages Language[] */ ?>
 <?php /* @var $selectedCategory TreeEx */ ?>
 
 <main>
@@ -20,8 +21,33 @@
             <span><?php echo __a('Add block'); ?></span>
         </div><!--/header-->
 
+        <div class="tab-line">
+            <?php foreach($languages as $index => $lng): ?>
+                <span <?php if($index == 0): ?>class="active"<?php endif;?> data-lang="<?php echo $lng->id; ?>"><?php echo $lng->name; ?></span>
+            <?php endforeach; ?>
+        </div><!--/tab-line-->
+
         <div class="inner-content">
             <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array(),'clientOptions' => array('validateOnSubmit'=>true))); ?>
+
+            <div class="tabs">
+                <?php foreach($languages as $index => $lng): ?>
+                    <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
+                        <tr>
+                            <td class="label"><?php echo __a('Name'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                            <td class="value"><input type="text" name="ContentItemEx[name][<?php echo $lng->id; ?>]" value=""></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo __a('Meta title'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                            <td class="value"><input type="text" name="ContentItemEx[meta_title][<?php echo $lng->id; ?>]" value=""></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo __a('Meta keywords'); ?> [<?php echo $lng->prefix; ?>]:</td>
+                            <td class="value"><input type="text" name="ContentItemEx[meta_keywords][<?php echo $lng->id; ?>]" value=""></td>
+                        </tr>
+                    </table>
+                <?php endforeach;?>
+            </div><!--/tabs-->
 
             <table>
                 <tr>

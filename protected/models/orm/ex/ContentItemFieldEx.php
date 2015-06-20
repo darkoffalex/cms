@@ -32,7 +32,10 @@ class ContentItemFieldEx extends ContentItemField
             }
         }
 
-        return new ContentItemFieldValueEx();
+        $valueObj = new ContentItemFieldValueEx();
+        $valueObj->content_item_id = $item_id;
+        $valueObj->field_id = $this->id;
+        return $valueObj;
     }
 
     /**

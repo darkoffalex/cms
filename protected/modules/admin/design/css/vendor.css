@@ -1367,6 +1367,8 @@ body
     margin-right: 10px;
     display: block;
     float: right;
+    color: #968B8B;
+    font-family: "Open_sans";
 }
 
 .filter-submit
@@ -1392,5 +1394,19 @@ body
 {
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #efefef;
+}
+.line-separation
+{
+    position: relative;
+}
+.line-separation span
+{
+    display: block;
+    height: 1px;
+    background-color: #efefef;
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 921px;
 }

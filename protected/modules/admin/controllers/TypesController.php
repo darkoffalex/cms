@@ -321,7 +321,7 @@ class TypesController extends ControllerAdmin
                 }
             }else{
                 //error message
-                Yii::app()->user->setFlash('error',__('Error : Some of fields not valid'));
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
             }
 
         }

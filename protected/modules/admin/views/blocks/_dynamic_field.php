@@ -9,7 +9,10 @@
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_PRICE):?>
     <tr>
         <td class="label"><?php echo __a($field->label); ?></td>
-        <td class="value"><input class="numeric-input-price" type="text" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]" value="<?php echo $field->getValueFor($item->id)->numeric_value; ?>" placeholder="<?php echo __a('0.00'); ?>"></td>
+        <td class="value">
+            <?php $cents = $field->getValueFor($item->id)->numeric_value; ?>
+            <input class="numeric-input-price" type="text" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]" value="<?php echo $cents > 0 ? centsToPrice($cents) : ''; ?>" placeholder="<?php echo __a('0.00'); ?>">
+        </td>
     </tr>
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_TEXT): ?>
     <?php if(!$field->use_wysiwyg): ?>
