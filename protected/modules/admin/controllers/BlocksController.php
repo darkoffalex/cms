@@ -528,4 +528,17 @@ class BlocksController extends ControllerAdmin
         $this->redirect(Yii::app()->request->urlReferrer);
 
     }
+
+    /**
+     * Deletes not directly, just relation (leaves image record and file)
+     * @param $id
+     */
+    public function actionDeleteImage($id)
+    {
+        //delete just relation between field value and image
+        ImageOfValueEx::model()->deleteByPk((int)$id);
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
 }
