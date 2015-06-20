@@ -1410,3 +1410,19 @@ body
     left: 0;
     width: 921px;
 }
+
+.content .inner-content .image-zone.smaller .list .image > img
+{
+    height: 77px;
+}
+
+.content .inner-content .image-zone.smaller .list .image
+{
+    height: 79px;
+}
+
+.content .inner-content .image-zone.smaller .list .image > .delete
+{
+    width: 22px;
+    height: 22px;
+}

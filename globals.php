@@ -70,22 +70,12 @@ function getif($expression, $default = null)
     return !empty($expression) ? $expression : $default;
 }
 
-/**
- * Converts cents to readable price
- * @param $cents
- * @return string
- */
 function centsToPrice($cents)
 {
     return number_format(($cents / 100),2,'.','');
 }
 
-/**
- * Converts entered price string to cents
- * @param $price
- * @return float|int
- */
-function priceToCents($price)
+function PriceToCents($price)
 {
     if(is_numeric($price))
     {
@@ -93,5 +83,6 @@ function priceToCents($price)
 
         return $clean * 100;
     }
+
     return 0;
 }

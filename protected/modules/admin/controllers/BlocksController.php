@@ -192,6 +192,7 @@ class BlocksController extends ControllerAdmin
         $form = Yii::app()->request->getPost('ContentItemEx',array());
         $files = $_FILES; //TODO: implement file appending
 
+
         //if something got from form
         if(!empty($form)){
             //set main attributes
@@ -288,6 +289,7 @@ class BlocksController extends ControllerAdmin
 
                         }
                     }
+
                     //saving dynamic translatable fields
                     if(!empty($dynamic_trl))
                     {
@@ -324,11 +326,145 @@ class BlocksController extends ControllerAdmin
                         }
                     }
 
+                    //file validation status
+                    $allRightWithFiles = true;
+
+                    //if array of files not empty
+                    if(!empty($files)){
+
+                        //pass through all files
+                        foreach($files as $fieldName => $fileArr){
+
+                            //obtain a field ID
+                            list($title, $fieldId) = array_pad(explode('_',$fieldName), 2, '');
+
+                            //find field by ID
+                            $field = ContentItemFieldEx::model()->findByPk((int)$fieldId);
+
+                            //if field found
+                            if(!empty($field)){
+
+                                //find or create value of this field for this block
+                                $valueObj = $field->getValueFor($block->id);
+                                if($valueObj->isNewRecord){
+                                    $valueObj->save();
+                                }
+
+                                //depending on field's type
+                                switch($field->field_type_id)
+                                {
+                                    //do this for image type
+                                    case Constants::FIELD_TYPE_IMAGE:
+
+                                        //get uploaded file's instance
+                                        $mediaValidation = new MediaUploadForm();
+                                        $mediaValidation->image = CUploadedFile::getInstanceByName($fieldName);
+
+                                        //if file set
+                                        if(!empty($mediaValidation->image) && $mediaValidation->image->size > 0)
+                                        {
+                                            //if file valid
+                                            if($mediaValidation->validate()){
+
+                                                //save file to directory with new random name
+                                                $uploadPath = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'images';
+                                                $randomName = uniqid().'.'.$mediaValidation->image->extensionName;
+                                                $destinationName = $uploadPath.DS.$randomName;
+
+                                                //if image saved
+                                                if($mediaValidation->image->saveAs($destinationName)){
+
+                                                    //create record in database
+                                                    $image = new ImageEx();
+                                                    $image -> label = $randomName;
+                                                    $image -> filename = $randomName;
+                                                    $image -> original_filename = $mediaValidation->image->name;
+                                                    $image -> extension = $mediaValidation->image->extensionName;
+                                                    $image -> size = $mediaValidation->image->size;
+                                                    $image -> mime_type = $mediaValidation->image->type;
+                                                    $image -> created_by_id = Yii::app()->user->id;
+                                                    $image -> created_time = time();
+                                                    $image -> updated_by_id = Yii::app()->user->id;
+                                                    $image -> updated_time = time();
+                                                    $image -> save();
+
+                                                    //relate with field value
+                                                    $iov = new ImageOfValueEx();
+                                                    $iov -> image_id = $image->id;
+                                                    $iov -> value_id = $valueObj->id;
+                                                    $iov -> priority = Sort::GetNextPriority('ImageOfValueEx');
+                                                    $iov -> save();
+                                                }
+                                            }else{
+                                                //error message
+                                                Yii::app()->user->setFlash('error',__a('Error : File not valid'));
+                                                $allRightWithFiles = false;
+                                            }
+                                        }
+                                        break;
+
+                                    case Constants::FIELD_TYPE_FILE:
+
+                                        //get uploaded file's instance
+                                        $mediaValidation = new MediaUploadForm();
+                                        $mediaValidation->file = CUploadedFile::getInstanceByName($fieldName);
+
+                                        //if file set
+                                        if(!empty($mediaValidation->file) && $mediaValidation->file->size > 0)
+                                        {
+                                            //if file valid
+                                            if($mediaValidation->validate()){
+
+                                                //save file to directory with new random name
+                                                $uploadPath = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'files';
+                                                $randomName = uniqid().'.'.$mediaValidation->image->extensionName;
+                                                $destinationName = $uploadPath.DS.$randomName;
+
+                                                //if file saved
+                                                if($mediaValidation->file->saveAs($destinationName)){
+
+                                                    //create record in database
+                                                    $file = new FileEx();
+                                                    $file -> label = $randomName;
+                                                    $file -> filename = $randomName;
+                                                    $file -> original_filename = $mediaValidation->image->name;
+                                                    $file -> extension = $mediaValidation->image->extensionName;
+                                                    $file -> size = $mediaValidation->image->size;
+                                                    $file -> mime_type = $mediaValidation->image->type;
+                                                    $file -> created_by_id = Yii::app()->user->id;
+                                                    $file -> created_time = time();
+                                                    $file -> updated_by_id = Yii::app()->user->id;
+                                                    $file -> updated_time = time();
+                                                    $file -> save();
+
+                                                    //relate with field value
+                                                    $fov = new FileOfValueEx();
+                                                    $fov -> file_id = $file->id;
+                                                    $fov -> value_id = $valueObj->id;
+                                                    $fov -> priority = Sort::GetNextPriority('FileOfValueEx');
+                                                    $fov -> save();
+                                                }
+                                            }else{
+                                                //error message
+                                                Yii::app()->user->setFlash('error',__a('Error : File not valid'));
+                                                $allRightWithFiles = false;
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+
                     //apply changes
                     $transaction->commit();
 
-                    //success message
-                    Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+                    //if with files all right too
+                    if($allRightWithFiles){
+                        //success message
+                        Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+                    }
+
                 }
                 catch(Exception $ex)
                 {
@@ -366,5 +502,30 @@ class BlocksController extends ControllerAdmin
         ContentItemEx::model()->deleteByPk((int)$id);
         //go back
         $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /**
+     * Deletes image directly (image record and file)
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDeleteImageDirect($id)
+    {
+        //delete image directly (not relation, but image)
+        $image = ImageEx::model()->findByPk((int)$id);
+
+        //if not found
+        if(empty($image)){
+            throw new CHttpException(404);
+        }
+
+        //delete uploaded file
+        $image->deleteFile();
+        //delete record
+        $image->delete();
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+
     }
 }

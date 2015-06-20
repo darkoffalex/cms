@@ -1,5 +1,6 @@
 <?php /* @var $item ContentItemEx */ ?>
 <?php /* @var $field ContentItemFieldEx */ ?>
+<?php /* @var $this BlocksController */ ?>
 
 <?php if($field->field_type_id == Constants::FIELD_TYPE_NUMERIC): ?>
     <tr>
@@ -46,11 +47,33 @@
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_IMAGE): ?>
     <tr>
         <td class="label"><?php echo __a($field->label); ?></td>
-        <td class="value"><input name="DynamicFileField_<?php echo $field->id; ?>" type="file" data-label="<?php echo __('Browse'); ?>"></td>
+        <td class="value"><input name="DynamicFileField_<?php echo $field->id; ?>" type="file" data-label="<?php echo __a('Browse'); ?>"></td>
+    </tr>
+    <tr>
+        <td class="label"></td>
+        <td class="value image-zone smaller">
+            <?php $valueObj = $field->getValueFor($item->id); ?>
+            <?php $iov = $valueObj->imageOfValues; ?>
+            <div class="list">
+                <?php if(!empty($iov)): ?>
+                    <?php foreach($iov as $imageOf): ?>
+                        <div class="image">
+                            <img src="<?php echo $imageOf->image->getCachedUrl(103,77,true); ?>" alt="">
+                            <a href="<?php echo Yii::app()->createUrl('admin/blocks/deleteimagedirect',array('id' => $imageOf->image_id)); ?>" class="delete active confirm-box"></a>
+                        </div>
+                    <?php endforeach;?>
+                <?php else:?>
+                    <div class="image">
+                        <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="">
+                        <a href="#" class="delete"></a>
+                    </div>
+                <?php endif;?>
+            </div>
+        </td>
     </tr>
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_FILE): ?>
     <tr>
         <td class="label"><?php echo __a($field->label); ?></td>
-        <td class="value"><input name="DynamicFileField_<?php echo $field->id; ?>" type="file" data-name="<?php echo __('Browse'); ?>"></td>
+        <td class="value"><input name="DynamicFileField_<?php echo $field->id; ?>" type="file" data-name="<?php echo __a('Browse'); ?>"></td>
     </tr>
 <?php endif?>
