@@ -58,7 +58,7 @@
                 <?php if(!empty($iov)): ?>
                     <?php foreach($iov as $imageOf): ?>
                         <div class="image">
-                            <img src="<?php echo $imageOf->image->getCachedUrl(103,77,true); ?>" alt="">
+                            <img src="<?php echo $imageOf->image->getCachedUrl(103,77,false); ?>" alt="">
                             <a href="<?php echo Yii::app()->createUrl('admin/blocks/deleteimagedirect',array('id' => $imageOf->image_id)); ?>" class="delete active confirm-box"></a>
                         </div>
                     <?php endforeach;?>

@@ -51,7 +51,7 @@
                             <td class="value"></td>
                         </tr>
                         <?php foreach($model->contentType->contentItemFields as $field):?>
-                            <?php $trlTextValue = getif($field->getValueFor($model->id)->getOrCreateTrl($lng->id)->text,''); ?>
+                            <?php $trlTextValue = $field->getValueFor($model->id)->getOrCreateTrl($lng->id)->text; ?>
                             <?php if($field->field_type_id == Constants::FIELD_TYPE_TEXT_TRL): ?>
                                 <?php if(!$field->use_wysiwyg): ?>
                                     <tr>

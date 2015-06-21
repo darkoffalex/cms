@@ -8,8 +8,7 @@ class Lang extends CWidget {
         $lng = Yii::app()->language;
         $languages = AdminModule::languages();
 
-        $current = getif($languages[$lng],array('title' => '--'));
-
+        $current = !empty($languages[$lng]) ? $languages[$lng] : array('title' => '--');
         $this->render('lang',array('current' => $current, 'menu' => AdminModule::languages()));
     }
 

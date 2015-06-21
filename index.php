@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
 // change the following paths if necessary
 $globals = dirname(__FILE__).'/globals.php';
 $yii=dirname(__FILE__).'/framework/yii.php';

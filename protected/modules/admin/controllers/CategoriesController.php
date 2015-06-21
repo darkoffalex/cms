@@ -116,8 +116,9 @@ class CategoriesController extends ControllerAdmin
         $statuses = Constants::statusList();
 
         //templates
-        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme);
-        $item_templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+        $theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+        $templates = TemplateHelper::getStandardTemplates($theme);
+        $item_templates = TemplateHelper::getStandardTemplates($theme,'Item');
 
         //model
         $model = new TreeEx();
@@ -154,12 +155,11 @@ class CategoriesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = getif($formParams['name'][$lng->id],'');
-                        $description = getif($formParams['description'][$lng->id],'');
-                        $text = getif($formParams['text'][$lng->id],'');
-                        $meta_title = getif($formParams['meta_title'][$lng->id],'');
-                        $meta_keywords = getif($formParams['meta_keywords'][$lng->id],'');
-
+                        $name = !empty($formParams['name']) ? $formParams['name'] : '';
+                        $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
+                        $text = !empty($formParams['text'][$lng->id]) ? $formParams['text'][$lng->id] : '';
+                        $meta_title = !empty($formParams['meta_title'][$lng->id]) ? $formParams['meta_title'][$lng->id] : '';
+                        $meta_keywords = !empty($formParams['meta_keywords'][$lng->id]) ? $formParams['meta_keywords'][$lng->id] : '';
 
                         $trl = $model->getOrCreateTrl($lng->id,true);
                         $trl->name = $name;
@@ -227,8 +227,9 @@ class CategoriesController extends ControllerAdmin
         $statuses = Constants::statusList();
 
         //templates
-        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme);
-        $item_templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+        $theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+        $templates = TemplateHelper::getStandardTemplates($theme);
+        $item_templates = TemplateHelper::getStandardTemplates($theme,'Item');
 
         //find category
         $model = TreeEx::model()->findByPk((int)$id);
@@ -245,7 +246,7 @@ class CategoriesController extends ControllerAdmin
         if(!empty($formParams)){
 
             //if selected other parent - we need new priority
-            $needNewPriority = $model->parent_id != getif($formParams['parent_id'],0);
+            $needNewPriority = $model->parent_id != !empty($formParams['parent_id']) ? $formParams['parent_id'] : 0;
 
             //store main attributes
             $model->attributes = $formParams;
@@ -279,11 +280,11 @@ class CategoriesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = getif($formParams['name'][$lng->id],'');
-                        $description = getif($formParams['description'][$lng->id],'');
-                        $text = getif($formParams['text'][$lng->id],'');
-                        $meta_title = getif($formParams['meta_title'][$lng->id],'');
-                        $meta_keywords = getif($formParams['meta_keywords'][$lng->id],'');
+                        $name = !empty($formParams['name']) ? $formParams['name'] : '';
+                        $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
+                        $text = !empty($formParams['text'][$lng->id]) ? $formParams['text'][$lng->id] : '';
+                        $meta_title = !empty($formParams['meta_title'][$lng->id]) ? $formParams['meta_title'][$lng->id] : '';
+                        $meta_keywords = !empty($formParams['meta_keywords'][$lng->id]) ? $formParams['meta_keywords'][$lng->id] : '';
 
                         $trl = $model->getOrCreateTrl($lng->id);
                         $trl->name = $name;

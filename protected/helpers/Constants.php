@@ -70,7 +70,7 @@ class Constants
     public static function getTypeName($type_id,$default = 'Unknown')
     {
         $array = self::fieldTypeList();
-        $name = getif($array[$type_id],__a($default));
+        $name = !empty($array[$type_id]) ? $array[$type_id] : __a($default);
         return $name;
     }
 }

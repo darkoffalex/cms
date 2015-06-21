@@ -20,7 +20,7 @@ class TypesController extends ControllerAdmin
         $types = ContentTypeEx::model()->findAll();
 
         //how many show on one page
-        $perPage = getif($this->global_settings->per_page_qnt,10);
+        $perPage = !empty($this->global_settings->per_page_qnt) ? $this->global_settings->per_page_qnt : 10;
 
         //paginated items
         $items = CPager::getInstance($types,$perPage,$page)->getPreparedArray();
@@ -40,7 +40,8 @@ class TypesController extends ControllerAdmin
         Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
 
         //templates
-        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+        $theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+        $templates = TemplateHelper::getStandardTemplates($theme,'Item');
 
         //model
         $model = new ContentTypeEx();
@@ -88,7 +89,8 @@ class TypesController extends ControllerAdmin
         }
 
         //templates
-        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+        $theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+        $templates = TemplateHelper::getStandardTemplates($theme,'Item');
 
         //get form params from request
         $formParams = Yii::app()->request->getPost('ContentTypeEx',null);
@@ -202,8 +204,8 @@ class TypesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = getif($formParams['name'][$lng->id],'');
-                        $description = getif($formParams['description'][$lng->id],'');
+                        $name = !empty($formParams['name'][$lng->id]) ? $formParams['name'][$lng->id] : '';
+                        $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
 
                         $trl = $model->getOrCreateTrl($lng->id);
                         $trl -> name = $name;
@@ -291,8 +293,8 @@ class TypesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = getif($formParams['name'][$lng->id],'');
-                        $description = getif($formParams['description'][$lng->id],'');
+                        $name = !empty($formParams['name'][$lng->id]) ? $formParams['name'][$lng->id] : '';
+                        $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
 
                         $trl = $model->getOrCreateTrl($lng->id);
                         $trl -> name = $name;

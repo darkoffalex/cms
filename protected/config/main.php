@@ -98,26 +98,33 @@ return array(
         ),
         */
 
+
+
         'errorHandler'=>array(
             // use 'site/error' action to display errors
             'errorAction'=>'site/error',
         ),
 
-        'log'=>array(
-            'class'=>'CLogRouter',
-            'routes'=>array(
+		'log'=>array(
+			'class'=>'CLogRouter',
+			'routes'=>array(
+				array(
+					'class'=>'CFileLogRoute',
+					'levels'=>'error, warning',
+				),
+
                 array(
-                    'class'=>'CFileLogRoute',
-                    'levels'=>'error, warning',
+                    'class'=>'CProfileLogRoute',
+                    'levels'=>'profile',
+                    'enabled'=>true,
                 ),
-                // uncomment the following to show log messages on web pages
-                /*
-                array(
-                    'class'=>'CWebLogRoute',
-                ),
-                */
-            ),
-        ),
+
+				array(
+					'class'=>'CWebLogRoute',
+				),
+			),
+		),
+
     ),
 
     // application-level parameters that can be accessed

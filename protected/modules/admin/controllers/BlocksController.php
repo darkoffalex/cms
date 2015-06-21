@@ -43,7 +43,7 @@ class BlocksController extends ControllerAdmin
         $blocks = ContentItemEx::model()->findAllByAttributes($conditions,array('order' => 'priority ASC'));
 
         //paginate items
-        $perPage = getif($this->global_settings->per_page_qnt,10);
+        $perPage = !empty($this->global_settings->per_page_qnt) ? $this->global_settings->per_page_qnt : 10;
         $items = CPager::getInstance($blocks,$perPage,$page)->getPreparedArray();
 
         //render list
@@ -99,7 +99,7 @@ class BlocksController extends ControllerAdmin
                 try
                 {
                     //obtain a template name
-                    $block->template_name = getif($block->contentType->predefined_template_name,$block->tree->item_template_name);
+                    $block->template_name = !empty($block->contentType->predefined_template_name) ? $block->contentType->predefined_template_name : $block->tree->item_template_name;
 
                     //calc priority
                     $block->priority = Sort::GetNextPriority('ContentItemEx',array('tree_id' => $block->tree_id));
@@ -115,16 +115,16 @@ class BlocksController extends ControllerAdmin
                     $block->save();
 
                     //save translatable attributes
-                    $trlName = getif($form['name'],array());
-                    $trlMetaTitle = getif($form['meta_title'],array());
-                    $trlKeywords = getif($form['meta_keywords'],array());
+                    $trlName = !empty($form['name']) ? $form['name'] : array();
+                    $trlMetaTitle = !empty($form['meta_title']) ? $form['meta_title'] : array();
+                    $trlKeywords = !empty($form['meta_keywords']) ? $form['meta_keywords'] : array();
 
                     foreach($languages as $language)
                     {
                         $trl = $block->getOrCreateTrl($language->id);
-                        $trl -> name = getif($trlName[$language->id],'');
-                        $trl -> meta_title = getif($trlMetaTitle[$language->id],'');
-                        $trl -> meta_keywords = getif($trlKeywords[$language->id],'');
+                        $trl -> name = !empty($trlName[$language->id]) ? $trlName[$language->id] : '';
+                        $trl -> meta_title = !empty($trlMetaTitle[$language->id]) ? $trlMetaTitle[$language->id] : '';
+                        $trl -> meta_keywords = !empty($trlKeywords[$language->id]) ? $trlKeywords[$language->id] : '';
 
                         if($trl->isNewRecord){
                             $trl->save();
@@ -179,7 +179,8 @@ class BlocksController extends ControllerAdmin
         //statuses
         $statuses = Constants::statusList();
         //templates
-        $templates = TemplateHelper::getStandardTemplates($this->global_settings->active_theme,'Item');
+        $theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+        $templates = TemplateHelper::getStandardTemplates($theme,'Item');
         //languages
         $languages = Language::model()->findAll();
         //content item model
@@ -214,22 +215,22 @@ class BlocksController extends ControllerAdmin
                     //if template name not set by user
                     if(empty($block->template_name)){
                         //take it from content type or category
-                        $block->template_name = getif($block->contentType->predefined_template_name,$block->tree->item_template_name);
+                        $block->template_name = !empty($block->contentType->predefined_template_name) ? $block->contentType->predefined_template_name : $block->tree->item_template_name;
                     }
 
                     $block->update();
 
                     //update translatable attributes
-                    $trlName = getif($form['name'],array());
-                    $trlMetaTitle = getif($form['meta_title'],array());
-                    $trlKeywords = getif($form['meta_keywords'],array());
+                    $trlName = !empty($form['name']) ? $form['name'] : array();
+                    $trlMetaTitle = !empty($form['meta_title']) ? $form['meta_title'] : array();
+                    $trlKeywords = !empty($form['meta_keywords']) ? $form['meta_keywords'] : array();
 
                     foreach($languages as $language)
                     {
                         $trl = $block->getOrCreateTrl($language->id);
-                        $trl -> name = getif($trlName[$language->id],'');
-                        $trl -> meta_title = getif($trlMetaTitle[$language->id],'');
-                        $trl -> meta_keywords = getif($trlKeywords[$language->id],'');
+                        $trl -> name = !empty($trlName[$language->id]) ? $trlName[$language->id] : '';
+                        $trl -> meta_title = !empty($trlMetaTitle[$language->id]) ? $trlMetaTitle[$language->id] : '';
+                        $trl -> meta_keywords = !empty($trlKeywords[$language->id]) ? $trlKeywords[$language->id] : '';
 
                         if($trl->isNewRecord){
                             $trl->save();
@@ -239,8 +240,8 @@ class BlocksController extends ControllerAdmin
                     }
 
                     //get dynamic fields
-                    $dynamic = getif($form['dynamic'],array());
-                    $dynamic_trl = getif($form['dynamic_trl'],array());
+                    $dynamic = !empty($form['dynamic']) ? $form['dynamic'] : array();
+                    $dynamic_trl = !empty($form['dynamic_trl']) ? $form['dynamic_trl'] : array();
 
                     //saving dynamic not translatable fields
                     if(!empty($dynamic))
@@ -314,7 +315,7 @@ class BlocksController extends ControllerAdmin
                                     //get translatable value's part
                                     $trlObjValue = $objValue->getOrCreateTrl($language->id);
                                     //set text
-                                    $trlObjValue -> text = getif($trlValuesArr[$language->id],'');
+                                    $trlObjValue -> text = !empty($trlValuesArr[$language->id]) ? $trlValuesArr[$language->id] : '';
                                     //save or update
                                     if($trlObjValue->isNewRecord){
                                         $trlObjValue->save();

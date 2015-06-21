@@ -60,7 +60,8 @@
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'tree_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'tree_id',$categories,array('options' => array($selectedCategory->id =>array('selected'=>true))));?></td>
+                    <?php $selId = !empty($selectedCategory) ? $selectedCategory->id : null; ?>
+                    <td class="value"><?php echo $form->dropDownList($model,'tree_id',$categories,array('options' => array($selId =>array('selected'=>true))));?></td>
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'content_type_id'); ?></td>
