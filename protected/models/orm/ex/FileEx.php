@@ -16,6 +16,33 @@ class FileEx extends File
     }
 
     /**
+     * Returns full path to image file
+     * @return string
+     */
+    public function getLocalPath()
+    {
+        $path = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'files'.DS.$this->filename;
+        return $path;
+    }
+
+    /**
+     * Delete file
+     * @return bool
+     */
+    public function deleteFile()
+    {
+        try
+        {
+            unlink($this->getLocalPath());
+            return true;
+        }
+        catch(Exception $ex)
+        {
+            return false;
+        }
+    }
+
+    /**
      * Override, relate with extended models
      * @return array relational rules.
      */

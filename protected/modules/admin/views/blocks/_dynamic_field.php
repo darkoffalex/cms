@@ -76,4 +76,20 @@
         <td class="label"><?php echo __a($field->label); ?></td>
         <td class="value"><input name="DynamicFileField_<?php echo $field->id; ?>" type="file" data-name="<?php echo __a('Browse'); ?>"></td>
     </tr>
+    <tr>
+        <td class="label"></td>
+        <td class="value file-zone">
+            <?php $valueObj = $field->getValueFor($item->id); ?>
+            <?php $fov = $valueObj->fileOfValues; ?>
+            <?php if(!empty($fov)): ?>
+                <div class="list">
+                    <ul class="file">
+                        <?php foreach($fov as $fileOf): ?>
+                            <li><a href="<?php echo Yii::app()->createUrl('files/getfile',array('id' => $fileOf->file_id)); ?>"><?php echo $fileOf->file->original_filename; ?></a><a href="<?php echo Yii::app()->createUrl('admin/blocks/deletefiledirect',array('id' => $fileOf->file_id)); ?>" class="delete active confirm-box"></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif;?>
+        </td>
+    </tr>
 <?php endif?>

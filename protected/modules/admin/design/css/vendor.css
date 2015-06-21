@@ -1426,3 +1426,53 @@ body
     width: 22px;
     height: 22px;
 }
+
+.content .inner-content .file-zone .list ul.file
+{
+    list-style: none;
+    color: #968B8B;
+    font-family: "Open_sans";
+}
+
+.content .inner-content .file-zone .list ul.file a
+{
+    color: inherit;
+    text-decoration: none;
+}
+
+.content .inner-content .file-zone .list ul.file li
+{
+    display: block;
+    width: 100%;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    padding: 3px;
+    margin-bottom: 3px;
+    position: relative;
+}
+
+.content .inner-content .file-zone .list ul.file li a.delete
+{
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: #e2e2e2;
+    border: 1px solid #d4d4d4;
+    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    font-size: 16px;
+    background-image: url(../images/icon-delete.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: default;
+}
+
+.content .inner-content .file-zone .list ul.file li a.delete.active
+{
+    background-color: #777;
+    border: 1px solid #444;
+    cursor: pointer;
+}

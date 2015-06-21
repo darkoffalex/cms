@@ -417,7 +417,7 @@ class BlocksController extends ControllerAdmin
 
                                                 //save file to directory with new random name
                                                 $uploadPath = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'files';
-                                                $randomName = uniqid().'.'.$mediaValidation->image->extensionName;
+                                                $randomName = uniqid().'.'.$mediaValidation->file->extensionName;
                                                 $destinationName = $uploadPath.DS.$randomName;
 
                                                 //if file saved
@@ -427,10 +427,10 @@ class BlocksController extends ControllerAdmin
                                                     $file = new FileEx();
                                                     $file -> label = $randomName;
                                                     $file -> filename = $randomName;
-                                                    $file -> original_filename = $mediaValidation->image->name;
-                                                    $file -> extension = $mediaValidation->image->extensionName;
-                                                    $file -> size = $mediaValidation->image->size;
-                                                    $file -> mime_type = $mediaValidation->image->type;
+                                                    $file -> original_filename = $mediaValidation->file->name;
+                                                    $file -> extension = $mediaValidation->file->extensionName;
+                                                    $file -> size = $mediaValidation->file->size;
+                                                    $file -> mime_type = $mediaValidation->file->type;
                                                     $file -> created_by_id = Yii::app()->user->id;
                                                     $file -> created_time = time();
                                                     $file -> updated_by_id = Yii::app()->user->id;
@@ -537,6 +537,30 @@ class BlocksController extends ControllerAdmin
     {
         //delete just relation between field value and image
         ImageOfValueEx::model()->deleteByPk((int)$id);
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /**
+     * Delete file directly (file record and file)
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDeleteFileDirect($id)
+    {
+        //delete file directly (not relation, but file)
+        $file = FileEx::model()->findByPk((int)$id);
+
+        //if not found
+        if(empty($file)){
+            throw new CHttpException(404);
+        }
+
+        //delete uploaded file
+        $file->deleteFile();
+        //delete record
+        $file->delete();
 
         //go back
         $this->redirect(Yii::app()->request->urlReferrer);
