@@ -5,7 +5,7 @@
 <?php /* @var $item_templates array */ ?>
 <?php /* @var $form CActiveForm */ ?>
 <?php /* @var $model TreeEx */ ?>
-
+<?php /* @var $this CategoriesController */ ?>
 
 <main>
     <div class="title-bar world">
@@ -28,7 +28,8 @@
         </div><!--/tab-line-->
 
         <div class="inner-content">
-            <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array(),'clientOptions' => array('validateOnSubmit'=>true))); ?>
+            <div class="form-zone">
+            <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array('enctype' => 'multipart/form-data'),'clientOptions' => array('validateOnSubmit'=>true))); ?>
                 <div class="tabs">
                     <?php foreach($languages as $index => $lng): ?>
                         <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
@@ -42,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Text'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><textarea name="TreeEx[text][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->text; ?></textarea></td>
+                                <td class="value"><textarea class="editor-area" name="TreeEx[text][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->text; ?></textarea></td>
                             </tr>
 
                             <tr>
@@ -79,6 +80,10 @@
                         <td class="value"><?php echo $form->dropDownList($model,'item_template_name',$item_templates);?></td>
                     </tr>
                     <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'image'); ?></td>
+                        <td class="value"><?php echo $form->fileField($model,'image', array('data-label' => __a('Browse'))); ?></td>
+                    </tr>
+                    <tr>
                         <td class="label">&nbsp;</td>
                         <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
                     </tr>
@@ -89,9 +94,27 @@
                         </td>
                     </tr>
                 </table>
-
             <?php $this->endWidget(); ?>
+            </div>
+            <div class="image-zone">
+                <strong><?php echo __('Images'); ?></strong>
 
+                <div class="list">
+                    <?php if(!empty($model->imageOfTrees)): ?>
+                        <?php foreach($model->imageOfTrees as $iot): ?>
+                            <div class="image">
+                                <img src="<?php echo $iot->image->getCachedUrl(160,120); ?>" alt="" />
+                                <a href="<?php echo Yii::app()->createUrl('admin/categories/delimgdirect',array('id' => $iot->image_id)); ?>" class="delete active confirm-box"></a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="image">
+                            <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="" />
+                            <a href="#" class="delete"></a>
+                        </div>
+                    <?php endif;?>
+                </div><!--/list-->
+            </div><!--/image-zone-->
         </div><!--/inner-content-->
 
     </div><!--/content translate-->

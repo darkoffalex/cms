@@ -393,7 +393,7 @@ class BlocksController extends ControllerAdmin
                                                     $iov = new ImageOfValueEx();
                                                     $iov -> image_id = $image->id;
                                                     $iov -> value_id = $valueObj->id;
-                                                    $iov -> priority = Sort::GetNextPriority('ImageOfValueEx');
+                                                    $iov -> priority = Sort::GetNextPriority('ImageOfValueEx', array('value_id' => $valueObj->id));
                                                     $iov -> save();
                                                 }
                                             }else{
@@ -442,7 +442,7 @@ class BlocksController extends ControllerAdmin
                                                     $fov = new FileOfValueEx();
                                                     $fov -> file_id = $file->id;
                                                     $fov -> value_id = $valueObj->id;
-                                                    $fov -> priority = Sort::GetNextPriority('FileOfValueEx');
+                                                    $fov -> priority = Sort::GetNextPriority('FileOfValueEx', array('value_id' => $valueObj->id));
                                                     $fov -> save();
                                                 }
                                             }else{

@@ -155,7 +155,7 @@ class CategoriesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = !empty($formParams['name']) ? $formParams['name'] : '';
+                        $name = !empty($formParams['name'][$lng->id]) ? $formParams['name'][$lng->id] : '';
                         $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
                         $text = !empty($formParams['text'][$lng->id]) ? $formParams['text'][$lng->id] : '';
                         $meta_title = !empty($formParams['meta_title'][$lng->id]) ? $formParams['meta_title'][$lng->id] : '';
@@ -280,7 +280,7 @@ class CategoriesController extends ControllerAdmin
                     //save translatable data
                     foreach($languages as $lng)
                     {
-                        $name = !empty($formParams['name']) ? $formParams['name'] : '';
+                        $name = !empty($formParams['name'][$lng->id]) ? $formParams['name'][$lng->id] : '';
                         $description = !empty($formParams['description'][$lng->id]) ? $formParams['description'][$lng->id] : '';
                         $text = !empty($formParams['text'][$lng->id]) ? $formParams['text'][$lng->id] : '';
                         $meta_title = !empty($formParams['meta_title'][$lng->id]) ? $formParams['meta_title'][$lng->id] : '';
@@ -298,6 +298,43 @@ class CategoriesController extends ControllerAdmin
                         }else{
                             $trl->update();
                         }
+                    }
+
+                    //if has images
+                    $model->image = CUploadedFile::getInstance($model,'image');
+                    if(!empty($model->image) && $model->image->size > 0){
+
+                        //save file to directory with new random name
+                        $uploadPath = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'images';
+                        $randomName = uniqid().'.'.$model->image->extensionName;
+                        $destinationName = $uploadPath.DS.$randomName;
+
+                        //if image saved
+                        if($model->image->saveAs($destinationName)){
+
+                            //create record in database
+                            $image = new ImageEx();
+                            $image -> label = $randomName;
+                            $image -> filename = $randomName;
+                            $image -> original_filename = $model->image->name;
+                            $image -> extension = $model->image->extensionName;
+                            $image -> size = $model->image->size;
+                            $image -> mime_type = $model->image->type;
+                            $image -> created_by_id = Yii::app()->user->id;
+                            $image -> created_time = time();
+                            $image -> updated_by_id = Yii::app()->user->id;
+                            $image -> updated_time = time();
+                            $image -> save();
+
+
+                            //relate image with this category
+                            $iot = new ImageOfTreeEx();
+                            $iot -> image_id = $image->id;
+                            $iot -> tree_id = $model->id;
+                            $iot -> priority = Sort::GetNextPriority('ImageOfTreeEx',array('tree_id' => $model->id));
+                            $iot -> save();
+                        }
+
                     }
 
                     //apply changes
@@ -329,5 +366,29 @@ class CategoriesController extends ControllerAdmin
                 'templates' => $templates,
                 'item_templates' => $item_templates
             ));
+    }
+
+    /**
+     * Deletes image directly (image record and file)
+     * @param int $id
+     * @throws CHttpException
+     */
+    public function actionDelImgDirect($id)
+    {
+        //delete image directly (not relation, but image)
+        $image = ImageEx::model()->findByPk((int)$id);
+
+        //if not found
+        if(empty($image)){
+            throw new CHttpException(404);
+        }
+
+        //delete uploaded file
+        $image->deleteFile();
+        //delete record
+        $image->delete();
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
     }
 }

@@ -262,6 +262,7 @@ class TreeEx extends Tree
     {
         $rules = parent::rules();
         $rules[] = array('label','required');
+        $rules[] = array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true, 'maxSize' => 4000000);
         return $rules;
     }
 
@@ -277,6 +278,8 @@ class TreeEx extends Tree
         {
             $labels[$label] = __a($value);
         }
+
+        $labels['image'] = __a('Image');
 
         return $labels;
     }
