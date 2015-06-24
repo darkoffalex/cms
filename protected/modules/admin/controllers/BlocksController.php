@@ -191,7 +191,7 @@ class BlocksController extends ControllerAdmin
 
         //get data from form
         $form = Yii::app()->request->getPost('ContentItemEx',array());
-        $files = $_FILES; //TODO: implement file appending
+        $files = $_FILES;
 
 
         //if something got from form

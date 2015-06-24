@@ -1337,6 +1337,11 @@ body
 
 
 
+
+
+
+
+
 /* Notices (error, success, etc.) */
 .notice
 {
@@ -1476,3 +1481,46 @@ body
     border: 1px solid #444;
     cursor: pointer;
 }
+
+.content > .list-row > .cell.action.bigger
+{
+    width: 216px
+}
+
+.content > .list-row > .cell.bigger.action > .action
+{
+    margin: 0 2px -3px;
+}
+
+.content > .list-row > .cell > .action.to-top, .content > .list-row > .cell > .action.to-bottom
+{
+    position: relative;
+    background: #ecbd62;
+}
+.content > .list-row > .cell > .action.to-top:before
+{
+    font: 18px/1 FontAwesome;
+    content: "\f062";
+    display: block;
+    position: absolute;
+    width: 38px;
+    height: 20px;
+    top: 9px;
+    color: white;
+    opacity: 0.8;
+}
+
+.content > .list-row > .cell > .action.to-bottom:before
+{
+    font: 18px/1 FontAwesome;
+    content: "\f063";
+    display: block;
+    position: absolute;
+    width: 38px;
+    height: 20px;
+    top: 10px;
+    color: white;
+    opacity: 0.8;
+}
+
+.content > .list-row.h60 { height: 60px; }

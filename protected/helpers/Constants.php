@@ -73,4 +73,17 @@ class Constants
         $name = !empty($array[$type_id]) ? $array[$type_id] : __a($default);
         return $name;
     }
+
+    /**
+     * Returns name of status by ID
+     * @param $status_id
+     * @param string $default
+     * @return string
+     */
+    public static function getStatusName($status_id, $default = 'Unknown')
+    {
+        $array = self::statusListEx();
+        $name = !empty($array[$status_id]) ? $array[$status_id] : __a($default);
+        return $name;
+    }
 }

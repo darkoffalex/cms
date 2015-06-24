@@ -9,6 +9,7 @@
  * @property string $name
  * @property string $prefix
  * @property integer $status
+ * @property integer $priority
  *
  * The followings are the available model relations:
  * @property ContentItemFieldTrl[] $contentItemFieldTrls
@@ -40,11 +41,13 @@ class Language extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('label, name, prefix', 'safe'),
+			array('label, prefix', 'required'),
+			array('status, priority', 'numerical', 'integerOnly'=>true),
+			array('prefix', 'length', 'max'=>2),
+			array('name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, name, prefix, status', 'safe', 'on'=>'search'),
+			array('id, label, name, prefix, status, priority', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -80,6 +83,7 @@ class Language extends CActiveRecord
 			'name' => 'Name',
 			'prefix' => 'Prefix',
 			'status' => 'Status',
+			'priority' => 'Priority',
 		);
 	}
 
@@ -106,6 +110,7 @@ class Language extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('prefix',$this->prefix,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('priority',$this->priority);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
