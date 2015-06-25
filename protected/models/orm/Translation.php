@@ -29,8 +29,8 @@ class Translation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('label', 'required'),
 			array('status_id', 'numerical', 'integerOnly'=>true),
-			array('label', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, label, status_id', 'safe', 'on'=>'search'),

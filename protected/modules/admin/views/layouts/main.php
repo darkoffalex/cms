@@ -13,6 +13,9 @@
 
     <link href="<?php echo $this->assets; ?>/js/imperavi-redactor/redactor.css" rel="stylesheet">
 
+    <script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
+    <script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
+
     <title><?php echo $this->title; ?></title>
 </head>
 <body>
@@ -49,8 +52,7 @@
     </div><!--/content-fluid-->
 </div><!--fluid-->
 
-<script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
-<script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
+
 <script src="<?php echo $this->assets; ?>/js/jquery.numeric.min.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>

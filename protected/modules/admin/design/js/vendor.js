@@ -171,4 +171,29 @@
         })
     };//end file upload input
     $.fileUploadInput();
+
+
+    ///////////////////////////////////////////// E X T E N D E D ////////////////////////////////////////////////////
+
+    $(document).on("click", ".light-box-open",function(e){
+        $(".lightbox.add-box").fadeIn(300);
+        return false;
+    });
+
+    $(document).on("click", ".light-box-close",function(e){
+        $(".lightbox input[type=text]").val('');
+        $(".lightbox").fadeOut(300);
+        return false;
+    });
+
+    $(document).on("click", ".light-box-hide",function(e){
+        $(".lightbox").fadeOut(300);
+        return false;
+    });
+
+    $(document).on("click", ".light-box-clean",function(e){
+        $(".lightbox input[type=text]").val('');
+        return false;
+    });
+
 })(jQuery);

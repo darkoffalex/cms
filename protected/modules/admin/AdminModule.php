@@ -86,7 +86,7 @@ class AdminModule extends CWebModule
 
                 'sub' => array(
                     array('title' => 'Language list', 'url' => Yii::app()->createUrl('admin/languages/index')),
-                    array('title' => 'Translations', 'url' => Yii::app()->createUrl('admin/languages/trans')),
+                    array('title' => 'Translations', 'url' => Yii::app()->createUrl('admin/translations/index')),
                 ),
             ),
 

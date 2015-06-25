@@ -15,6 +15,29 @@ class TranslationEx extends Translation
     }
 
     /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return TranslationTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        $trl = TranslationTrl::model()->findByAttributes(array('translation_id' => $this->id,'lng_id' => $lng_id));
+
+        if(empty($trl)){
+            $trl = new TranslationTrl();
+            $trl -> lng_id = $lng_id;
+            $trl -> translation_id = $this->id;
+
+            if($save){
+                $trl->save();
+            }
+        }
+
+        return $trl;
+    }
+
+    /**
      * Returns all translations for specified language
      * @param $lng
      * @return array|TranslationTrl[]
@@ -29,6 +52,24 @@ class TranslationEx extends Translation
 
         return array();
     }
+
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
+    }
+
 
     /**
      * Override, relate with extended models
