@@ -6,7 +6,7 @@
             <div class="title-bar">
                 <h1><?php echo __a('Position') ?>: <?php echo $position->label; ?> [<?php echo $position->position_name; ?>]</h1>
 
-                <?php $availableReg = $position->availableRegWidgets(); ?>
+                <?php $availableReg = array(0 => 'Test'); ?>
                 <?php if(!empty($availableReg)): ?>
                     <ul class="actions">
                         <li>
@@ -34,8 +34,8 @@
 
                     <?php foreach($position->widgetRegistrations as $wr): ?>
                         <div class="list-row h94">
-                            <div class="cell"><?php echo $wr->regObjName(); ?></div>
-                            <div class="cell type"><?php echo $wr->regObjType(); ?></div>
+                            <div class="cell"><?php echo $wr->widget->label; ?></div>
+                            <div class="cell type"><?php echo Constants::getWidgetTypeName($wr->widget->type_id); ?></div>
                             <div class="cell action bigger">
                                 <a href="<?php echo Yii::app()->createUrl('admin/widgets/moveregistered',array('id' => $wr->id, 'dir' => 'up')); ?>" class="action to-top"></a>
                                 <a href="<?php echo Yii::app()->createUrl('admin/widgets/moveregistered',array('id' => $wr->id, 'dir' => 'down')); ?>" class="action to-bottom"></a>
