@@ -15,6 +15,39 @@ class WidgetPositionEx extends WidgetPosition
     }
 
     /**
+     * Returns not registered widgets
+     * @return array
+     */
+    public function availableWidgets()
+    {
+        $result = array();
+        $all = WidgetEx::model()->findAll();
+        foreach($all as $widget){
+            if(!$this->isThisWidgetRegistered($widget->id)){
+                $result[$widget->id] = $widget->label;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Checks if widget already registered in this position
+     * @param $widget_id
+     * @return bool
+     */
+    private function isThisWidgetRegistered($widget_id)
+    {
+        foreach($this->widgetRegistrations as $reg){
+            if($reg->widget_id == $widget_id){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Override to translate all labels
      * @return array
      */

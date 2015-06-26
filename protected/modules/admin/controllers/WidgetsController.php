@@ -249,6 +249,19 @@ class WidgetsController extends ControllerAdmin
         $this->render('positions_edit',array('model' => $position, 'statuses' => $statuses));
     }
 
+    /**
+     * Delete position
+     * @param $id
+     */
+    public function actionPositionDelete($id)
+    {
+        //delete by pk
+        WidgetPositionEx::model()->deleteByPk((int)$id);
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
     /**************************************** R E G I S T R A T I O N S ************************************************/
 
     /**
@@ -260,14 +273,71 @@ class WidgetsController extends ControllerAdmin
         $this->render('register_list',array('positions' => $positions));
     }
 
+    /**
+     * Register widget to specified position
+     * @throws CHttpException
+     */
     public function actionRegister()
     {
-        if(Yii::app()->request->isPostRequest){
+        //get widget and position id
+        $widgetId = Yii::app()->request->getParam('wid_id',null);
+        $positionId = Yii::app()->request->getParam('pos_id',null);
 
-        }else{
+        //try find widget and position by id's
+        $widget = WidgetEx::model()->findByPk((int)$widgetId);
+        $position = WidgetPositionEx::model()->findByPk((int)$positionId);
+
+        //if not found something - error
+        if(empty($widget) || empty($position)){
             throw new CHttpException(404);
         }
-        debugvar($_POST);
-        exit();
+
+        //new widget registration
+        $registration = new WidgetRegistrationEx();
+        $registration->widget_id = $widgetId;
+        $registration->position_id = $positionId;
+        $registration->priority = Sort::GetNextPriority('WidgetRegistrationEx',array('position_id' => $positionId));
+        $registration->created_by_id = Yii::app()->user->id;
+        $registration->updated_by_id = Yii::app()->user->id;
+        $registration->created_time = time();
+        $registration->updated_time = time();
+        $registration->readonly = 0;
+        $registration->save();
+
+        //go back to previous page (list)
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /**
+     * Delete registration from position
+     * @param $id
+     */
+    public function actionUnregister($id)
+    {
+        //delete by pk
+        WidgetRegistrationEx::model()->deleteByPk((int)$id);
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /**
+     * Change registration order
+     * @param $id
+     * @param $dir
+     * @throws CHttpException
+     */
+    public function actionMoveRegistered($id,$dir)
+    {
+        $reg = WidgetRegistrationEx::model()->findByPk((int)$id);
+
+        if(empty($reg)){
+            throw new CHttpException(404);
+        }
+
+        Sort::Move($reg,$dir,'WidgetRegistrationEx',array('position_id' => $reg->position_id));
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
     }
 }
