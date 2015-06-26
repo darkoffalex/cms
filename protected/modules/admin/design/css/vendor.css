@@ -1388,6 +1388,18 @@ body
     cursor: pointer;
 }
 
+.reg-widget-submit
+{
+    background: #f6f6f6 url(../images/icon-add-dark.png) center center no-repeat;
+    border: 1px solid #dddddd;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    display:block;
+    float: right;
+    cursor: pointer;
+}
+
 .special-filter-form
 {
     display: block;

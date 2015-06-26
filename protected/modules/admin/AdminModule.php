@@ -72,9 +72,9 @@ class AdminModule extends CWebModule
                 'title' => 'Widgets',
 
                 'sub' => array(
-                    array('title' => 'Menus', 'url' => Yii::app()->createUrl('admin/widgets/menus')),
-                    array('title' => 'Widgets', 'url' => Yii::app()->createUrl('admin/widgets/widgets')),
-                    array('title' => 'Positions', 'url' => Yii::app()->createUrl('admin/widgets/positions'))
+                    array('title' => 'Widgets', 'url' => Yii::app()->createUrl('admin/widgets/index')),
+                    array('title' => 'Positions', 'url' => Yii::app()->createUrl('admin/widgets/positions')),
+                    array('title' => 'Registration', 'url' => Yii::app()->createUrl('admin/widgets/registration'))
                 ),
             ),
 
@@ -91,7 +91,7 @@ class AdminModule extends CWebModule
             ),
 
             array(
-                'url' => '#',
+                'url' => Yii::app()->createUrl('admin/settings/index'),
                 'icon' => '',
                 'html_class' => 'icon settings',
                 'title' => 'Settings',

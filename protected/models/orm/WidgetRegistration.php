@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'widget_registration':
  * @property integer $id
- * @property integer $menu_id
  * @property integer $widget_id
  * @property integer $position_id
  * @property integer $priority
@@ -17,7 +16,6 @@
  *
  * The followings are the available model relations:
  * @property WidgetPosition $position
- * @property Menu $menu
  * @property Widget $widget
  */
 class WidgetRegistration extends CActiveRecord
@@ -38,10 +36,10 @@ class WidgetRegistration extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('menu_id, widget_id, position_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
+			array('widget_id, position_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, menu_id, widget_id, position_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
+			array('id, widget_id, position_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +52,6 @@ class WidgetRegistration extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'position' => array(self::BELONGS_TO, 'WidgetPosition', 'position_id'),
-			'menu' => array(self::BELONGS_TO, 'Menu', 'menu_id'),
 			'widget' => array(self::BELONGS_TO, 'Widget', 'widget_id'),
 		);
 	}
@@ -66,7 +63,6 @@ class WidgetRegistration extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'menu_id' => 'Menu',
 			'widget_id' => 'Widget',
 			'position_id' => 'Position',
 			'priority' => 'Priority',
@@ -97,7 +93,6 @@ class WidgetRegistration extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('menu_id',$this->menu_id);
 		$criteria->compare('widget_id',$this->widget_id);
 		$criteria->compare('position_id',$this->position_id);
 		$criteria->compare('priority',$this->priority);

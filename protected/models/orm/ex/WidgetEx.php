@@ -2,7 +2,6 @@
 /**
  * Class WidgetEx
  * @property TreeEx $tree
- * @property WidgetTypeEx $widgetType
  * @property WidgetRegistrationEx[] $widgetRegistrations
  * @property WidgetTrl $trl
  */
@@ -15,6 +14,46 @@ class WidgetEx extends Widget
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+
+    /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return WidgetTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        $trl = WidgetTrl::model()->findByAttributes(array('widget_id' => $this->id,'lng_id' => $lng_id));
+
+        if(empty($trl)){
+            $trl = new WidgetTrl();
+            $trl -> lng_id = $lng_id;
+            $trl -> widget_id = $this->id;
+
+            if($save){
+                $trl->save();
+            }
+        }
+
+        return $trl;
+    }
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
     }
 
     /**

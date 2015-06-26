@@ -17,6 +17,14 @@ class Constants
     const FIELD_TYPE_BOOLEAN = 7;
     const FIELD_TYPE_PRICE = 8;
 
+    //widget types
+    const WIDGET_TYPE_MENU = 1;
+    const WIDGET_TYPE_BREADCRUMBS = 2;
+    const WIDGET_TYPE_BLOCK = 3;
+    const WIDGET_TYPE_BLOCKS = 4;
+    const WIDGET_TYPE_FILTER = 5;
+    const WIDGET_TYPE_TEXT = 6;
+
     /**
      * Returns list of basic statuses
      * @return array
@@ -62,6 +70,43 @@ class Constants
     }
 
     /**
+     * Returns all widget types
+     * @return array
+     */
+    public static function widgetTypeList()
+    {
+        return array(
+            self::WIDGET_TYPE_MENU  => __a('Menu'),
+            self::WIDGET_TYPE_BREADCRUMBS => __('Breadcrumbs'),
+            self::WIDGET_TYPE_BLOCK => __a('Single block'),
+            self::WIDGET_TYPE_BLOCKS  => __a('Blocks'),
+            self::WIDGET_TYPE_FILTER => __a('Filter'),
+            self::WIDGET_TYPE_TEXT => __a('Custom text'),
+        );
+    }
+
+    /**
+     * Template types for widgets
+     * @param $type_id
+     * @param $default
+     * @return mixed
+     */
+    public static function widTplType($type_id, $default = 'Default')
+    {
+        $arr = array(
+            self::WIDGET_TYPE_MENU  => 'Menu',
+            self::WIDGET_TYPE_BREADCRUMBS => 'Breadcrumbs',
+            self::WIDGET_TYPE_BLOCK => 'SingleBlock',
+            self::WIDGET_TYPE_BLOCKS  => 'Blocks',
+            self::WIDGET_TYPE_FILTER => 'Filter',
+            self::WIDGET_TYPE_TEXT => 'CustomText'
+        );
+
+        return !empty($arr[$type_id]) ? $arr[$type_id] : $default;
+    }
+
+
+    /**
      * Returns name of filed type by ID
      * @param $type_id
      * @param string $default
@@ -70,6 +115,19 @@ class Constants
     public static function getTypeName($type_id,$default = 'Unknown')
     {
         $array = self::fieldTypeList();
+        $name = !empty($array[$type_id]) ? $array[$type_id] : __a($default);
+        return $name;
+    }
+
+    /**
+     * Returns widget type name by ID
+     * @param $type_id
+     * @param string $default
+     * @return string
+     */
+    public static function getWidgetTypeName($type_id, $default = 'Unknows')
+    {
+        $array = self::widgetTypeList();
         $name = !empty($array[$type_id]) ? $array[$type_id] : __a($default);
         return $name;
     }

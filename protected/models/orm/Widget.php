@@ -6,8 +6,8 @@
  * The followings are the available columns in table 'widget':
  * @property integer $id
  * @property string $label
+ * @property integer $type_id
  * @property integer $tree_id
- * @property integer $widget_type_id
  * @property string $template_name
  * @property integer $created_by_id
  * @property integer $updated_by_id
@@ -17,7 +17,6 @@
  *
  * The followings are the available model relations:
  * @property Tree $tree
- * @property WidgetType $widgetType
  * @property WidgetRegistration[] $widgetRegistrations
  * @property WidgetTrl[] $widgetTrls
  */
@@ -39,11 +38,12 @@ class Widget extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tree_id, widget_type_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
-			array('label, template_name', 'safe'),
+			array('label', 'required'),
+			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
+			array('template_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, tree_id, widget_type_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
+			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,7 +56,6 @@ class Widget extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
-			'widgetType' => array(self::BELONGS_TO, 'WidgetType', 'widget_type_id'),
 			'widgetRegistrations' => array(self::HAS_MANY, 'WidgetRegistration', 'widget_id'),
 			'widgetTrls' => array(self::HAS_MANY, 'WidgetTrl', 'widget_id'),
 		);
@@ -70,8 +69,8 @@ class Widget extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'label' => 'Label',
+			'type_id' => 'Type',
 			'tree_id' => 'Tree',
-			'widget_type_id' => 'Widget Type',
 			'template_name' => 'Template Name',
 			'created_by_id' => 'Created By',
 			'updated_by_id' => 'Updated By',
@@ -101,8 +100,8 @@ class Widget extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('label',$this->label,true);
+		$criteria->compare('type_id',$this->type_id);
 		$criteria->compare('tree_id',$this->tree_id);
-		$criteria->compare('widget_type_id',$this->widget_type_id);
 		$criteria->compare('template_name',$this->template_name,true);
 		$criteria->compare('created_by_id',$this->created_by_id);
 		$criteria->compare('updated_by_id',$this->updated_by_id);

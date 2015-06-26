@@ -2,7 +2,6 @@
 /**
  * Class WidgetRegistrationEx
  * @property WidgetPositionEx $position
- * @property MenuEx $menu
  * @property WidgetEx $widget
  */
 class WidgetRegistrationEx extends WidgetRegistration

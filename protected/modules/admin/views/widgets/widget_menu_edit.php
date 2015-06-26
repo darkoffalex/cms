@@ -2,13 +2,13 @@
 <?php /* @var $templates array */ ?>
 <?php /* @var $categories array */ ?>
 <?php /* @var $form CActiveForm */ ?>
-<?php /* @var $model MenuEx */ ?>
+<?php /* @var $model WidgetEx */ ?>
 
 <main>
     <div class="title-bar world">
-        <h1><?php echo __a('Menus');?></h1>
+        <h1><?php echo __a('Widgets');?></h1>
         <ul class="actions">
-            <li><a href="<?php echo Yii::app()->createUrl('admin/widgets/menus'); ?>" class="action undo"></a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('admin/widgets/list'); ?>" class="action undo"></a></li>
         </ul>
     </div><!--/title-bar-->
 
@@ -19,28 +19,8 @@
             <span><?php echo __a($title); ?></span>
         </div><!--/header-->
 
-        <div class="tab-line">
-            <?php foreach($languages as $index => $lng): ?>
-                <span <?php if($index == 0): ?>class="active"<?php endif;?> data-lang="<?php echo $lng->id; ?>"><?php echo $lng->name; ?></span>
-            <?php endforeach; ?>
-        </div><!--/tab-line-->
-
         <div class="inner-content">
             <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array(),'clientOptions' => array('validateOnSubmit'=>true))); ?>
-            <div class="tabs">
-                <?php foreach($languages as $index => $lng): ?>
-                    <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
-                        <tr>
-                            <td class="label"><?php echo __a('Name'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                            <td class="value"><input type="text" name="MenuEx[name][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->name; ?>"></td>
-                        </tr>
-                        <tr>
-                            <td class="label"><?php echo __a('Description'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                            <td class="value"><textarea class="editor-area" name="MenuEx[description][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->description; ?></textarea></td>
-                        </tr>
-                    </table>
-                <?php endforeach;?>
-            </div><!--/tabs-->
 
             <table>
                 <tr>

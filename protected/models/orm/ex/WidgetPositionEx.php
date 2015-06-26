@@ -30,6 +30,7 @@ class WidgetPositionEx extends WidgetPosition
         return $labels;
     }
 
+
     /**
      * Override, relate with extended models
      * @return array relational rules.
