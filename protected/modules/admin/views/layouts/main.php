@@ -44,7 +44,7 @@
     </header>
     <div class="content-fluid">
         <aside><!-- class="minimized" if sidebar must be minimized when page loads (from cookie: inluMenu == 'minimized')-->
-            <?php $this->widget('admin.widgets.Menu'); ?>
+            <?php $this->widget('admin.widgets.MainMenu'); ?>
         </aside>
 
         <?php echo $content; ?>

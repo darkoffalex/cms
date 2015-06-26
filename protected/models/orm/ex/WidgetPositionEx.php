@@ -33,6 +33,9 @@ class WidgetPositionEx extends WidgetPosition
             }
         }
 
+        //modify relation - add ascending sorting
+        $relations['widgetRegistrations'] = array(self::HAS_MANY, 'WidgetRegistrationEx', 'position_id','order' => 'priority ASC');
+
         //return modified relations
         return $relations;
     }

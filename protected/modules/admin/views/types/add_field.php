@@ -6,7 +6,7 @@
 
 <main>
     <div class="title-bar world">
-        <h1><?php echo __('Fields of').' "'.$contentType->label.'"' ; ?></h1>
+        <h1><?php echo __a('Fields of').' "'.$contentType->label.'"' ; ?></h1>
         <ul class="actions">
             <li><a href="<?php echo Yii::app()->createUrl('admin/types/fields',array('id' => $contentType->id)); ?>" class="action undo"></a></li>
         </ul>

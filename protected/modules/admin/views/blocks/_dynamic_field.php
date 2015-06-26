@@ -19,7 +19,7 @@
     <?php if(!$field->use_wysiwyg): ?>
         <tr>
             <td class="label"><?php echo __a($field->label); ?>:</td>
-            <td class="value"><input type="text" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]" value="<?php echo $field->getValueFor($item->id)->text_value; ?>" placeholder="<?php echo __('Text'); ?>"></td>
+            <td class="value"><input type="text" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]" value="<?php echo $field->getValueFor($item->id)->text_value; ?>" placeholder="<?php echo __a('Text'); ?>"></td>
         </tr>
     <?php else: ?>
         <tr>

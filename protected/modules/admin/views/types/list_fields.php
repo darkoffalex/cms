@@ -3,7 +3,7 @@
 
 <main>
     <div class="title-bar">
-        <h1><?php echo __('Fields of').' "'.$type->label.'"' ; ?></h1>
+        <h1><?php echo __a('Fields of').' "'.$type->label.'"' ; ?></h1>
         <ul class="actions">
             <li><a href="<?php echo Yii::app()->createUrl('admin/types/list'); ?>" class="action undo"></a></li>
             <li><a href="<?php echo Yii::app()->createUrl('admin/types/addfield',array('id' => $type->id)); ?>" class="action add"></a></li>
@@ -13,10 +13,10 @@
     <?php if(!empty($items)): ?>
         <div class="content list">
             <div class="list-row title">
-                <div class="cell"><?php echo __('Name'); ?></div>
-                <div class="cell"><?php echo __('Field name'); ?></div>
-                <div class="cell category"><?php echo __('Field type'); ?></div>
-                <div class="cell action"><?php echo __('Actions'); ?></div>
+                <div class="cell"><?php echo __a('Name'); ?></div>
+                <div class="cell"><?php echo __a('Field name'); ?></div>
+                <div class="cell category"><?php echo __a('Field type'); ?></div>
+                <div class="cell action"><?php echo __a('Actions'); ?></div>
             </div><!--/list-row-->
 
             <?php foreach($items as $index => $item): ?>
@@ -34,7 +34,7 @@
     <?php else: ?>
         <div class="content list">
             <div class="list-row">
-                <div class="cell"><?php echo __('List is empty'); ?></div>
+                <div class="cell"><?php echo __a('List is empty'); ?></div>
             </div><!--/list-row-->
         </div>
     <?php endif;?>

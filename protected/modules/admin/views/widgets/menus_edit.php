@@ -1,21 +1,22 @@
 <?php /* @var $languages Language[] */ ?>
-<?php /* @var $fieldTypes array */ ?>
-<?php /* @var $contentType ContentTypeEx */ ?>
+<?php /* @var $templates array */ ?>
+<?php /* @var $categories array */ ?>
 <?php /* @var $form CActiveForm */ ?>
-<?php /* @var $model ContentItemFieldEx */ ?>
+<?php /* @var $model MenuEx */ ?>
 
 <main>
     <div class="title-bar world">
-        <h1><?php echo __a('Fields of').' "'.$contentType->label.'"' ; ?></h1>
+        <h1><?php echo __a('Menus');?></h1>
         <ul class="actions">
-            <li><a href="<?php echo Yii::app()->createUrl('admin/types/fields',array('id' => $contentType->id)); ?>" class="action undo"></a></li>
+            <li><a href="<?php echo Yii::app()->createUrl('admin/widgets/menus'); ?>" class="action undo"></a></li>
         </ul>
     </div><!--/title-bar-->
 
     <div class="content menu-content">
 
         <div class="header">
-            <span><?php echo __a('Edit field'); ?></span>
+            <?php $title = $model->isNewRecord ? 'Add menu' : 'Edit menu'; ?>
+            <span><?php echo __a($title); ?></span>
         </div><!--/header-->
 
         <div class="tab-line">
@@ -31,11 +32,11 @@
                     <table data-tab="<?php echo $lng->id; ?>" <?php if($index == 0): ?>class="active"<?php endif;?>>
                         <tr>
                             <td class="label"><?php echo __a('Name'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                            <td class="value"><input type="text" name="ContentItemFieldEx[name][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->name; ?>"></td>
+                            <td class="value"><input type="text" name="MenuEx[name][<?php echo $lng->id; ?>]" value="<?php echo $model->getOrCreateTrl($lng->id)->name; ?>"></td>
                         </tr>
                         <tr>
                             <td class="label"><?php echo __a('Description'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                            <td class="value"><textarea name="ContentItemFieldEx[description][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->description; ?></textarea></td>
+                            <td class="value"><textarea class="editor-area" name="MenuEx[description][<?php echo $lng->id; ?>]"><?php echo $model->getOrCreateTrl($lng->id)->description; ?></textarea></td>
                         </tr>
                     </table>
                 <?php endforeach;?>
@@ -47,16 +48,12 @@
                     <td class="value"><?php echo $form->textField($model,'label',array('placeholder' => __a('Label'))); ?></td>
                 </tr>
                 <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'field_name'); ?></td>
-                    <td class="value"><?php echo $form->textField($model,'field_name',array('placeholder' => __a('Variable name'))); ?></td>
+                    <td class="label"><?php echo $form->labelEx($model,'tree_id'); ?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'tree_id',$categories);?></td>
                 </tr>
                 <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'field_type_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'field_type_id',$fieldTypes);?></td>
-                </tr>
-                <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'use_wysiwyg'); ?></td>
-                    <td class="value"><?php echo $form->checkBox($model,'use_wysiwyg')?></td>
+                    <td class="label"><?php echo $form->labelEx($model,'template_name'); ?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'template_name',$templates);?></td>
                 </tr>
                 <tr>
                     <td class="label">&nbsp;</td>
@@ -66,7 +63,8 @@
                     <td class="label">&nbsp;</td>
                     <td class="value">
                         <?php echo $form->error($model,'label',array('class'=>'error')); ?>
-                        <?php echo $form->error($model,'field_name',array('class'=>'error')); ?>
+                        <?php echo $form->error($model,'tree_id',array('class'=>'error')); ?>
+                        <?php echo $form->error($model,'template_name',array('class'=>'error')); ?>
                     </td>
                 </tr>
             </table>

@@ -41,7 +41,7 @@
                             </tr>
                             <tr>
                                 <td class="label"><?php echo __a('Text'); ?> [<?php echo $lng->prefix; ?>]:</td>
-                                <td class="value"><textarea name="TreeEx[text][<?php echo $lng->id; ?>]"></textarea></td>
+                                <td class="value"><textarea class="editor-area" name="TreeEx[text][<?php echo $lng->id; ?>]"></textarea></td>
                             </tr>
 
                             <tr>

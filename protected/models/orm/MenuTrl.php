@@ -32,7 +32,7 @@ class MenuTrl extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, lng_id, menu_id', 'numerical', 'integerOnly'=>true),
+			array('lng_id, menu_id', 'numerical', 'integerOnly'=>true),
 			array('name, description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

@@ -30,8 +30,8 @@ class LoginForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'username' => __('Login'),
-            'password' => __('Password')
+            'username' => __a('Login'),
+            'password' => __a('Password')
         );
     }
 
@@ -49,15 +49,15 @@ class LoginForm extends CFormModel
             {
                 if($this->_identity->errorCode == UserIdentity::ERROR_PASSWORD_INVALID)
                 {
-                    $this->addError('password',__('Incorrect password'));
+                    $this->addError('password',__a('Incorrect password'));
                 }
                 elseif($this->_identity->errorCode == UserIdentity::ERROR_USERNAME_INVALID)
                 {
-                    $this->addError('username',__('User not found in database'));
+                    $this->addError('username',__a('User not found in database'));
                 }
                 elseif($this->_identity->errorCode == UserIdentity::ERROR_UNKNOWN_IDENTITY)
                 {
-                    $this->addError('username',__('Unknown error. Authentication failed'));
+                    $this->addError('username',__a('Unknown error. Authentication failed'));
                 }
             }
         }

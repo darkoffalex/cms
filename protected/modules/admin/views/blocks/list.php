@@ -40,8 +40,8 @@
         <div class="content list">
             <div class="list-row title">
                 <div class="cell"><?php echo __a('Label'); ?></div>
-                <div class="cell type"><?php echo __('Type'); ?></div>
-                <div class="cell type"><?php echo __('Category'); ?></div>
+                <div class="cell type"><?php echo __a('Type'); ?></div>
+                <div class="cell type"><?php echo __a('Category'); ?></div>
                 <div class="cell action"><?php echo __a('Actions'); ?></div>
             </div><!--/list-row-->
 
@@ -75,7 +75,7 @@
     <?php else: ?>
         <div class="content list">
             <div class="list-row">
-                <div class="cell"><?php echo __('List is empty'); ?></div>
+                <div class="cell"><?php echo __a('List is empty'); ?></div>
             </div><!--/list-row-->
         </div>
     <?php endif;?>

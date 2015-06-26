@@ -1,5 +1,5 @@
 <?php
-class Menu extends CWidget {
+class MainMenu extends CWidget {
 
     /**
      * Widget entry point

@@ -15,7 +15,7 @@
 
     <div class="content translation">
         <div class="header">
-            <span><?php echo __('Translated labels'); ?></span>
+            <span><?php echo __a('Translated labels'); ?></span>
         </div><!--/header-->
         <div class="translate-actions padding-right-725">
             <form action="<?php echo Yii::app()->createUrl('admin/translations/list',array('page' => CPager::getInstance()->getCurrentPage())); ?>" method="get">

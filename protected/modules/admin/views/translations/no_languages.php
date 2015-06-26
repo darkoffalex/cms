@@ -14,7 +14,7 @@
 
     <div class="content translation">
         <div class="header">
-            <span><?php echo __('Translated labels'); ?></span>
+            <span><?php echo __a('Translated labels'); ?></span>
         </div><!--/header-->
         <div class="translate-actions">
             <p><?php echo __a('You have no languages. Please add language to continue'); ?></p>

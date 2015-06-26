@@ -37,8 +37,9 @@ class Menu extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('label, tree_id', 'required'),
 			array('tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
-			array('label, template_name', 'safe'),
+			array('template_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, label, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),

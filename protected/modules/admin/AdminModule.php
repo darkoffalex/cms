@@ -66,15 +66,15 @@ class AdminModule extends CWebModule
             ),
 
             array(
-                'url' => '#',
+                'url' => Yii::app()->createUrl('admin/widgets/index'),
                 'icon' => '',
                 'html_class' => 'icon edit-menu',
                 'title' => 'Widgets',
 
                 'sub' => array(
-                    array('title' => 'Menus', 'url' => '#'),
-                    array('title' => 'Widgets', 'url' => '#'),
-                    array('title' => 'Positions', 'url' => '#')
+                    array('title' => 'Menus', 'url' => Yii::app()->createUrl('admin/widgets/menus')),
+                    array('title' => 'Widgets', 'url' => Yii::app()->createUrl('admin/widgets/widgets')),
+                    array('title' => 'Positions', 'url' => Yii::app()->createUrl('admin/widgets/positions'))
                 ),
             ),
 

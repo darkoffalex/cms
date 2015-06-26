@@ -97,7 +97,7 @@
             <?php $this->endWidget(); ?>
             </div>
             <div class="image-zone">
-                <strong><?php echo __('Images'); ?></strong>
+                <strong><?php echo __a('Images'); ?></strong>
 
                 <div class="list">
                     <?php if(!empty($model->imageOfTrees)): ?>
