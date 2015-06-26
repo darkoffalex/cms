@@ -7,6 +7,8 @@ class WidgetsController extends ControllerAdmin
         $this->redirect(Yii::app()->createUrl('admin/widgets/menus'));
     }
 
+    /*********************************************** M E N U S ********************************************************/
+
     /**
      * List all menus
      */
@@ -176,5 +178,94 @@ class WidgetsController extends ControllerAdmin
 
         //go back
         $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /********************************************** W I D G E T S ******************************************************/
+
+    //TODO: implement here widget management
+
+    /******************************************** P O S I T I O N S ****************************************************/
+
+    /**
+     * List all positions
+     */
+    public function actionPositions()
+    {
+        $positions = WidgetPositionEx::model()->findAll();
+        $this->render('positions_list',array('items' => $positions));
+    }
+
+    /**
+     * Adding new position
+     */
+    public function actionPositionAdd()
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $position = new WidgetPositionEx();
+        $statuses = Constants::statusList();
+        $form = Yii::app()->request->getParam('WidgetPositionEx',null);
+
+        if(!empty($form)){
+
+            $position->attributes = $form;
+
+            if($position->validate()){
+                $position->updated_time = time();
+                $position->created_time = time();
+                $position->updated_by_id = Yii::app()->user->id;
+                $position->created_by_id = Yii::app()->user->id;
+                $position->save();
+
+
+                $this->redirect(Yii::app()->createUrl('admin/widgets/positions'));
+            }
+        }
+
+        $this->render('positions_edit',array('model' => $position, 'statuses' => $statuses));
+    }
+
+    /**
+     * Editing position
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionPositionEdit($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $position = WidgetPositionEx::model()->findByPk((int)$id);
+
+        if(empty($position)){
+            throw new CHttpException(404);
+        }
+
+        $statuses = Constants::statusList();
+        $form = Yii::app()->request->getParam('WidgetPositionEx',null);
+
+        if(!empty($form)){
+
+            $position->attributes = $form;
+
+            if($position->validate()){
+                $position->updated_time = time();
+                $position->updated_by_id = Yii::app()->user->id;
+                $position->save();
+
+                //success message
+                Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
+        }
+
+        $this->render('positions_edit',array('model' => $position, 'statuses' => $statuses));
     }
 }

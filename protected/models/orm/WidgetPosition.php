@@ -35,8 +35,8 @@ class WidgetPosition extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('label, position_name', 'required'),
 			array('status_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
-			array('label, position_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, label, position_name, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
