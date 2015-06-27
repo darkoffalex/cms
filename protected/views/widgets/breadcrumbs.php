@@ -3,8 +3,8 @@
 
 <?php
 /*
- * TemplateType:CustomText
- * TemplateName:Text widget
+ * TemplateType:Breadcrumbs
+ * TemplateName:Breadcrumbs
  */
 ?>
 

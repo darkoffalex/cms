@@ -5,10 +5,12 @@ const DS = DIRECTORY_SEPARATOR;
 /**
  * Debug variable
  * @param $var
- * @param string $title
+ * @param bool $return
+ * @return string
  */
-function debugvar($var, $title = '')
+function debugvar($var, $return = false)
 {
+    $result = "";
     $arrIps = array(
         '127.0.0.1',
         '::1',
@@ -20,15 +22,22 @@ function debugvar($var, $title = '')
     {
         //debug
         ob_start();
-        if( $title )
-            echo "$title\n";
         print_r($var);
         $out = ob_get_clean();
-        echo "<pre>";
-        echo htmlentities($out);
-        echo "</pre>";
+
+        if(!$return){
+            echo "<pre>";
+            echo htmlentities($out);
+            echo "</pre>";
+        }else{
+            $result = "<pre>".htmlentities($out)."</pre>";
+        }
+
     }
+
+    return $result;
 }
+
 
 /**
  * Short equivalent of translation function

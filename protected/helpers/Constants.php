@@ -20,7 +20,6 @@ class Constants
     //widget types
     const WIDGET_TYPE_MENU = 1;
     const WIDGET_TYPE_BREADCRUMBS = 2;
-    const WIDGET_TYPE_BLOCK = 3;
     const WIDGET_TYPE_BLOCKS = 4;
     const WIDGET_TYPE_FILTER = 5;
     const WIDGET_TYPE_TEXT = 6;
@@ -78,7 +77,6 @@ class Constants
         return array(
             self::WIDGET_TYPE_MENU  => __a('Menu'),
             self::WIDGET_TYPE_BREADCRUMBS => __('Breadcrumbs'),
-            self::WIDGET_TYPE_BLOCK => __a('Single block'),
             self::WIDGET_TYPE_BLOCKS  => __a('Blocks'),
             self::WIDGET_TYPE_FILTER => __a('Filter'),
             self::WIDGET_TYPE_TEXT => __a('Custom text'),
@@ -96,7 +94,6 @@ class Constants
         $arr = array(
             self::WIDGET_TYPE_MENU  => 'Menu',
             self::WIDGET_TYPE_BREADCRUMBS => 'Breadcrumbs',
-            self::WIDGET_TYPE_BLOCK => 'SingleBlock',
             self::WIDGET_TYPE_BLOCKS  => 'Blocks',
             self::WIDGET_TYPE_FILTER => 'Filter',
             self::WIDGET_TYPE_TEXT => 'CustomText'

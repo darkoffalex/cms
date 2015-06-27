@@ -119,6 +119,73 @@ class TreeEx extends Tree
         return $asString ? $string : $branch;
     }
 
+
+    /**
+     * Returns full path - array of categories, or string of ID's (another implementation)
+     * @param bool $asString
+     * @return self[]|string
+     */
+    public function findBranchEx($asString = false)
+    {
+        $branch = array();
+        $branchIds = array();
+
+        //if this item is saved in db - branch will include id of this item, if not - append 'X' symbol
+        if(!$this->isNewRecord){
+            $branch[] = $this;
+        }else{
+            $branch[] = new self();
+        }
+
+        //current step's item
+        $current = $this;
+
+        while(!empty($current->parent)){
+            $branch[] = $current->parent;
+            $branchIds[] = $current->parent_id;
+
+            $current = $current->parent;
+        }
+
+        //reverse array
+        $branch = array_reverse($branch);
+        $branchIds = array_reverse($branchIds);
+
+        //branch as string
+        $string = implode(':',$branchIds);
+
+        //return array or string
+        return $asString ? $string : $branch;
+    }
+
+    /**
+     * Returns all content items related with category(and subcategories if needed)
+     * @param bool $fromNested
+     * @return array|ContentItemEx[]
+     */
+    public function getContentBlocks($fromNested = false)
+    {
+
+        $result = array();
+
+        if(!empty($this->contentItems)){
+            foreach($this->contentItems as $item){
+                $result[] = $item;
+            }
+        }
+
+        if(!empty($this->children) && $fromNested){
+            foreach($this->children as $child){
+                $temp = $child->getContentBlocks($fromNested);
+                foreach($temp as $block){
+                    $result[] = $block;
+                }
+            }
+        }
+
+        return $result;
+    }
+
     /**
      * Builds recursively-sorted array of tree items (not nested array)
      * @param int $parent_id
@@ -142,7 +209,7 @@ class TreeEx extends Tree
         $_attributes['parent_id'] = $parent_id;
 
         //get all elements by this conditions
-        $all = self::findAllByAttributes($_attributes,$_conditions);
+        $all = self::model()->findAllByAttributes($_attributes,$_conditions);
 
         //pass through all found elements
         foreach($all as $item)
@@ -161,6 +228,51 @@ class TreeEx extends Tree
                 {
                     $result[] = $innerItem;
                 }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Builds recursively-sorted array of tree items (another implementation)
+     * @param bool $onlyActive
+     * @return array|self[]
+     */
+    public function getChildrenRecursiveEx($onlyActive = false)
+    {
+        $result = array();
+
+        if(!empty($this->children))
+        {
+            foreach($this->children as $child)
+            {
+                if($onlyActive){
+                    if($child->status_id == Constants::STATUS_VISIBLE)
+                    {
+                        $result[] = $child;
+
+                        if(!empty($child->children))
+                        {
+                            $tmp = $child->getChildrenRecursiveEx();
+                            foreach($tmp as $subChild){
+                                $result[] = $subChild;
+                            }
+                        }
+                    }
+                }
+                else{
+                    $result[] = $child;
+
+                    if(!empty($child->children))
+                    {
+                        $tmp = $child->getChildrenRecursiveEx();
+                        foreach($tmp as $subChild){
+                            $result[] = $subChild;
+                        }
+                    }
+                }
+
             }
         }
 
@@ -308,7 +420,7 @@ class TreeEx extends Tree
         $lng = Yii::app()->language;
         $relations['trl'] = array(self::HAS_ONE, 'TreeTrl', 'tree_id', 'with' => array('lng' => array('condition' => "lng.prefix='{$lng}'")));
         $relations['parent'] = array(self::BELONGS_TO, 'TreeEx', 'parent_id');
-        $relations['children'] = array(self::HAS_MANY, 'TreeEx', 'parent_id');
+        $relations['children'] = array(self::HAS_MANY, 'TreeEx', 'parent_id', 'order' => 'priority ASC');
 
         //return modified relations
         return $relations;

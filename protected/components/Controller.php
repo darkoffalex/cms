@@ -3,12 +3,17 @@
 class Controller extends CController
 {
 	public $layout='//layouts/main';
-	public $menu=array();
-	public $breadcrumbs=array();
 
     public $title = "";
     public $keywords = "";
     public $description = "";
+
+    public $themeName = "";
+
+    /**
+     * @var GlobalSettingsEx
+     */
+    public $global_settings = null;
 
     /**
      * Perform before every action
@@ -17,6 +22,19 @@ class Controller extends CController
      */
     protected function beforeAction($action)
     {
+        //get global settings
+        $this->global_settings = GlobalSettingsEx::model()->find();
+
+        //get theme
+        Yii::app()->theme = !empty($this->global_settings->active_theme) ? $this->global_settings->active_theme : null;
+
+        //get theme name
+        $this->themeName = !empty(Yii::app()->theme->name) ? Yii::app()->theme->name : '';
+
+        //initialize dynamic widgets
+        DynamicWidget::getInstance()->initialize($this,$this->themeName);
+
+
         return parent::beforeAction($action);
     }
 

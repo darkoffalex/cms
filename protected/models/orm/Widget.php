@@ -14,6 +14,9 @@
  * @property integer $created_time
  * @property integer $updated_time
  * @property integer $readonly
+ * @property integer $breadcrumbs_root_level
+ * @property integer $block_limit
+ * @property integer $include_from_nested
  *
  * The followings are the available model relations:
  * @property Tree $tree
@@ -39,11 +42,11 @@ class Widget extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('label', 'required'),
-			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
+			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested', 'numerical', 'integerOnly'=>true),
 			array('template_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly', 'safe', 'on'=>'search'),
+			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +80,9 @@ class Widget extends CActiveRecord
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
 			'readonly' => 'Readonly',
+			'breadcrumbs_root_level' => 'Breadcrumbs Root Level',
+			'block_limit' => 'Block Limit',
+			'include_from_nested' => 'Include From Nested',
 		);
 	}
 
@@ -108,6 +114,9 @@ class Widget extends CActiveRecord
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('readonly',$this->readonly);
+		$criteria->compare('breadcrumbs_root_level',$this->breadcrumbs_root_level);
+		$criteria->compare('block_limit',$this->block_limit);
+		$criteria->compare('include_from_nested',$this->include_from_nested);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

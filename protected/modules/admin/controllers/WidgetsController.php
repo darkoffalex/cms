@@ -147,12 +147,11 @@ class WidgetsController extends ControllerAdmin
 
         //each type of widget have own edit-form template
         $editing_templates = array(
-            Constants::WIDGET_TYPE_MENU => 'widget_menu_edit',
-            Constants::WIDGET_TYPE_TEXT => 'widget_text_edit',
-            Constants::WIDGET_TYPE_BLOCK => 'widget_block_edit',
-            Constants::WIDGET_TYPE_BREADCRUMBS => 'widget_breadcrumbs_edit',
-            Constants::WIDGET_TYPE_BLOCKS => 'widget_blocks_edit',
-            Constants::WIDGET_TYPE_FILTER => 'widget_filter_edit'
+            Constants::WIDGET_TYPE_MENU => 'widget_edit_menu',
+            Constants::WIDGET_TYPE_TEXT => 'widget_edit_text',
+            Constants::WIDGET_TYPE_BREADCRUMBS => 'widget_edit_crumbs',
+            Constants::WIDGET_TYPE_BLOCKS => 'widget_edit_blocks',
+            Constants::WIDGET_TYPE_FILTER => 'widget_edit_filter'
         );
 
         //render form
