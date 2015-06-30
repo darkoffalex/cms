@@ -113,6 +113,9 @@ class DynamicWidget
                 case Constants::WIDGET_TYPE_BLOCKS:
                     //get all blocks of selected category
                     $items = $widget->tree->getContentBlocks($widget->include_from_nested);
+
+                    //TODO: implement filtration here
+
                     //limit array if needed (if limit was set)
                     if(!empty($widget->block_limit) && $widget->block_limit <= count($items)){
                         $content = array_splice($items,0,$widget->block_limit);

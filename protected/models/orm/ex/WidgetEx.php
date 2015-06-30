@@ -44,6 +44,49 @@ class WidgetEx extends Widget
         return !empty($array[$id][1]) ? $array[$id][1] : Constants::FILTER_CONDITION_IGNORE;
     }
 
+    public function getFilteredItems()
+    {
+        /* @var $items ContentItemEx[] */
+        /* @var $itemsTmp ContentItemEx[] */
+
+        $items = array();
+        $itemsTmp = $this->tree->getContentBlocks($this->include_from_nested);
+
+        if(!empty($this->filtrationByType)){
+
+            //first phase of filtration
+            foreach($itemsTmp as $item)
+            {
+                if($item->content_type_id == $this->filtration_by_type_id){
+                    $items[] = $item;
+                }
+            }
+
+            $itemsTmp = $items;
+
+            //get filterable fields
+            $fields = $this->filtrationByType->getFilterableFields();
+
+            foreach($fields as $filterable){
+                if($this->filtrationConFor($filterable->id) != Constants::FILTER_CONDITION_IGNORE)
+                {
+                    foreach($itemsTmp as $item)
+                    {
+                        $value = $item->getDynamicFieldValueById($filterable->id);
+                        $condition = $this->filtrationConFor($filterable->id);
+                        $conditionValue = $this->filtrationValFor($filterable->id);
+
+                        //TODO: the truth is out there...
+                    }
+                }
+            }
+
+
+        }else{
+            $items = $itemsTmp;
+        }
+    }
+
 
     /**
      * Finds or creates Trl of this item
