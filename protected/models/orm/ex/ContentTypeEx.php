@@ -16,12 +16,17 @@ class ContentTypeEx extends ContentType
 
     /**
      * Array for drop-downs
+     * @param string $emptyElement
      * @return array
      */
-    public function listAllItemsForForms()
+    public function listAllItemsForForms($emptyElement = null)
     {
         $result = array();
         $all = self::model()->findAll();
+
+        if(!empty($emptyElement)){
+            $result[''] = $emptyElement;
+        }
 
         foreach ($all as $type) {
             $result[$type->id] = $type->label;
@@ -43,6 +48,33 @@ class ContentTypeEx extends ContentType
         }
 
         return false;
+    }
+
+    /**
+     * Returns filterable fields (which can be used in filter conditions)
+     * @return ContentItemFieldEx[]
+     */
+    public function getFilterableFields()
+    {
+        $result = array();
+
+        $filterableFieldTypes = array(
+            Constants::FIELD_TYPE_BOOLEAN,
+            Constants::FIELD_TYPE_PRICE,
+            Constants::FIELD_TYPE_DATE,
+            Constants::FIELD_TYPE_NUMERIC,
+        );
+
+        if(!empty($this->contentItemFields)){
+            foreach($this->contentItemFields as $field){
+
+                if(in_array($field->field_type_id,$filterableFieldTypes)){
+                    $result[] = $field;
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

@@ -1541,3 +1541,7 @@ body
 {
     padding-right: 725px;
 }
+
+.content.menu-content .inner-content .filtration-conditions input{width: 150px;}
+.content.menu-content .inner-content .filtration-conditions select{width: 150px;}
+.content.menu-content .inner-content .filtration-conditions select.fcb{width: 300px;}

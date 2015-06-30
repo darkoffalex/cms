@@ -95,6 +95,7 @@ class WidgetsController extends ControllerAdmin
 
         $categories = TreeEx::model()->listAllItemsForForms(0,'-');
         $form = Yii::app()->request->getPost('WidgetEx',null);
+        $types = ContentTypeEx::model()->listAllItemsForForms(__a('No filtration'));
 
         //if form
         if(!empty($form)){
@@ -112,6 +113,12 @@ class WidgetsController extends ControllerAdmin
                     $item->updated_by_id = Yii::app()->user->id;
                     $item->updated_time = time();
                     $item->readonly = 0;
+
+                    //clean filtration params filtration not selected
+                    if(empty($item->filtrationByType)){
+                        $item->filtration_array_json = null;
+                    }
+
                     $ok = $item->update();
 
                     if($ok && !empty($nameTrl) && !empty($descriptionTrl))
@@ -159,8 +166,73 @@ class WidgetsController extends ControllerAdmin
                 'model' => $item,
                 'languages' => $languages,
                 'templates' => $templates,
-                'categories' => $categories)
+                'categories' => $categories,
+                'types' => $types
+            )
         );
+    }
+
+    /**
+     * Edit filtration
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionEditFiltration($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $item = WidgetEx::model()->findByPk((int)$id);
+
+        if(empty($item) || empty($item->filtrationByType)){
+            throw new CHttpException(404);
+        }
+
+        $conditions = Yii::app()->request->getPost('ConditionsForm',array());
+        if(!empty($conditions)){
+
+            $filtrationArray = array();
+
+            foreach($conditions as $fieldId => $params)
+            {
+                $field = ContentItemFieldEx::model()->findByPk($fieldId);
+                if(!empty($field->field_type_id)){
+
+                    $value = !empty($params['value']) ? $params['value'] : '';
+                    $condition = !empty($params['condition']) ? $params['condition'] : '';
+
+                    switch($field->field_type_id)
+                    {
+                        case Constants::FIELD_TYPE_NUMERIC:
+                            $filtrationArray[$field->id] = array((int)$value,$condition);
+                            break;
+                        case Constants::FIELD_TYPE_PRICE:
+                            $filtrationArray[$field->id] = array((int)(centsToPrice($value)),$condition);
+                            break;
+                        case Constants::FIELD_TYPE_DATE:
+                            $d = DateTime::createFromFormat('m/d/Y',$value);
+                            $filtrationArray[$field->id] = array((int)$d->getTimestamp(),$condition);
+                            break;
+                        case Constants::FIELD_TYPE_BOOLEAN:
+                            $filtrationArray[$field->id] = array(1,$condition);
+                            break;
+                    }
+                }
+            }
+
+            $conditionString = json_encode($filtrationArray);
+            $item->filtration_array_json = $conditionString;
+            $item->updated_by_id = Yii::app()->user->id;
+            $item->updated_time = time();
+            $item->update();
+
+            //success message
+            Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+        }
+
+        $this->render('widget_edit_blocks_filter',array('model' => $item));
     }
 
     /******************************************** P O S I T I O N S ****************************************************/

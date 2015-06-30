@@ -17,11 +17,14 @@
  * @property integer $breadcrumbs_root_level
  * @property integer $block_limit
  * @property integer $include_from_nested
+ * @property integer $filtration_by_type_id
+ * @property string $filtration_array_json
  *
  * The followings are the available model relations:
- * @property Tree $tree
- * @property WidgetRegistration[] $widgetRegistrations
  * @property WidgetTrl[] $widgetTrls
+ * @property WidgetRegistration[] $widgetRegistrations
+ * @property ContentType $filtrationByType
+ * @property Tree $tree
  */
 class Widget extends CActiveRecord
 {
@@ -42,11 +45,11 @@ class Widget extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('label', 'required'),
-			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested', 'numerical', 'integerOnly'=>true),
-			array('template_name', 'safe'),
+			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id', 'numerical', 'integerOnly'=>true),
+			array('template_name, filtration_array_json', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested', 'safe', 'on'=>'search'),
+			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, filtration_array_json', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,9 +61,10 @@ class Widget extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
-			'widgetRegistrations' => array(self::HAS_MANY, 'WidgetRegistration', 'widget_id'),
 			'widgetTrls' => array(self::HAS_MANY, 'WidgetTrl', 'widget_id'),
+			'widgetRegistrations' => array(self::HAS_MANY, 'WidgetRegistration', 'widget_id'),
+			'filtrationByType' => array(self::BELONGS_TO, 'ContentType', 'filtration_by_type_id'),
+			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
 		);
 	}
 
@@ -83,6 +87,8 @@ class Widget extends CActiveRecord
 			'breadcrumbs_root_level' => 'Breadcrumbs Root Level',
 			'block_limit' => 'Block Limit',
 			'include_from_nested' => 'Include From Nested',
+			'filtration_by_type_id' => 'Filtration By Type',
+			'filtration_array_json' => 'Filtration Array Json',
 		);
 	}
 
@@ -117,6 +123,8 @@ class Widget extends CActiveRecord
 		$criteria->compare('breadcrumbs_root_level',$this->breadcrumbs_root_level);
 		$criteria->compare('block_limit',$this->block_limit);
 		$criteria->compare('include_from_nested',$this->include_from_nested);
+		$criteria->compare('filtration_by_type_id',$this->filtration_by_type_id);
+		$criteria->compare('filtration_array_json',$this->filtration_array_json,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

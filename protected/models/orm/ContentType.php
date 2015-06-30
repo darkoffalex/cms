@@ -16,6 +16,7 @@
  * The followings are the available model relations:
  * @property ContentItem[] $contentItems
  * @property ContentItemField[] $contentItemFields
+ * @property Widget[] $widgets
  */
 class ContentType extends CActiveRecord
 {
@@ -53,6 +54,7 @@ class ContentType extends CActiveRecord
 		return array(
 			'contentItems' => array(self::HAS_MANY, 'ContentItem', 'content_type_id'),
 			'contentItemFields' => array(self::HAS_MANY, 'ContentItemField', 'content_type_id'),
+			'widgets' => array(self::HAS_MANY, 'Widget', 'filtration_by_type_id'),
 		);
 	}
 

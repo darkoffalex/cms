@@ -24,6 +24,15 @@ class Constants
     const WIDGET_TYPE_FILTER = 5;
     const WIDGET_TYPE_TEXT = 6;
 
+    //filter conditions
+    const FILTER_CONDITION_IGNORE = 0;
+    const FILTER_CONDITION_SET = 1;
+    const FILTER_CONDITION_UNSET = 2;
+    const FILTER_CONDITION_MORE = 3;
+    const FILTER_CONDITION_LESS = 4;
+    const FILTER_CONDITION_EQUAL = 5;
+    const FILTER_CONDITION_BETWEEN = 6;
+
     /**
      * Returns list of basic statuses
      * @return array

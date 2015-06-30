@@ -3,6 +3,7 @@
  * Class WidgetEx
  * @property TreeEx $tree
  * @property WidgetRegistrationEx[] $widgetRegistrations
+ * @property ContentTypeEx $filtrationByType
  * @property WidgetTrl $trl
  */
 class WidgetEx extends Widget
@@ -14,6 +15,33 @@ class WidgetEx extends Widget
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+
+    /**
+     * Filtration settings - returns key value
+     * @param $id
+     * @return null
+     */
+    public function filtrationValFor($id)
+    {
+        $arrayStr = $this->filtration_array_json;
+        $array = !empty($arrayStr) ? json_decode($arrayStr,true) : array();
+
+        return !empty($array[$id][0]) ? $array[$id][0] : null;
+    }
+
+    /**
+     * Filtration settings - returns condition
+     * @param $id
+     * @return int
+     */
+    public function filtrationConFor($id)
+    {
+        $arrayStr = $this->filtration_array_json;
+        $array = !empty($arrayStr) ? json_decode($arrayStr,true) : array();
+
+        return !empty($array[$id][1]) ? $array[$id][1] : Constants::FILTER_CONDITION_IGNORE;
     }
 
 

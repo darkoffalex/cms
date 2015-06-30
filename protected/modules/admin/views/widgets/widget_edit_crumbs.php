@@ -15,7 +15,7 @@
     <div class="content menu-content">
 
         <div class="header">
-            <?php $title = $model->isNewRecord ? 'Add menu' : 'Edit menu'; ?>
+            <?php $title = $model->isNewRecord ? 'Add breadcrumbs' : 'Edit breadcrumbs'; ?>
             <span><?php echo __a($title); ?></span>
         </div><!--/header-->
 
