@@ -209,7 +209,7 @@ class WidgetsController extends ControllerAdmin
                             $filtrationArray[$field->id] = array((int)$value,$condition);
                             break;
                         case Constants::FIELD_TYPE_PRICE:
-                            $filtrationArray[$field->id] = array((int)(centsToPrice($value)),$condition);
+                            $filtrationArray[$field->id] = array((int)(priceToCents($value)),$condition);
                             break;
                         case Constants::FIELD_TYPE_DATE:
                             $d = DateTime::createFromFormat('m/d/Y',$value);

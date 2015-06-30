@@ -74,7 +74,7 @@ function centsToPrice($cents)
     return number_format(($cents / 100),2,'.','');
 }
 
-function PriceToCents($price)
+function priceToCents($price)
 {
     if(is_numeric($price))
     {
