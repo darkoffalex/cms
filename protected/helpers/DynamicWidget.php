@@ -70,24 +70,34 @@ class DynamicWidget
         $content = '';
         $position = WidgetPositionEx::model()->findByAttributes(array('position_name' => $positionName));
 
+        //if found some registrations (some widget registered at current position)
         if(!empty($position->widgetRegistrations)){
 
+            //pass through all registrations
             foreach($position->widgetRegistrations as $registered)
             {
+                //get widget
                 $widget = $registered->widget;
+                //get content
                 $data = $this->getContent($widget);
+                //define html variable
                 $html = '';
+
+                //if controller and template set
                 if(!empty($this->controller) && !empty($widget->template_name)){
                     try{
+                        //render contents to variable
                         $html = $this->controller->renderPartial('//widgets/'.$widget->template_name,array('widget' => $widget, 'content' => $data),true);
                     }catch (Exception $ex){
+                        //get message error message if template not found
                         $html = $ex->getMessage();
                     }
-
+                //if template not set, but controller specified
                 }elseif(!empty($this->controller)){
+                    //get contents as debugged array
                     $html = debugvar($data,true);
                 }
-
+                //append got html to content
                 $content .= $html;
             }
         }

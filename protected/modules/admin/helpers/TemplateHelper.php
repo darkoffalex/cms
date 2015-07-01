@@ -97,4 +97,28 @@ class TemplateHelper
 
         return $templates;
     }
+
+    /**
+     * Returns array of themes
+     * @param bool $appendNone
+     * @param string $defaultName
+     * @return array
+     */
+    public static function getThemesForListing($appendNone = false, $defaultName = 'None')
+    {
+        $themeNames = Yii::app()->getThemeManager()->getThemeNames();
+        $themeList = array();
+
+        if($appendNone){
+            $themeList[''] = $defaultName;
+        }
+
+        foreach($themeNames as $index => $name){
+
+            //TODO: perform theme validation
+            $themeList[$name] = $name;
+        }
+
+        return $themeList;
+    }
 }

@@ -14,8 +14,6 @@
  * @property integer $per_page_qnt
  * @property integer $images_qnt
  * @property integer $files_qnt
- * @property string $root_user_name
- * @property string $root_user_password
  * @property string $active_theme
  */
 class GlobalSettings extends CActiveRecord
@@ -36,12 +34,12 @@ class GlobalSettings extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('webmaster_email', 'required'),
+			array('site_name', 'required'),
 			array('home_page_category_id, per_page_qnt, images_qnt, files_qnt', 'numerical', 'integerOnly'=>true),
-			array('admin_email, admin_phone, site_name, site_description, site_keywords, root_user_name, root_user_password, active_theme', 'safe'),
+			array('webmaster_email, admin_email, admin_phone, site_description, site_keywords, active_theme', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('home_page_category_id, webmaster_email, admin_email, admin_phone, site_name, site_description, site_keywords, per_page_qnt, images_qnt, files_qnt, root_user_name, root_user_password, active_theme', 'safe', 'on'=>'search'),
+			array('home_page_category_id, webmaster_email, admin_email, admin_phone, site_name, site_description, site_keywords, per_page_qnt, images_qnt, files_qnt, active_theme', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,8 +70,6 @@ class GlobalSettings extends CActiveRecord
 			'per_page_qnt' => 'Per Page Qnt',
 			'images_qnt' => 'Images Qnt',
 			'files_qnt' => 'Files Qnt',
-			'root_user_name' => 'Root User Name',
-			'root_user_password' => 'Root User Password',
 			'active_theme' => 'Active Theme',
 		);
 	}
@@ -106,8 +102,6 @@ class GlobalSettings extends CActiveRecord
 		$criteria->compare('per_page_qnt',$this->per_page_qnt);
 		$criteria->compare('images_qnt',$this->images_qnt);
 		$criteria->compare('files_qnt',$this->files_qnt);
-		$criteria->compare('root_user_name',$this->root_user_name,true);
-		$criteria->compare('root_user_password',$this->root_user_password,true);
 		$criteria->compare('active_theme',$this->active_theme,true);
 
 		return new CActiveDataProvider($this, array(
