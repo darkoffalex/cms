@@ -3,7 +3,6 @@
  * Class TreeEx
  * @property ContentItemEx[] $contentItems
  * @property ImageOfTreeEx[] $imageOfTrees
- * @property MenuEx[] $menus
  * @property TreeTrl $trl
  * @property TreeEx $parent
  * @property TreeEx[] $children
@@ -373,8 +372,7 @@ class TreeEx extends Tree
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = array('label','required');
-        $rules[] = array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true, 'maxSize' => 4000000);
+        $rules[] = array('image', 'file', 'types'=>Constants::UPLOAD_VALIDATE_IMAGE_TYPES, 'allowEmpty' => true, 'maxSize' => Constants::UPLOAD_IMAGE_FILE_SIZE);
         return $rules;
     }
 

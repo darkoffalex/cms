@@ -3,28 +3,6 @@
 <?php /* @var $categories Array */ ?>
 <?php /* @var $themes Array */ ?>
 
-<style>
-    .label.bigger
-    {
-        font-size: 17px;
-        /*border-bottom: 1px solid #EFEFEF;*/
-        /*border-right: 1px solid #EFEFEF;*/
-        /*border-bottom-right-radius: 10px;*/
-    }
-    .content.menu-content .inner-content .label.non-centered
-    {
-        vertical-align: top;
-    }
-
-    .content.menu-content .inner-content textarea, .content .inner-content .form-zone textarea.smaller
-    {
-        height: 100px;
-    }
-    .last
-    {
-        height: 40px;
-    }
-</style>
 
 <main>
     <div class="title-bar world">
@@ -41,7 +19,6 @@
             <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array(),'clientOptions' => array('validateOnSubmit'=>true))); ?>
 
             <table>
-
                 <tr>
                     <td class="label bigger"><b><?php echo __a('Meta'); ?></b></td>
                     <td class="value"></td>

@@ -1545,3 +1545,21 @@ body
 .content.menu-content .inner-content .filtration-conditions input{width: 150px;}
 .content.menu-content .inner-content .filtration-conditions select{width: 150px;}
 .content.menu-content .inner-content .filtration-conditions select.fcb{width: 300px;}
+
+.label.bigger
+{
+    font-size: 17px;
+}
+.content.menu-content .inner-content .label.non-centered
+{
+    vertical-align: top;
+}
+
+.content.menu-content .inner-content textarea, .content .inner-content .form-zone textarea.smaller
+{
+    height: 100px;
+}
+.last
+{
+    height: 40px;
+}

@@ -16,10 +16,10 @@ class MediaUploadForm extends CFormModel
     public function rules()
     {
         return array(
-            array('images', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true, 'maxFiles' => 10, 'maxSize' => 4000000),
-            array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true, 'maxSize' => 4000000),
-            array('files', 'file', 'types'=>'swf, pdf, txt, zip, mp3, jpg, gif, png, pdf, wav, avi, doc, xls', 'allowEmpty' => true, 'maxFiles' => 10, 'maxSize' => 9000000),
-            array('file', 'file', 'types'=>'swf, pdf, txt, zip, mp3, jpg, gif, png, pdf, wav, avi, doc, xls', 'allowEmpty' => true, 'maxSize' => 9000000),
+            array('images', 'file', 'types'=>Constants::UPLOAD_VALIDATE_IMAGE_TYPES, 'allowEmpty' => true, 'maxFiles' => 10, 'maxSize' => Constants::UPLOAD_IMAGE_FILE_SIZE),
+            array('image', 'file', 'types'=>Constants::UPLOAD_VALIDATE_IMAGE_TYPES, 'allowEmpty' => true, 'maxSize' => Constants::UPLOAD_IMAGE_FILE_SIZE),
+            array('files', 'file', 'types'=>Constants::UPLOAD_VALIDATE_COMMON_TYPES, 'allowEmpty' => true, 'maxFiles' => 10, 'maxSize' => Constants::UPLOAD_COMMON_FILE_SIZE),
+            array('file', 'file', 'types'=>Constants::UPLOAD_VALIDATE_COMMON_TYPES, 'allowEmpty' => true, 'maxSize' => Constants::UPLOAD_COMMON_FILE_SIZE),
         );
     }
 

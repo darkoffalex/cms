@@ -1,6 +1,16 @@
 <?php
 class Constants
 {
+    //files
+    const UPLOAD_IMAGE_FILE_SIZE = 4000000;
+    const UPLOAD_COMMON_FILE_SIZE =  9000000;
+    const UPLOAD_VALIDATE_IMAGE_TYPES = 'jpg, gif, png';
+    const UPLOAD_VALIDATE_COMMON_TYPES = 'swf, pdf, txt, zip, mp3, jpg, gif, png, pdf, wav, avi, doc, xls';
+
+    //admin panel pagination stuff
+    const PER_PAGE = 10;
+    const IMAGE_LIMIT = 5;
+
     //statuses
     const STATUS_VISIBLE = 1;
     const STATUS_HIDDEN = 2;

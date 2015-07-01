@@ -19,11 +19,11 @@
  * @property string $layout_name
  * @property string $item_template_name
  * @property integer $readonly
+ * @property string $http_link
  *
  * The followings are the available model relations:
  * @property ContentItem[] $contentItems
  * @property ImageOfTree[] $imageOfTrees
- * @property Menu[] $menus
  * @property TreeTrl[] $treeTrls
  * @property Widget[] $widgets
  */
@@ -45,11 +45,12 @@ class Tree extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('label', 'required'),
 			array('parent_id, status_id, item_sort_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly', 'numerical', 'integerOnly'=>true),
-			array('branch, label, template_name, layout_name, item_template_name', 'safe'),
+			array('branch, template_name, layout_name, item_template_name, http_link', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, parent_id, branch, label, status_id, item_sort_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, template_name, layout_name, item_template_name, readonly', 'safe', 'on'=>'search'),
+			array('id, parent_id, branch, label, status_id, item_sort_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, template_name, layout_name, item_template_name, readonly, http_link', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,7 +64,6 @@ class Tree extends CActiveRecord
 		return array(
 			'contentItems' => array(self::HAS_MANY, 'ContentItem', 'tree_id'),
 			'imageOfTrees' => array(self::HAS_MANY, 'ImageOfTree', 'tree_id'),
-			'menus' => array(self::HAS_MANY, 'Menu', 'tree_id'),
 			'treeTrls' => array(self::HAS_MANY, 'TreeTrl', 'tree_id'),
 			'widgets' => array(self::HAS_MANY, 'Widget', 'tree_id'),
 		);
@@ -90,6 +90,7 @@ class Tree extends CActiveRecord
 			'layout_name' => 'Layout Name',
 			'item_template_name' => 'Item Template Name',
 			'readonly' => 'Readonly',
+			'http_link' => 'Http Link',
 		);
 	}
 
@@ -126,6 +127,7 @@ class Tree extends CActiveRecord
 		$criteria->compare('layout_name',$this->layout_name,true);
 		$criteria->compare('item_template_name',$this->item_template_name,true);
 		$criteria->compare('readonly',$this->readonly);
+		$criteria->compare('http_link',$this->http_link,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

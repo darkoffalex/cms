@@ -78,6 +78,10 @@
                         <td class="value"><?php echo $form->dropDownList($model,'item_template_name',$item_templates);?></td>
                     </tr>
                     <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'http_link'); ?></td>
+                        <td class="value"><?php echo $form->textField($model,'http_link',array('placeholder' => __a('URL to external or internal page'))); ?></td>
+                    </tr>
+                    <tr>
                         <td class="label">&nbsp;</td>
                         <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
                     </tr>
