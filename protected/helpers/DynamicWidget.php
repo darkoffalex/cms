@@ -59,9 +59,10 @@ class DynamicWidget
     /**
      * Rendering content
      * @param $positionName
+     * @param bool $return
      * @return string
      */
-    public function render($positionName)
+    public function render($positionName, $return = false)
     {
         /* @var $position WidgetPositionEx */
         /* @var $content string */
@@ -78,7 +79,7 @@ class DynamicWidget
                 $html = '';
                 if(!empty($this->controller) && !empty($widget->template_name)){
                     try{
-                        $html = $this->controller->renderPartial('//widgets/'.$widget->template_name,array('widget' => $widget, 'content' => $data, true));
+                        $html = $this->controller->renderPartial('//widgets/'.$widget->template_name,array('widget' => $widget, 'content' => $data),true);
                     }catch (Exception $ex){
                         $html = $ex->getMessage();
                     }
@@ -91,7 +92,13 @@ class DynamicWidget
             }
         }
 
-        return $content;
+        if($return){
+            return $content;
+        }else{
+            echo $content;
+        }
+
+        return null;
     }
 
     private function getContent($widget)
@@ -113,14 +120,14 @@ class DynamicWidget
                 case Constants::WIDGET_TYPE_BLOCKS:
                     //get all blocks of selected category
                     $items = $widget->tree->getContentBlocks($widget->include_from_nested);
-
-                    //TODO: implement filtration here
+                    $filterConditions = $widget->getFiltrationArr();
+                    $itemsFiltered = Filtration::dynamicFiltrate($items,$widget->filtration_by_type_id,$filterConditions);
 
                     //limit array if needed (if limit was set)
                     if(!empty($widget->block_limit) && $widget->block_limit <= count($items)){
-                        $content = array_splice($items,0,$widget->block_limit);
+                        $content = array_splice($itemsFiltered,0,$widget->block_limit);
                     }else{
-                        $content = $items;
+                        $content = $itemsFiltered;
                     }
                     break;
 

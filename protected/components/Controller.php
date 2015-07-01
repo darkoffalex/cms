@@ -34,7 +34,7 @@ class Controller extends CController
         //initialize dynamic widgets
         DynamicWidget::getInstance()->initialize($this,$this->themeName);
 
-
+        //before action - parent call
         return parent::beforeAction($action);
     }
 

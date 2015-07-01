@@ -7,5 +7,4 @@
  * TemplateName:Blocks
  */
 ?>
-
 <?php debugvar($content); ?>

@@ -17,76 +17,40 @@ class WidgetEx extends Widget
         return parent::model($className);
     }
 
+    /**
+     * Returns array of conditions for item filtration
+     * @return array|mixed
+     */
+    public function getFiltrationArr()
+    {
+        $filtrationStr = $this->filtration_array_json;
+        if(!empty($filtrationStr) && isJson($filtrationStr)){
+            return json_decode($this->filtration_array_json,true);
+        }
+        return array();
+    }
 
     /**
      * Filtration settings - returns key value
-     * @param $id
+     * @param $field_id
      * @return null
      */
-    public function filtrationValFor($id)
+    public function filtrationValFor($field_id)
     {
-        $arrayStr = $this->filtration_array_json;
-        $array = !empty($arrayStr) ? json_decode($arrayStr,true) : array();
-
-        return !empty($array[$id][0]) ? $array[$id][0] : null;
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id][0]) ? $array[$field_id][0] : null;
     }
 
     /**
      * Filtration settings - returns condition
-     * @param $id
+     * @param $field_id
      * @return int
      */
-    public function filtrationConFor($id)
+    public function filtrationConFor($field_id)
     {
-        $arrayStr = $this->filtration_array_json;
-        $array = !empty($arrayStr) ? json_decode($arrayStr,true) : array();
-
-        return !empty($array[$id][1]) ? $array[$id][1] : Constants::FILTER_CONDITION_IGNORE;
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id][1]) ? $array[$field_id][1] : Constants::FILTER_CONDITION_IGNORE;
     }
-
-    public function getFilteredItems()
-    {
-        /* @var $items ContentItemEx[] */
-        /* @var $itemsTmp ContentItemEx[] */
-
-        $items = array();
-        $itemsTmp = $this->tree->getContentBlocks($this->include_from_nested);
-
-        if(!empty($this->filtrationByType)){
-
-            //first phase of filtration
-            foreach($itemsTmp as $item)
-            {
-                if($item->content_type_id == $this->filtration_by_type_id){
-                    $items[] = $item;
-                }
-            }
-
-            $itemsTmp = $items;
-
-            //get filterable fields
-            $fields = $this->filtrationByType->getFilterableFields();
-
-            foreach($fields as $filterable){
-                if($this->filtrationConFor($filterable->id) != Constants::FILTER_CONDITION_IGNORE)
-                {
-                    foreach($itemsTmp as $item)
-                    {
-                        $value = $item->getDynamicFieldValueById($filterable->id);
-                        $condition = $this->filtrationConFor($filterable->id);
-                        $conditionValue = $this->filtrationValFor($filterable->id);
-
-                        //TODO: the truth is out there...
-                    }
-                }
-            }
-
-
-        }else{
-            $items = $itemsTmp;
-        }
-    }
-
 
     /**
      * Finds or creates Trl of this item

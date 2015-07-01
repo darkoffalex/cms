@@ -68,12 +68,21 @@ function __lng()
     return Yii::app()->language;
 }
 
-
+/**
+ * Converts price specified in cents to human-readable format
+ * @param int $cents
+ * @return string
+ */
 function centsToPrice($cents)
 {
     return number_format(($cents / 100),2,'.','');
 }
 
+/**
+ * Converts entered by human price to cents format
+ * @param $price
+ * @return float|int
+ */
 function priceToCents($price)
 {
     if(is_numeric($price))
@@ -84,4 +93,14 @@ function priceToCents($price)
     }
 
     return 0;
+}
+
+/**
+ * Checst if string is valid json array
+ * @param $string
+ * @return bool
+ */
+function isJson($string)
+{
+    return !preg_match('/[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]/', preg_replace('/"(\\.|[^"\\\\])*"/', '', $string));
 }

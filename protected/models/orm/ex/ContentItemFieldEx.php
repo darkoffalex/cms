@@ -27,7 +27,7 @@ class ContentItemFieldEx extends ContentItemField
         $values = $this->contentItemFieldValues;
 
         foreach ($values as $valueObj) {
-            if($valueObj->content_item_id = $item_id){
+            if($valueObj->content_item_id == $item_id){
                 return $valueObj;
             }
         }
