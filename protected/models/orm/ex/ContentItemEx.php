@@ -51,6 +51,41 @@ class ContentItemEx extends ContentItem
     }
 
     /**
+     * Returns a link to category
+     * @param bool $abs
+     * @param bool $titled
+     * @param bool $friendly
+     * @return string
+     */
+    public function getUrl($abs = false, $titled = true, $friendly = false)
+    {
+        $link = '';
+
+        if(!$this->isNewRecord){
+            if(!$friendly){
+                $title = !empty($this->trl->name) ? $this->trl->name : $this->label;
+                $slug = slug($title);
+
+                $params = array('id' => $this->id);
+
+                if($titled){
+                    $params['title'] = $slug;
+                }
+
+                if($abs){
+                    $link = Yii::app()->createAbsoluteUrl('pages/show',$params);
+                }else{
+                    $link = Yii::app()->createUrl('pages/show',$params);
+                }
+            }else{
+                //TODO: implement friendly url mechanism
+            }
+        }
+
+        return $link;
+    }
+
+    /**
      * Returns value of block's dynamic field (by id)
      * @param $fieldId
      * @return FileOfValueEx[]|ImageOfValueEx[]|int|null|string

@@ -39,6 +39,43 @@ class TreeEx extends Tree
     }
 
     /**
+     * Returns a link to category
+     * @param bool $abs
+     * @param bool $titled
+     * @param bool $friendly
+     * @return string
+     */
+    public function getUrl($abs = false, $titled = true, $friendly = false)
+    {
+        $link = '';
+
+        if(!$this->isNewRecord){
+            if(!empty($this->http_link)){
+                $link = $this->http_link;
+            }elseif(!$friendly){
+                $title = !empty($this->trl->name) ? $this->trl->name : $this->label;
+                $slug = slug($title);
+
+                $params = array('id' => $this->id);
+
+                if($titled){
+                    $params['title'] = $slug;
+                }
+
+                if($abs){
+                    $link = Yii::app()->createAbsoluteUrl('pages/list',$params);
+                }else{
+                    $link = Yii::app()->createUrl('pages/list',$params);
+                }
+            }else{
+                //TODO: implement friendly url mechanism
+            }
+        }
+
+        return $link;
+    }
+
+    /**
      * Recursively deletes all sub-categories and category itself
      */
     public function recursiveDelete()
@@ -132,8 +169,10 @@ class TreeEx extends Tree
         //if this item is saved in db - branch will include id of this item, if not - append 'X' symbol
         if(!$this->isNewRecord){
             $branch[] = $this;
+            $branchIds[] = $this->id;
         }else{
             $branch[] = new self();
+            $branchIds[] = 'X';
         }
 
         //current step's item

@@ -96,11 +96,20 @@ function priceToCents($price)
 }
 
 /**
- * Checst if string is valid json array
+ * Check if string is valid json array
  * @param $string
  * @return bool
  */
 function isJson($string)
 {
     return !preg_match('/[^,:{}\\[\\]0-9.\\-+Eaeflnr-u \\n\\r\\t]/', preg_replace('/"(\\.|[^"\\\\])*"/', '', $string));
+}
+
+/**
+ * Used for friendly url's
+ * @param $str
+ * @return mixed
+ */
+function slug($str){
+    return preg_replace('/[^A-Za-z0-9-]+/', '-', $str);
 }
