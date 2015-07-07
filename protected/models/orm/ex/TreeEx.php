@@ -458,6 +458,7 @@ class TreeEx extends Tree
         $relations['trl'] = array(self::HAS_ONE, 'TreeTrl', 'tree_id', 'with' => array('lng' => array('condition' => "lng.prefix='{$lng}'")));
         $relations['parent'] = array(self::BELONGS_TO, 'TreeEx', 'parent_id');
         $relations['children'] = array(self::HAS_MANY, 'TreeEx', 'parent_id', 'order' => 'priority ASC');
+        $relations['contentItems'] = array(self::HAS_MANY, 'ContentItemEx', 'tree_id', 'order' => 'priority ASC');
 
         //return modified relations
         return $relations;

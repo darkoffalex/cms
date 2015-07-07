@@ -18,6 +18,47 @@ class ContentItemEx extends ContentItem
     }
 
     /**
+     * Returns all content items from every category as list fro drop downs
+     * @param int $nestingLevel
+     * @param int $contentTypeId
+     * @return array
+     */
+    public function dropDownListOrderedByCats($nestingLevel = null, $contentTypeId = null)
+    {
+        /* @var $category TreeEx */
+
+        //prepared list
+        $list = array();
+
+        //get all categories
+        $categories = TreeEx::model()->findAll(array('order' => 'priority ASC'));
+
+        //fill the list
+        foreach($categories as $category){
+
+            if($nestingLevel !== null){
+                if($category->nestingLevel() < $nestingLevel){
+                    continue;
+                }
+            }
+
+            $list['cat_'.$category->id] = '-'.$category->label;
+            foreach($category->contentItems as $item)
+            {
+                if($contentTypeId !== null){
+                    if($item->content_type_id != $contentTypeId){
+                        continue;
+                    }
+                }
+
+                $list[$item->id] = $item->label;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Finds or creates Trl of this item
      * @param $lng_id
      * @param bool $save
@@ -51,7 +92,7 @@ class ContentItemEx extends ContentItem
     }
 
     /**
-     * Returns a link to category
+     * Returns a link to item
      * @param bool $abs
      * @param bool $titled
      * @param bool $friendly
@@ -102,23 +143,32 @@ class ContentItemEx extends ContentItem
                     $valueObj = $field->getValueFor($this->id);
 
                     switch($field->field_type_id){
+
                         case Constants::FIELD_TYPE_TEXT:
                             $value = $valueObj->text_value;
                             break;
+
                         case Constants::FIELD_TYPE_BOOLEAN:
                         case Constants::FIELD_TYPE_NUMERIC:
                         case Constants::FIELD_TYPE_PRICE:
                         case Constants::FIELD_TYPE_DATE:
                             $value = $valueObj->numeric_value;
                             break;
+
                         case Constants::FIELD_TYPE_TEXT_TRL:
                             $value = !empty($valueObj->trl->text) ? $valueObj->trl->text : '';
                             break;
+
                         case Constants::FIELD_TYPE_IMAGE:
                             $value = $valueObj->imageOfValues;
                             break;
+
                         case Constants::FIELD_TYPE_FILE:
                             $value = $valueObj->fileOfValues;
+                            break;
+
+                        case Constants::FIELD_TYPE_LINKED_BLOCK:
+                            $value = ContentItemEx::model()->findByPk((int)$valueObj->id);
                             break;
                     }
                 }

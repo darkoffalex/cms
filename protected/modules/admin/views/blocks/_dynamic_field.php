@@ -1,4 +1,5 @@
 <?php /* @var $item ContentItemEx */ ?>
+<?php /* @var $linked array */ ?>
 <?php /* @var $field ContentItemFieldEx */ ?>
 <?php /* @var $this BlocksController */ ?>
 
@@ -90,6 +91,20 @@
                     </ul>
                 </div>
             <?php endif;?>
+        </td>
+    </tr>
+<?php elseif($field->field_type_id == Constants::FIELD_TYPE_LINKED_BLOCK): ?>
+    <tr>
+        <td class="label"><?php echo __a($field->label); ?></td>
+        <td class="value">
+            <?php $valueObj = $field->getValueFor($item->id) ?>
+            <?php $selectedId = $valueObj->numeric_value; ?>
+            <select name="ContentItemEx[dynamic][<?php echo $field->id; ?>]">
+                <option value="0"><?php echo __a('None'); ?></option>
+                <?php foreach($linked as $id => $name): ?>
+                    <option <?php if($selectedId == $id): ?> selected <?php endif; ?> <?php if(!is_numeric($id) || $id == $item->id): ?> disabled <?php endif; ?> <?php if(!is_numeric($id)): ?> style="font-weight: bolder;" <?php endif; ?> value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                <?php endforeach; ?>
+            </select>
         </td>
     </tr>
 <?php endif?>

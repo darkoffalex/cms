@@ -5,6 +5,7 @@
 <?php /* @var $templates array */ ?>
 <?php /* @var $languages Language[] */ ?>
 <?php /* @var $this BlocksController */ ?>
+<?php /* @var $linked array */ ?>
 
 <main>
     <div class="title-bar world">
@@ -95,7 +96,7 @@
             <div class="form-zone">
                 <table>
                     <?php foreach($model->contentType->contentItemFields as $field): ?>
-                        <?php $this->renderPartial('_dynamic_field',array('field' => $field, 'item' => $model)); ?>
+                        <?php $this->renderPartial('_dynamic_field',array('field' => $field, 'item' => $model, 'linked' => $linked)); ?>
                     <?php endforeach; ?>
                     <tr>
                         <td class="label">&nbsp;</td>

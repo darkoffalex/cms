@@ -183,6 +183,8 @@ class BlocksController extends ControllerAdmin
         $templates = TemplateHelper::getStandardTemplates($theme,'Item');
         //languages
         $languages = Language::model()->findAll();
+        //content items - prepare array for selection
+        $linked = ContentItemEx::model()->dropDownListOrderedByCats();
         //content item model
         $block = ContentItemEx::model()->findByPk((int)$id);
         if(empty($block)){
@@ -277,6 +279,9 @@ class BlocksController extends ControllerAdmin
                                     case Constants::FIELD_TYPE_DATE:
                                         $d = DateTime::createFromFormat('m/d/Y',$valueContent);
                                         $objValue->numeric_value = $d->getTimestamp();
+                                        break;
+                                    case Constants::FIELD_TYPE_LINKED_BLOCK:
+                                        $objValue->numeric_value = $valueContent;
                                         break;
                                 }
 
@@ -489,7 +494,8 @@ class BlocksController extends ControllerAdmin
                 'categories' => $categoriesList,
                 'statuses' => $statuses,
                 'languages' => $languages,
-                'templates' => $templates
+                'templates' => $templates,
+                'linked' => $linked
             ));
     }
 

@@ -11,11 +11,11 @@
  * @property string $text_value
  *
  * The followings are the available model relations:
+ * @property ContentItemFieldValueTrl[] $contentItemFieldValueTrls
+ * @property ImageOfValue[] $imageOfValues
+ * @property FileOfValue[] $fileOfValues
  * @property ContentItem $contentItem
  * @property ContentItemField $field
- * @property ContentItemFieldValueTrl[] $contentItemFieldValueTrls
- * @property FileOfValue[] $fileOfValues
- * @property ImageOfValue[] $imageOfValues
  */
 class ContentItemFieldValue extends CActiveRecord
 {
@@ -51,11 +51,11 @@ class ContentItemFieldValue extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'contentItemFieldValueTrls' => array(self::HAS_MANY, 'ContentItemFieldValueTrl', 'value_id'),
+			'imageOfValues' => array(self::HAS_MANY, 'ImageOfValue', 'value_id'),
+			'fileOfValues' => array(self::HAS_MANY, 'FileOfValue', 'value_id'),
 			'contentItem' => array(self::BELONGS_TO, 'ContentItem', 'content_item_id'),
 			'field' => array(self::BELONGS_TO, 'ContentItemField', 'field_id'),
-			'contentItemFieldValueTrls' => array(self::HAS_MANY, 'ContentItemFieldValueTrl', 'value_id'),
-			'fileOfValues' => array(self::HAS_MANY, 'FileOfValue', 'value_id'),
-			'imageOfValues' => array(self::HAS_MANY, 'ImageOfValue', 'value_id'),
 		);
 	}
 

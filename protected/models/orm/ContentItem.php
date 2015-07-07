@@ -18,10 +18,10 @@
  * @property integer $content_type_id
  *
  * The followings are the available model relations:
+ * @property ContentItemTrl[] $contentItemTrls
  * @property ContentType $contentType
  * @property Tree $tree
  * @property ContentItemFieldValue[] $contentItemFieldValues
- * @property ContentItemTrl[] $contentItemTrls
  */
 class ContentItem extends CActiveRecord
 {
@@ -57,10 +57,10 @@ class ContentItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'item_id'),
 			'contentType' => array(self::BELONGS_TO, 'ContentType', 'content_type_id'),
 			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
 			'contentItemFieldValues' => array(self::HAS_MANY, 'ContentItemFieldValue', 'content_item_id'),
-			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'item_id'),
 		);
 	}
 
