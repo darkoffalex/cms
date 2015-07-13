@@ -34,6 +34,16 @@ class UserEx extends User
         return $all;
     }
 
+    public function avatarUrl()
+    {
+        return Yii::app()->getHomeUrl().'uploads/avatars/'.$this->avatar_filename;
+    }
+
+    public function photoUrl()
+    {
+        return Yii::app()->getHomeUrl().'uploads/avatars/'.$this->photo_filename;
+    }
+
 
     /**
      * Override to translate all labels

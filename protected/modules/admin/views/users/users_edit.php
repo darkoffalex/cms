@@ -63,8 +63,13 @@
                             <div class="image-zone">
                                 <div class="list">
                                     <div class="image">
-                                        <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="" />
-                                        <a href="#" class="delete"></a>
+                                        <?php if(!empty($model->avatar_filename)): ?>
+                                            <img src="<?php echo $model->avatarUrl(); ?>" alt="" />
+                                            <a href="<?php echo Yii::app()->createUrl('admin/users/delavatar',array('id' => $model->id)); ?>" class="delete active confirm-box"></a>
+                                        <?php else: ?>
+                                            <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="" />
+                                            <a href="#" class="delete"></a>
+                                        <?php endif;?>
                                     </div>
                                 </div><!--/list-->
                             </div><!--/image-zone-->
@@ -77,26 +82,32 @@
                             <div class="image-zone">
                                 <div class="list">
                                     <div class="image">
-                                        <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="" />
-                                        <a href="#" class="delete"></a>
+                                        <?php if(!empty($model->photo_filename)): ?>
+                                            <img src="<?php echo $model->photoUrl(); ?>" alt="" />
+                                            <a href="<?php echo Yii::app()->createUrl('admin/users/delphoto',array('id' => $model->id)); ?>" class="delete active confirm-box"></a>
+                                        <?php else: ?>
+                                            <img src="<?php echo $this->assets; ?>/images/no-image-upload.png" alt="" />
+                                            <a href="#" class="delete"></a>
+                                        <?php endif;?>
                                     </div>
                                 </div><!--/list-->
                             </div><!--/image-zone-->
                         </td>
                     </tr>
-                    <tr>
-                        <td class="line-separation label"><span></span></td>
-                        <td class="value"></td>
-                    </tr>
-                    <tr>
-                        <td class="label"><?php echo $form->labelEx($model,'status_id'); ?></td>
-                        <td class="value"><?php echo $form->dropDownList($model,'status_id',$statuses); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label"><?php echo $form->labelEx($model,'role_id'); ?></td>
-<!--                        <td class="value">--><?php //echo $form->dropDownList($model,'role_id',$roles, array('options' => array(1=>array('disabled' => true)))); ?><!--</td>-->
-                        <td class="value"><?php echo $form->dropDownList($model,'role_id',$roles); ?></td>
-                    </tr>
+                    <?php if($model->id != Yii::app()->getUser()->id): ?>
+                        <tr>
+                            <td class="line-separation label"><span></span></td>
+                            <td class="value"></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $form->labelEx($model,'status_id'); ?></td>
+                            <td class="value"><?php echo $form->dropDownList($model,'status_id',$statuses); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $form->labelEx($model,'role_id'); ?></td>
+                            <td class="value"><?php echo $form->dropDownList($model,'role_id',$roles); ?></td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
                         <td class="line-separation label"><span></span></td>
                         <td class="value"></td>

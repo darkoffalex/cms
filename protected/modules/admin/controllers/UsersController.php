@@ -45,7 +45,7 @@ class UsersController extends ControllerAdmin
         $statuses = Constants::statusListForUsers();
         $clientTypes = Constants::shopCliTypes();
 
-        if(empty($user) || $user->readonly){
+        if(empty($user) || $user->readonly || $user->role->permission_level < CurUser::get()->permissionLvl()){
             throw new CHttpException(404);
         }
 
@@ -57,6 +57,7 @@ class UsersController extends ControllerAdmin
 
             //get old password
             $oldPassword = $user->password;
+            $oldRoleId = $user->role_id;
 
             //set main attributes
             $user->attributes = $post;
@@ -64,6 +65,15 @@ class UsersController extends ControllerAdmin
             //validate
             if($user->validate()){
 
+                //check permissions for changing role
+                $newRole = RoleEx::model()->findByPk((int)$post['role_id']);
+                if(!empty($newRole) && $newRole->permission_level > CurUser::get()->permissionLvl()){
+                    $user->role_id = $newRole->id;
+                }else{
+                    $user->role_id = $oldRoleId;
+                }
+
+                //reassigning password
                 $user->password = !empty($post['password']) ? md5($post['password']) : $oldPassword;
                 $user->updated_time = time();
 
@@ -203,7 +213,7 @@ class UsersController extends ControllerAdmin
         //get user by ID
         $user = UserEx::model()->findByPk((int)$id);
 
-        if(empty($user) || $user->readonly){
+        if(empty($user) || $user->readonly || $user->role->permission_level <= CurUser::get()->permissionLvl() || $user->id == Yii::app()->getUser()->id){
             throw new CHttpException(404);
         }
 
@@ -211,5 +221,59 @@ class UsersController extends ControllerAdmin
 
         //back to list
         $this->redirect(Yii::app()->createUrl('admin/users/list'));
+    }
+
+    /**
+     * Delete photo and back
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDelPhoto($id)
+    {
+        //get user by ID
+        $user = UserEx::model()->findByPk((int)$id);
+
+        if(empty($user) || $user->readonly || $user->role->permission_level <= CurUser::get()->permissionLvl()){
+            throw new CHttpException(404);
+        }
+
+        $file_path = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'avatars'.DS.$user->photo_filename;
+
+        try{
+            unlink($file_path);
+            $user->photo_filename = null;
+            $user->update();
+        }catch (Exception $ex){
+            exit($ex->getMessage());
+        }
+
+        $this->redirect(Yii::app()->getRequest()->urlReferrer);
+    }
+
+    /**
+     * Delete avatar and back
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDelAvatar($id)
+    {
+        //get user by ID
+        $user = UserEx::model()->findByPk((int)$id);
+
+        if(empty($user) || $user->readonly || $user->role->permission_level <= CurUser::get()->permissionLvl()){
+            throw new CHttpException(404);
+        }
+
+        $file_path = YiiBase::getPathOfAlias("webroot").DS.'uploads'.DS.'avatars'.DS.$user->avatar_filename;
+
+        try{
+            unlink($file_path);
+            $user->avatar_filename = null;
+            $user->update();
+        }catch (Exception $ex){
+            exit($ex->getMessage());
+        }
+
+        $this->redirect(Yii::app()->getRequest()->urlReferrer);
     }
 }

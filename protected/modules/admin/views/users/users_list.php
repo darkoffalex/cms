@@ -38,8 +38,12 @@
                     <div class="cell type"><?php echo __a($item->role->label); ?></div>
                     <div class="cell action">
                         <?php if(!$item->readonly): ?>
-                            <a href="<?php echo Yii::app()->createUrl('admin/users/edit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
-                            <a href="<?php echo Yii::app()->createUrl('admin/users/delete',array('id' => $item->id)); ?>" class="action delete delete-page confirm-box"></a>
+                            <?php if($item->id == Yii::app()->user->id): ?>
+                                <a href="<?php echo Yii::app()->createUrl('admin/users/edit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
+                            <?php elseif($item->role->permission_level > CurUser::get()->permissionLvl()): ?>
+                                <a href="<?php echo Yii::app()->createUrl('admin/users/edit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
+                                <a href="<?php echo Yii::app()->createUrl('admin/users/delete',array('id' => $item->id)); ?>" class="action delete delete-page confirm-box"></a>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div><!--/list-row-->

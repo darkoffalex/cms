@@ -15,20 +15,30 @@ class RoleEx extends Role
         return parent::model($className);
     }
 
+
     /**
      * List all items for form's drop-downs
      * @param bool $translate
+     * @param bool $limit_permissions
      * @return array
      */
-    public function listAllItemsForForms($translate = true)
+    public function listAllItemsForForms($translate = true, $limit_permissions = true)
     {
         $list = array();
         $all = self::model()->findAll();
 
-        foreach($all as $role){
-
-            //if this is not root role
-            if($role->permission_level > 0){
+        //if permissions should be limited
+        if($limit_permissions){
+            foreach($all as $role){
+                //add roles for choosing only if they have weaker permission than current user's
+                if($role->permission_level > CurUser::get()->permissionLvl()){
+                    $list[$role->id] = $translate ? __a($role->label) : $role->label;
+                }
+            }
+        }
+        //if should show all roles
+        else{
+            foreach($all as $role){
                 $list[$role->id] = $translate ? __a($role->label) : $role->label;
             }
         }
