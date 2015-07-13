@@ -7,7 +7,9 @@
  * @property integer $id
  * @property string $label
  * @property string $permissions
+ * @property integer $permission_level
  * @property integer $readonly
+ * @property integer $admin_access
  *
  * The followings are the available model relations:
  * @property RoleTrl[] $roleTrls
@@ -31,11 +33,12 @@ class Role extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('readonly', 'numerical', 'integerOnly'=>true),
-			array('label, permissions', 'safe'),
+			array('label', 'required'),
+			array('permission_level, readonly, admin_access', 'numerical', 'integerOnly'=>true),
+			array('permissions', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, permissions, readonly', 'safe', 'on'=>'search'),
+			array('id, label, permissions, permission_level, readonly, admin_access', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +64,9 @@ class Role extends CActiveRecord
 			'id' => 'ID',
 			'label' => 'Label',
 			'permissions' => 'Permissions',
+			'permission_level' => 'Permission Level',
 			'readonly' => 'Readonly',
+			'admin_access' => 'Admin Access',
 		);
 	}
 
@@ -86,7 +91,9 @@ class Role extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('label',$this->label,true);
 		$criteria->compare('permissions',$this->permissions,true);
+		$criteria->compare('permission_level',$this->permission_level);
 		$criteria->compare('readonly',$this->readonly);
+		$criteria->compare('admin_access',$this->admin_access);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

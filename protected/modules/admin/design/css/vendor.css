@@ -940,23 +940,6 @@ body
 		font-size: 15px;
 		font-family: "Open_sans";
 	}
-
-.content.menu-content .inner-content textarea,
-.content .inner-content .form-zone textarea
-    {
-        width: 360px;
-        height: 150px;
-        padding-left: 3px;
-        padding-right: 3px;
-        background-color: #fff;
-        border-radius: 3px;
-        border: 1px solid #ddd;
-        color: #968b8b;
-        font-size: 15px;
-        font-family: "Open_sans";
-        resize: none;
-    }
-
 .content.menu-content .inner-content input[type=text],
 .content .inner-content .form-zone input[type=text]
 	{
@@ -1562,4 +1545,40 @@ body
 .last
 {
     height: 40px;
+}
+
+.fluid > .content-fluid aside > ul.root > li > span.icon.user
+{
+    background-image: url(../images/icon-user.png);
+}
+
+.content.menu-content .inner-content textarea,
+.content .inner-content .form-zone textarea
+{
+    width: 360px;
+    height: 150px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    color: #968b8b;
+    font-size: 15px;
+    font-family: "Open_sans";
+    resize: none;
+}
+
+.content.menu-content .inner-content input[type=password],
+.content .inner-content .form-zone input[type=password]
+{
+    width: 360px;
+    height: 30px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    color: #968b8b;
+    font-size: 15px;
+    font-family: "Open_sans";
 }

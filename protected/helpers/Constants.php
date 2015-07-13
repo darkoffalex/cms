@@ -44,6 +44,10 @@ class Constants
     const FILTER_CONDITION_EQUAL = 5;
     const FILTER_CONDITION_BETWEEN = 6;
 
+    //client types
+    const SHOP_CLIENT_PHYSICAL = 1;
+    const SHOP_CLIENT_JURIDICAL = 2;
+
     /**
      * Returns list of basic statuses
      * @return array
@@ -67,6 +71,31 @@ class Constants
             self::STATUS_HIDDEN => __a('Hidden'),
             self::STATUS_DELETED => __a('Deleted'),
             self::STATUS_SUSPENDED => __a('Suspended'),
+        );
+    }
+
+    /**
+     * Returns list of statuses for users
+     * @return array
+     */
+    public static function statusListForUsers()
+    {
+        return array(
+            self::STATUS_VISIBLE => __a('Active'),
+            self::STATUS_HIDDEN => __a('Inactive'),
+            self::STATUS_SUSPENDED => __a('Suspended'),
+        );
+    }
+
+    /**
+     * Client types
+     * @return array
+     */
+    public static function shopCliTypes()
+    {
+        return array(
+            self::SHOP_CLIENT_PHYSICAL => __a('Physical'),
+            self::SHOP_CLIENT_JURIDICAL => __a('Juridical')
         );
     }
 

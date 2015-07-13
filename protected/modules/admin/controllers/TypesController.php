@@ -20,7 +20,7 @@ class TypesController extends ControllerAdmin
         $types = ContentTypeEx::model()->findAll();
 
         //how many show on one page
-        $perPage = !empty($this->global_settings->per_page_qnt) ? $this->global_settings->per_page_qnt : 10;
+        $perPage = Constants::PER_PAGE;
 
         //paginated items
         $items = CPager::getInstance($types,$perPage,$page)->getPreparedArray();

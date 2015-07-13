@@ -43,7 +43,7 @@ class BlocksController extends ControllerAdmin
         $blocks = ContentItemEx::model()->findAllByAttributes($conditions,array('order' => 'priority ASC'));
 
         //paginate items
-        $perPage = !empty($this->global_settings->per_page_qnt) ? $this->global_settings->per_page_qnt : 10;
+        $perPage = Constants::PER_PAGE;
         $items = CPager::getInstance($blocks,$perPage,$page)->getPreparedArray();
 
         //render list

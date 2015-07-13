@@ -16,6 +16,43 @@ class RoleEx extends Role
     }
 
     /**
+     * List all items for form's drop-downs
+     * @param bool $translate
+     * @return array
+     */
+    public function listAllItemsForForms($translate = true)
+    {
+        $list = array();
+        $all = self::model()->findAll();
+
+        foreach($all as $role){
+
+            //if this is not root role
+            if($role->permission_level > 0){
+                $list[$role->id] = $translate ? __a($role->label) : $role->label;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Override to translate all labels
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+
+        foreach($labels as $label => $value)
+        {
+            $labels[$label] = __a($value);
+        }
+
+        return $labels;
+    }
+
+    /**
      * Override, relate with extended models
      * @return array relational rules.
      */
