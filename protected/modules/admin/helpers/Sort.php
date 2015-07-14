@@ -121,11 +121,12 @@ class Sort
 
     /**
      * Returns next priority for some item (used in adding)
-     * @param string $className
+     * @param $className
      * @param array $condition
+     * @param string $field
      * @return int
      */
-    public static function GetNextPriority($className,$condition = array())
+    public static function GetNextPriority($className,$condition = array(),$field = 'priority')
     {
         /* @var $className CActiveRecord */
         /* @var $itemsAll TreeEx[] | ContentItemEx[] */
@@ -142,9 +143,9 @@ class Sort
         $max = 0;
         foreach($itemsAll as $item)
         {
-            if($item->priority > $max)
+            if($item->$field > $max)
             {
-                $max = $item->priority;
+                $max = $item->$field;
             }
         }
 

@@ -2,6 +2,7 @@
 
 class UsersController extends ControllerAdmin
 {
+
     /**
      * Entry
      */
@@ -9,6 +10,8 @@ class UsersController extends ControllerAdmin
         $this->redirect(Yii::app()->createUrl('admin/users/list'));
     }
 
+
+    /************************************************ U S E R S ********************************************************/
 
     /**
      * Search list
@@ -276,4 +279,205 @@ class UsersController extends ControllerAdmin
 
         $this->redirect(Yii::app()->getRequest()->urlReferrer);
     }
+
+    /************************************************ R O L E S ********************************************************/
+
+    /**
+     * List all roles
+     */
+    public function actionRoles()
+    {
+        $roles = RoleEx::model()->findAll(array('order' => 'permission_level ASC'));
+        $this->render('roles_list',array('items' => $roles));
+    }
+
+    /**
+     * Editing role
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionEditRole($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //get role and languages
+        $role = RoleEx::model()->findByPk((int)$id);
+        $languages = Language::model()->findAll();
+
+        //if role not found or if have no permission
+        if(empty($role) || $role->permission_level < CurUser::get()->permissionLvl()){
+            throw new CHttpException(404);
+        }
+
+        //try get post
+        $post = Yii::app()->request->getPost('RoleEx',null);
+
+        //if post got
+        if(!empty($post)){
+
+            //translatable data
+            $names = !empty($post['name']) ? $post['name'] : array();
+            $descriptions = !empty($post['description']) ? $post['description'] : array();
+
+            //store old parameters
+            $oldLabel = $role->label;
+            $oldAdminAccess = $role->admin_access;
+
+            //set main attributes
+            $role->attributes = $post;
+
+            if($role->validate()){
+
+                //open transaction
+                $connection = Yii::app()->db;
+                $transaction = $connection->beginTransaction();
+
+                try{
+                    //if we trying modify our role
+                    if($role->id == CurUser::get()->roleId()){
+
+                        //restore old parameters
+                        $role->label = $oldLabel;
+                        $role->admin_access = $oldAdminAccess;
+                    }
+
+                    //update
+                    $role->updated_time = time();
+                    $role->updated_by_id = Yii::app()->getUser()->id;
+                    $role->update();
+
+                    //save translatable data
+                    foreach($languages as $lng)
+                    {
+                        $name = !empty($names[$lng->id]) ? $names[$lng->id] : '';
+                        $description = !empty($descriptions[$lng->id]) ? $descriptions[$lng->id] : '';
+
+                        $trl = $role->getOrCreateTrl($lng->id);
+                        $trl->name = $name;
+                        $trl->description = $description;
+                        $ok = $trl->isNewRecord ? $trl->save() : $trl->update();
+                    }
+
+                    $transaction->commit();
+
+                    //success message
+                    Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+                }
+                catch(Exception $ex){
+                    //discard changes
+                    $transaction->rollback();
+                    //exit script and show error message
+                    exit($ex->getMessage());
+                }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
+
+
+        }
+
+        //render form
+        $this->render('roles_edit',array('model' => $role, 'languages' => $languages));
+    }
+
+    /**
+     * Adding new role
+     */
+    public function actionAddRole()
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //new role
+        $role = new RoleEx();
+        $languages = Language::model()->findAll();
+
+        //try get post
+        $post = Yii::app()->request->getPost('RoleEx',null);
+        $names = !empty($post['name']) ? $post['name'] : array();
+        $descriptions = !empty($post['description']) ? $post['description'] : array();
+
+        //if post got
+        if(!empty($post)){
+
+            //set main attributes
+            $role->attributes = $post;
+
+            if($role->validate()){
+
+                //open transaction
+                $connection = Yii::app()->db;
+                $transaction = $connection->beginTransaction();
+
+                try{
+                    //save new item
+                    $role->created_time = time();
+                    $role->created_by_id = Yii::app()->getUser()->id;
+                    $role->updated_time = time();
+                    $role->updated_by_id = Yii::app()->getUser()->id;
+                    $role->permission_level = Sort::GetNextPriority('RoleEx',array(),'permission_level');
+                    $role->save();
+
+                    //save translatable data
+                    foreach($languages as $lng)
+                    {
+                        $name = !empty($names[$lng->id]) ? $names[$lng->id] : '';
+                        $description = !empty($descriptions[$lng->id]) ? $descriptions[$lng->id] : '';
+
+                        $trl = $role->getOrCreateTrl($lng->id);
+                        $trl->name = $name;
+                        $trl->description = $description;
+                        $ok = $trl->isNewRecord ? $trl->save() : $trl->update();
+                    }
+
+                    $transaction->commit();
+
+                    //success message
+                    Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+
+                    //back to list
+                    $this->redirect(Yii::app()->createUrl('admin/users/roles'));
+                }
+                catch(Exception $ex){
+                    //discard changes
+                    $transaction->rollback();
+                    //exit script and show error message
+                    exit($ex->getMessage());
+                }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
+
+        }
+
+        //render form
+        $this->render('roles_edit',array('model' => $role, 'languages' => $languages));
+    }
+
+    /**
+     * Deleting role
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDeleteRole($id)
+    {
+        //finding role
+        $role = RoleEx::model()->findByPk((int)$id);
+        //if role not found or if have no permission
+        if(empty($role) || $role->permission_level <= CurUser::get()->permissionLvl()){
+            throw new CHttpException(404);
+        }
+        //delete
+        $role->delete();
+        //back to list
+        $this->redirect(Yii::app()->createUrl('admin/users/roles'));
+    }
+
 }

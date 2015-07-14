@@ -17,6 +17,31 @@ class RoleEx extends Role
 
 
     /**
+     * Finds or creates Trl of this item
+     * @param $lng_id
+     * @param bool $save
+     * @return RoleTrl
+     */
+    public function getOrCreateTrl($lng_id, $save = false)
+    {
+        $trl = RoleTrl::model()->findByAttributes(array('role_id' => $this->id,'lng_id' => $lng_id));
+
+        if(empty($trl)){
+            $trl = new RoleTrl();
+            $trl -> lng_id = $lng_id;
+            $trl -> role_id = $this->id;
+
+            if($save){
+                $trl->save();
+            }
+        }
+
+        return $trl;
+    }
+
+
+
+    /**
      * List all items for form's drop-downs
      * @param bool $translate
      * @param bool $limit_permissions

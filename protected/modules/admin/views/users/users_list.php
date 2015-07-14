@@ -29,7 +29,7 @@
             </div><!--/list-row-->
 
             <?php foreach($items as $item): ?>
-                <div class="list-row">
+                <div class="list-row h60">
                     <div class="cell"><?php echo $item->id; ?></div>
                     <div class="cell"><?php echo $item->login; ?></div>
                     <div class="cell"><?php echo $item->email; ?></div>

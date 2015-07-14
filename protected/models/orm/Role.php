@@ -10,6 +10,10 @@
  * @property integer $permission_level
  * @property integer $readonly
  * @property integer $admin_access
+ * @property integer $created_time
+ * @property integer $updated_time
+ * @property integer $created_by_id
+ * @property integer $updated_by_id
  *
  * The followings are the available model relations:
  * @property RoleTrl[] $roleTrls
@@ -34,11 +38,11 @@ class Role extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('label', 'required'),
-			array('permission_level, readonly, admin_access', 'numerical', 'integerOnly'=>true),
+			array('permission_level, readonly, admin_access, created_time, updated_time, created_by_id, updated_by_id', 'numerical', 'integerOnly'=>true),
 			array('permissions', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, permissions, permission_level, readonly, admin_access', 'safe', 'on'=>'search'),
+			array('id, label, permissions, permission_level, readonly, admin_access, created_time, updated_time, created_by_id, updated_by_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +71,10 @@ class Role extends CActiveRecord
 			'permission_level' => 'Permission Level',
 			'readonly' => 'Readonly',
 			'admin_access' => 'Admin Access',
+			'created_time' => 'Created Time',
+			'updated_time' => 'Updated Time',
+			'created_by_id' => 'Created By',
+			'updated_by_id' => 'Updated By',
 		);
 	}
 
@@ -94,6 +102,10 @@ class Role extends CActiveRecord
 		$criteria->compare('permission_level',$this->permission_level);
 		$criteria->compare('readonly',$this->readonly);
 		$criteria->compare('admin_access',$this->admin_access);
+		$criteria->compare('created_time',$this->created_time);
+		$criteria->compare('updated_time',$this->updated_time);
+		$criteria->compare('created_by_id',$this->created_by_id);
+		$criteria->compare('updated_by_id',$this->updated_by_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

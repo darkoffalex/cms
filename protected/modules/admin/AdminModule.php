@@ -98,7 +98,7 @@ class AdminModule extends CWebModule
 
                 'sub' => array(
                     array('title' => 'User list', 'url' => Yii::app()->createUrl('admin/users/list')),
-                    array('title' => 'Privileges', 'url' => Yii::app()->createUrl('admin/users/privileges')),
+                    array('title' => 'Roles', 'url' => Yii::app()->createUrl('admin/users/roles')),
                     array('title' => 'Comments', 'url' => Yii::app()->createUrl('admin/users/comments'))
                 ),
             ),
