@@ -432,6 +432,7 @@ class UsersController extends ControllerAdmin
 
                 try{
                     //save new item
+                    $role->readonly = 0;
                     $role->created_time = time();
                     $role->created_by_id = Yii::app()->getUser()->id;
                     $role->updated_time = time();
@@ -493,6 +494,61 @@ class UsersController extends ControllerAdmin
         $role->delete();
         //back to list
         $this->redirect(Yii::app()->createUrl('admin/users/roles'));
+    }
+
+
+    /***************************************** C O M M E N T S ********************************************************/
+
+    /**
+     * List all comments with filtration ability
+     * @param int $page
+     * @param null $usr
+     * @param null $ip
+     * @param null $bid
+     */
+    public function actionComments($page = 1, $usr = null, $ip = null, $bid = null)
+    {
+        //get all blocks for filter's drop-down (ordered by categories)
+        $blocks = ContentItemEx::model()->dropDownListOrderedByCats();
+
+        //find all users, by entered search-string, and then filter by them all comments
+        $userIds = !empty($usr) ? UserEx::model()->searchByString($usr,true) : null;
+        $comments = CommentEx::model()->findAllFilteredEx($userIds,$ip,$bid);
+
+        //paginate items
+        $perPage = Constants::PER_PAGE;
+        $items = CPager::getInstance($comments,$perPage,$page)->getPreparedArray();
+
+        $this->render('comments_list',array('items' => $items, 'usr' => $usr, 'ip' => $ip, 'bid' => $bid, 'blocks' => $blocks));
+    }
+
+
+    public function actionAddComment()
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //new comment
+        $comment = new CommentEx();
+
+        //users and blocks
+        $users = UserEx::model()->findAllWithPermissionLvlWeaker(CurUser::get()->permissionLvl(),true);
+        $users = array('' => __a('-Guest-'), Yii::app()->getUser()->id => __a('-Current user-')) + $users;
+        $blocks = ContentItemEx::model()->dropDownListOrderedByCats();
+
+        //get post request
+        $post = Yii::app()->request->getPost('CommentEx',array());
+
+        if(!empty($post)){
+            debugvar($post);
+            //TODO: implement comment adding
+            exit();
+        }
+
+        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks));
+
     }
 
 }

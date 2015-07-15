@@ -1,37 +1,34 @@
 <?php
 
 /**
- * This is the model class for table "content_item".
+ * This is the model class for table "comment".
  *
- * The followings are the available columns in table 'content_item':
+ * The followings are the available columns in table 'comment':
  * @property integer $id
- * @property integer $tree_id
- * @property string $label
- * @property string $template_name
- * @property string $priority
- * @property integer $status_id
+ * @property integer $content_item_id
+ * @property integer $user_id
+ * @property string $user_ip
+ * @property string $text
+ * @property string $guest_nickname
+ * @property string $guest_name
+ * @property string $guest_surname
  * @property integer $created_by_id
  * @property integer $updated_by_id
  * @property integer $created_time
  * @property integer $updated_time
- * @property integer $readonly
- * @property integer $content_type_id
  *
  * The followings are the available model relations:
- * @property ContentItemTrl[] $contentItemTrls
- * @property ContentType $contentType
- * @property Tree $tree
- * @property ContentItemFieldValue[] $contentItemFieldValues
- * @property Comment[] $comments
+ * @property User $user
+ * @property ContentItem $contentItem
  */
-class ContentItem extends CActiveRecord
+class Comment extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'content_item';
+		return 'comment';
 	}
 
 	/**
@@ -42,11 +39,12 @@ class ContentItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tree_id, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly, content_type_id', 'numerical', 'integerOnly'=>true),
-			array('label, template_name, priority', 'safe'),
+			array('text', 'required'),
+			array('content_item_id, user_id, created_by_id, updated_by_id, created_time, updated_time', 'numerical', 'integerOnly'=>true),
+			array('user_ip, guest_nickname, guest_name, guest_surname', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, tree_id, label, template_name, priority, status_id, created_by_id, updated_by_id, created_time, updated_time, readonly, content_type_id', 'safe', 'on'=>'search'),
+			array('id, content_item_id, user_id, user_ip, text, guest_nickname, guest_name, guest_surname, created_by_id, updated_by_id, created_time, updated_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,11 +56,8 @@ class ContentItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'item_id'),
-			'contentType' => array(self::BELONGS_TO, 'ContentType', 'content_type_id'),
-			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
-			'contentItemFieldValues' => array(self::HAS_MANY, 'ContentItemFieldValue', 'content_item_id'),
-			'comments' => array(self::HAS_MANY, 'Comment', 'content_item_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'contentItem' => array(self::BELONGS_TO, 'ContentItem', 'content_item_id'),
 		);
 	}
 
@@ -73,17 +68,17 @@ class ContentItem extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'tree_id' => 'Tree',
-			'label' => 'Label',
-			'template_name' => 'Template Name',
-			'priority' => 'Priority',
-			'status_id' => 'Status',
+			'content_item_id' => 'Content Item',
+			'user_id' => 'User',
+			'user_ip' => 'User Ip',
+			'text' => 'Text',
+			'guest_nickname' => 'Guest Nickname',
+			'guest_name' => 'Guest Name',
+			'guest_surname' => 'Guest Surname',
 			'created_by_id' => 'Created By',
 			'updated_by_id' => 'Updated By',
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
-			'readonly' => 'Readonly',
-			'content_type_id' => 'Content Type',
 		);
 	}
 
@@ -106,17 +101,17 @@ class ContentItem extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('tree_id',$this->tree_id);
-		$criteria->compare('label',$this->label,true);
-		$criteria->compare('template_name',$this->template_name,true);
-		$criteria->compare('priority',$this->priority,true);
-		$criteria->compare('status_id',$this->status_id);
+		$criteria->compare('content_item_id',$this->content_item_id);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('user_ip',$this->user_ip,true);
+		$criteria->compare('text',$this->text,true);
+		$criteria->compare('guest_nickname',$this->guest_nickname,true);
+		$criteria->compare('guest_name',$this->guest_name,true);
+		$criteria->compare('guest_surname',$this->guest_surname,true);
 		$criteria->compare('created_by_id',$this->created_by_id);
 		$criteria->compare('updated_by_id',$this->updated_by_id);
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
-		$criteria->compare('readonly',$this->readonly);
-		$criteria->compare('content_type_id',$this->content_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -127,7 +122,7 @@ class ContentItem extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ContentItem the static model class
+	 * @return Comment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

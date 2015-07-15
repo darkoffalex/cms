@@ -4,6 +4,7 @@
  * @property RoleEx $role
  * @property CUploadedFile $avatar
  * @property CUploadedFile $photo
+ * @property CommentEx[] $comments
  */
 class UserEx extends User
 {
@@ -22,15 +23,67 @@ class UserEx extends User
         return parent::model($className);
     }
 
+
+    /**
+     * Get all users which role's permission level is weaker than specified
+     * @param $level
+     * @param $forDropDowns
+     * @return array
+     */
+    public function findAllWithPermissionLvlWeaker($level, $forDropDowns = false)
+    {
+        /* @var $all self[] */
+        /* @var $result self[] */
+
+        //result
+        $result = array();
+
+        //all users
+        $all = self::model()->findAll();
+
+        //pass through all
+        foreach($all as $user){
+
+            //if user permission level weaker - add ti result array
+            if(!empty($user->role) && $user->role->permission_level > $level){
+                $result[] = $user;
+            }
+        }
+
+        if($forDropDowns){
+            $resultDD = array();
+            foreach($result as $item)
+            {
+                $name_surname = (!empty($item->name) || !empty($item->surname)) ? " (".$item->name." ".$item->surname.")" : "";
+                $resultDD[$item->id] = $item->login.$name_surname;
+            }
+
+            return $resultDD;
+        }
+        return $result;
+    }
+
     /**
      * Searches user's by query string
-     * @param $search
-     * @return UserEx[]
+     * @param string $search
+     * @param bool $asIdArray
+     * @return self[]
      */
-    public function searchByString($search)
+    public function searchByString($search, $asIdArray = false)
     {
         $sql = "SELECT * FROM ".$this->tableName()." WHERE login LIKE '%".$search."%' OR email LIKE '%".$search."%' OR name LIKE '%".$search."%' OR surname LIKE '%".$search."%' OR id = '".$search."'";
         $all = self::model()->findAllBySql($sql);
+
+        if($asIdArray){
+            $arr = array();
+
+            foreach($all as $item){
+                $arr[] = $item->id;
+            }
+
+            return $arr;
+        }
+
         return $all;
     }
 

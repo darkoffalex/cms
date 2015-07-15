@@ -37,6 +37,7 @@
  *
  * The followings are the available model relations:
  * @property Role $role
+ * @property Comment[] $comments
  */
 class User extends CActiveRecord
 {
@@ -79,6 +80,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'role' => array(self::BELONGS_TO, 'Role', 'role_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
 		);
 	}
 

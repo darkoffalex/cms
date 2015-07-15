@@ -5,6 +5,7 @@
  * @property ContentItemFieldValueEx[] $contentItemFieldValues
  * @property ContentTypeEx $contentType
  * @property ContentItemTrl $trl
+ * @property CommentEx[] $comments
  */
 class ContentItemEx extends ContentItem
 {
@@ -18,7 +19,7 @@ class ContentItemEx extends ContentItem
     }
 
     /**
-     * Returns all content items from every category as list fro drop downs
+     * Returns all content items from every category as list for drop downs
      * @param int $nestingLevel
      * @param int $contentTypeId
      * @return array
@@ -40,6 +41,10 @@ class ContentItemEx extends ContentItem
                 if($category->nestingLevel() < $nestingLevel){
                     continue;
                 }
+            }
+
+            if(empty($category->contentItems)){
+                continue;
             }
 
             $list['cat_'.$category->id] = '-'.$category->label;

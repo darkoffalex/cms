@@ -1389,6 +1389,10 @@ body
     height: 40px;
     width: 550px;
 }
+.special-filter-form.w750
+{
+    width: 750px;
+}
 
 .separate-block
 {
