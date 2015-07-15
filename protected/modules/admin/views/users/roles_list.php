@@ -19,7 +19,6 @@
                 <div class="cell type"><?php echo __a('Admin access'); ?></div>
                 <div class="cell action"><?php echo __a('Actions'); ?></div>
             </div><!--/list-row-->
-
             <?php foreach($items as $item): ?>
                 <div class="list-row h60">
                     <div class="cell"><?php echo $item->id; ?></div>

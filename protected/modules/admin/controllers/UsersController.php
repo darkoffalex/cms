@@ -322,12 +322,18 @@ class UsersController extends ControllerAdmin
             $names = !empty($post['name']) ? $post['name'] : array();
             $descriptions = !empty($post['description']) ? $post['description'] : array();
 
+            //permission array
+            $permissions = !empty($post['permissions']) ? $post['permissions'] : array();
+            $permissionsStr = serialize($permissions);
+
             //store old parameters
             $oldLabel = $role->label;
             $oldAdminAccess = $role->admin_access;
+            $oldPermissions = $role->permissions;
 
-            //set main attributes
+            //set main attributes and permissions
             $role->attributes = $post;
+            $role->permissions = $permissionsStr;
 
             if($role->validate()){
 
@@ -342,6 +348,7 @@ class UsersController extends ControllerAdmin
                         //restore old parameters
                         $role->label = $oldLabel;
                         $role->admin_access = $oldAdminAccess;
+                        $role->permissions = $oldPermissions;
                     }
 
                     //update
@@ -400,14 +407,22 @@ class UsersController extends ControllerAdmin
 
         //try get post
         $post = Yii::app()->request->getPost('RoleEx',null);
+
+        //translatable data
         $names = !empty($post['name']) ? $post['name'] : array();
         $descriptions = !empty($post['description']) ? $post['description'] : array();
+
+        //permission array
+        $permissions = !empty($post['permissions']) ? $post['permissions'] : array();
+        $permissionsStr = serialize($permissions);
 
         //if post got
         if(!empty($post)){
 
             //set main attributes
             $role->attributes = $post;
+            //set permissions
+            $role->permissions = $permissionsStr;
 
             if($role->validate()){
 

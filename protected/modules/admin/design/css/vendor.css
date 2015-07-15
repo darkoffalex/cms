@@ -1519,6 +1519,14 @@ body
 }
 
 .content > .list-row.h60 { height: 60px; }
+.content > .list-row.h36 { height: 36px; }
+.content > .list-row.title.h36 { height: 36px; }
+.content > .list-row > .cell.action.smallest{width: 80px}
+
+.content.menu-content .inner-content .label.top-aligned, .content .inner-content .form-zone .label.top-aligned
+{
+    vertical-align: top;
+}
 
 .padding-right-725
 {

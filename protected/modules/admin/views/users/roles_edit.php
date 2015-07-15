@@ -1,6 +1,7 @@
 <?php /* @var $languages Language[] */ ?>
 <?php /* @var $form CActiveForm */ ?>
 <?php /* @var $model RoleEx */ ?>
+<?php /* @var $this UsersController */ ?>
 
 <main>
     <div class="title-bar world">
@@ -52,6 +53,10 @@
                         <tr>
                             <td class="label"><?php echo $form->labelEx($model,'admin_access'); ?></td>
                             <td class="value"><?php echo $form->checkBox($model,'admin_access');?></td>
+                        </tr>
+                        <tr>
+                            <td class="label top-aligned"><?php echo $form->labelEx($model,'permissions'); ?></td>
+                            <td class="value"><?php echo $this->renderPartial('_permissions',array('actions' => Constants::adminActionMap(), 'role' => $model)) ?></td>
                         </tr>
                     <?php endif; ?>
                     <tr>

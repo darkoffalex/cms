@@ -15,6 +15,60 @@ class RoleEx extends Role
         return parent::model($className);
     }
 
+    /**
+     * Checks if access granted for some controller and some action
+     * @param $controller
+     * @param $action
+     * @return bool
+     */
+    public function allowed($controller, $action)
+    {
+        //if this is new record (can't have data in DB) - false
+        if($this->isNewRecord){
+            return false;
+        }
+
+        //get permission string (serialized array)
+        $permissionsStr = $this->permissions;
+
+        if(!is_serialized($permissionsStr)){
+            return false;
+        }
+
+        $permissions = unserialize($permissionsStr);
+
+        if(!array_key_exists($controller,$permissions)){
+            return false;
+        }else{
+            $actions = $permissions[$controller];
+            if(!array_key_exists($action,$actions)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if access granted for some controller and some action (considering permission level)
+     * @param $controller
+     * @param $action
+     * @return bool
+     */
+    public function allowedEx($controller, $action)
+    {
+        if($this->permission_level == 0){
+            return true;
+        }
+
+        return $this->allowed($controller,$action);
+    }
+
+    public function permissionArray()
+    {
+        $permissions = $this->permissions;
+        return unserialize($permissions);
+    }
 
     /**
      * Finds or creates Trl of this item

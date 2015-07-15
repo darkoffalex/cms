@@ -48,105 +48,6 @@ class Constants
     const SHOP_CLIENT_PHYSICAL = 1;
     const SHOP_CLIENT_JURIDICAL = 2;
 
-    public static function adminPermissionMap()
-    {
-        $map = [
-            'statistics' => [
-                'title' => __a('Statistics'),
-                'access' => null,
-                'actions' => [
-                    'index' => ['title' => __a('See'), 'access' => null],
-                ],
-            ],
-
-            'categories' => [
-                'title' => __a('Categories'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                    'edit' => ['title' => __a('Edit'), 'access' => null],
-                    'delete' => ['title' => __a('Delete'), 'access' => null],
-                    'add' => ['title' => __a('Add'), 'access' => null]
-                ],
-            ],
-
-            'blocks' => [
-                'title' => __a('Content'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                    'add' => ['title' => __a('Add'), 'access' => null],
-                    'edit' => ['title' => __a('Edit'), 'access' => null],
-                    'delete' => ['title' => __a('Delete'), 'access'=> null]
-                ],
-            ],
-
-            'types' => [
-                'title' => __a('Content types'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                    'edittype' => ['title' => __a('Edit type'), 'access' => null],
-                    'deletetype' => ['title' => __a('Delete type'), 'access' => null],
-                    'addtype' => ['title' => __a('Add type'), 'access' => null],
-                    'fields' => ['title' => __a('List fields'), 'access' => null],
-                    'addfield' => ['title' => __a('Add fields'), 'access' => null],
-                    'editfield' => ['title' => __a('Edit fields'), 'access' => null],
-                    'deletefield' => ['title' => __a('Delete fields'), 'access' => null]
-                ],
-            ],
-
-            'widgets' => [
-                'title' => __a('Widgets'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                    'edit' => ['title' => __a('Edit'), 'access' => null],
-                    'delete' => ['title' => __a('Delete'), 'access' => null],
-                    'add' => ['title' => __a('Add'), 'access' => null],
-                    'positions' => ['title' => __a('See positions'), 'access' => null],
-                    'positionedit' => ['title' => __a('Edit positions'), 'access' => null],
-                    'positiondelete' => ['title' => __a('Delete positions'), 'access' => null],
-                    'positionadd' => ['title' => __a('Add positions'), 'access' => null],
-                    'registration' => ['title' => __a('See registrations'), 'access' => null],
-                    'register' => ['title' => __a('Register'), 'access' => null],
-                    'unregister' => ['title' => __a('Unregister'), 'access' => null],
-                    'moveregistered' => ['title' => __a('Ordering'), 'access' => null]
-                ],
-            ],
-
-            'languages' => [
-                'title' => __a('Languages'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                    'add' => ['title' => __a('Add'), 'access' => null],
-                    'edit' => ['title' => __a('Edit'), 'access' => null],
-                    'delete' => ['title' => __a('Delete'), 'access' => null],
-                    'move' => ['title' => __a('Ordering'), 'access' => null]
-                ],
-            ],
-
-            'translations' => [
-                'title' => __a('Translations'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null]
-                ]
-            ],
-
-            'users' => [
-                'title' => __a('Users'),
-                'access' => null,
-                'actions' => [
-                    'list' => ['title' => __a('See'), 'access' => null],
-                ]
-            ],
-
-
-            //TODO: continue build accessions map...
-        ];
-    }
 
     /**
      * Returns list of basic statuses
@@ -290,5 +191,120 @@ class Constants
         $array = self::statusListEx();
         $name = !empty($array[$status_id]) ? $array[$status_id] : __a($default);
         return $name;
+    }
+
+
+    /**
+     * Admin-Panel action maps - used to build permission array for roles. In role you can manage access to every action
+     * @return array
+     */
+    public static function adminActionMap()
+    {
+        $map = array(
+
+            'statistics' => array(
+                'Statistics',
+                array(
+                    'index' => 'See'
+                )
+            ),
+
+            'categories' => array(
+                'Categories',
+                array(
+                    'list' => 'See',
+                    'edit' => 'Edit',
+                    'delete' => 'Delete',
+                    'add' => 'Add'
+                )
+            ),
+
+            'blocks' => array(
+                'Content',
+                array(
+                    'list' => 'See',
+                    'add' => 'Add',
+                    'edit' => 'Edit',
+                    'delete' => 'Delete',
+                )
+            ),
+
+            'types' => array(
+                'Content types',
+                array(
+                    'list' => 'See types',
+                    'edittype' => 'Edit types',
+                    'deletetype' => 'Delete types',
+                    'addtype' => 'Add types',
+                    'fields' => 'See fields',
+                    'addfield' => 'Add fields',
+                    'editfield' => 'Edit fields',
+                    'deletefield' => 'Delete fields',
+                )
+            ),
+
+            'widgets' => array(
+                'Widgets',
+                array(
+                    'list' => 'See widgets',
+                    'edit' => 'Edit widgets',
+                    'delete' => 'Delete widgets',
+                    'add' => 'Add widgets',
+                    'positions' => 'See positions',
+                    'positionedit' => 'Edit positions',
+                    'positiondelete' => 'Delete positions',
+                    'positionadd' => 'Add positions',
+                    'registration' => 'See registrations',
+                    'register' => 'Register widgets',
+                    'unregister' => 'Unregister widgets',
+                    'moveregistered' => 'Ordering in positions'
+                )
+            ),
+
+            'languages' => array(
+                'Languages',
+                array(
+                    'list' => 'See languages',
+                    'add' => 'Add languages',
+                    'edit' => 'Edit languages',
+                    'delete' => 'Delete languages',
+                    'move' => 'Ordering languages'
+                )
+            ),
+
+            'translations' => array(
+                'Translations',
+                array(
+                    'list' => 'See translations',
+                    'add' => 'Add translations',
+                    'delete' => 'Delete translations',
+                    'update' => 'Update translations',
+                )
+            ),
+
+            'users' => array(
+                'Users',
+                array(
+                    'list' => 'See users',
+                    'edit' => 'Edit users',
+                    'delete' => 'Delete users',
+                    'add' => 'Add users',
+                    'roles' => 'See roles',
+                    'addrole' => 'Add roles',
+                    'editrole' => 'Edit roles',
+                    'deleterole' => 'Delete roles',
+                )
+            ),
+
+            'settings' => array(
+                'Settings',
+                array(
+                    'edit' => 'Manage settings'
+                )
+            ),
+
+        );
+
+        return $map;
     }
 }
