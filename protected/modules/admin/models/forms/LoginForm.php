@@ -44,7 +44,7 @@ class LoginForm extends CFormModel
     {
         if(!$this->hasErrors())
         {
-            $this->_identity=new UserIdentity($this->username,$this->password);
+            $this->_identity=new AdminIdentity($this->username,$this->password);
             if(!$this->_identity->authenticate())
             {
                 if($this->_identity->errorCode == UserIdentity::ERROR_PASSWORD_INVALID)
@@ -71,13 +71,35 @@ class LoginForm extends CFormModel
 	{
 		if($this->_identity===null)
 		{
-			$this->_identity=new UserIdentity($this->username,$this->password);
+			$this->_identity=new AdminIdentity($this->username,$this->password);
 			$this->_identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
+		if($this->_identity->errorCode===AdminIdentity::ERROR_NONE)
 		{
-			Yii::app()->user->login($this->_identity);
-			return true;
+            //login (start user's session)
+            $logged = Yii::app()->user->login($this->_identity);
+
+            //get IPs
+            $ip = findUserIP();
+            $ipBehindProxy = findUserIP(true);
+
+            //get related to DB user object
+            $userDBObj = CurUser::get()->userObj();
+
+            //set last visit time, last visit IP, and add new IPs to list
+            $userDBObj -> last_visit_time = time();
+            $userDBObj -> last_ip = $ipBehindProxy;
+            $userDBObj -> addVisitIp($ip);
+            $userDBObj -> addVisitIp($ipBehindProxy);
+            $updated = $userDBObj -> update();
+
+            //if updating failed - logout user
+            if(!$updated && $logged){
+                Yii::app()->getUser()->logout(false);
+                $logged = false;
+            }
+
+			return $logged;
 		}
 		else
         {

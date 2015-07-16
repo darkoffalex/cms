@@ -309,3 +309,28 @@ function is_serialized($value, &$result = null)
     return true;
 }
 
+/**
+ * Detect user IP (behind proxy too, if proxy not anonymous)
+ * @param bool $behindProxy
+ * @return string
+ */
+function findUserIP($behindProxy = true){
+
+    if($behindProxy)
+    {
+        $forward_ip = @getenv('HTTP_X_FORWARDED_FOR');
+        if(empty($forward_ip)){
+            $user_ip = @getenv('REMOTE_ADDR');
+            $proxy_ip = '';
+        }
+        else{
+            $user_ip = $forward_ip;
+            $proxy_ip = @getenv('REMOTE_ADDR');
+        }
+    }else{
+        return @getenv('REMOTE_ADDR');
+    }
+
+    return $user_ip;
+}
+

@@ -5,7 +5,7 @@
  * It contains the authentication method that checks if the provided
  * data can identity the user.
  */
-class UserIdentity extends CUserIdentity
+class AdminIdentity extends CUserIdentity
 {
 	/**
 	 * Authenticates a user.
@@ -36,7 +36,7 @@ class UserIdentity extends CUserIdentity
             else
             {
                 //if user found, and not suspended
-                if($user->status_id != Constants::STATUS_HIDDEN){
+                if($user->status_id != Constants::STATUS_HIDDEN && !empty($user->role) && $user->role->admin_access == true){
 
                     //no error
                     $this->errorCode = self::ERROR_NONE;

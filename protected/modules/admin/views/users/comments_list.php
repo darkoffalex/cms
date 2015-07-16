@@ -23,8 +23,14 @@
                     <input type="text" name="usr" class="float-left filter-drop-down" value="<?php echo $usr; ?>" placeholder="<?php echo __a('User ID, name, surname, login'); ?>">
                 </form>
             </li>
-            <?php if(!empty($blocks)): ?>
-                <li><a href="<?php echo Yii::app()->createUrl('admin/users/addcomment'); ?>" class="action add"></a></li>
+            <?php if(!empty($blocks)):
+                $params = array();
+                if(!empty($usr)): $params['usr'] = $usr; endif;
+                if(!empty($ip)): $params['ip'] = $ip; endif;
+                if(!empty($bid)) : $params['bid'] = $bid; endif;
+                ?>
+                <li><a href="<?php echo Yii::app()->createUrl('admin/users/addcomment',$params); ?>" class="action add"></a></li>
+                <?php $params = array(); ?>
             <?php endif; ?>
         </ul>
     </div><!--/title-bar-->
@@ -48,14 +54,22 @@
                     <div class="cell"><?php echo !empty($item->contentItem->label) ? $item->contentItem->label : ''; ?></div>
                     <div class="cell"><?php echo date('Y-m-d H:i:s',$item->created_time); ?></div>
                     <div class="cell action">
-                        <?php if($item->permissionLevel() > CurUser::get()->permissionLvl() || (!empty($item->user) && $item->user->id == Yii::app()->getUser()->id)): ?>
-                            <a href="<?php echo Yii::app()->createUrl('admin/users/editcomment',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
-                            <a href="<?php echo Yii::app()->createUrl('admin/users/deletecomment',array('id' => $item->id)); ?>" class="action delete delete-page confirm-box"></a>
+                        <?php if($item->permissionLevel() > CurUser::get()->permissionLvl() || (!empty($item->user) && $item->user->id == Yii::app()->getUser()->id)):
+                            $params = array();
+                            $params['id'] = $item->id;
+                            if(!empty($usr)): $params['usr'] = $usr; endif;
+                            if(!empty($ip)): $params['ip'] = $ip; endif;
+                            if(!empty($bid)) : $params['bid'] = $bid; endif;
+                            ?>
+                            <a href="<?php echo Yii::app()->createUrl('admin/users/editcomment',$params); ?>" class="action edit edit-page"></a>
+                            <a href="<?php echo Yii::app()->createUrl('admin/users/deletecomment',$params); ?>" class="action delete delete-page confirm-box"></a>
                         <?php endif; ?>
                     </div>
                 </div><!--/list-row-->
             <?php endforeach;?>
         </div><!--/content-->
+
+        <?php $params = array(); ?>
 
         <?php if(CPager::getInstance()->getTotalPages() > 1): ?>
             <div class="pagination">

@@ -156,22 +156,25 @@
                         <td class="label"><?php echo $form->labelEx($model,'shop_vat_code'); ?></td>
                         <td class="value"><?php echo $form->textField($model,'shop_vat_code',array('placeholder' => __a('VAT code'))); ?></td>
                     </tr>
-                    <tr>
-                        <td class="line-separation label"><span></span></td>
-                        <td class="value"></td>
-                    </tr>
-                    <tr>
-                        <td class="label"><?php echo $form->labelEx($model,'last_visit_time'); ?></td>
-                        <td class="value"><?php echo $form->textField($model,'last_visit_time',array('disabled' => 'disabled', 'value' => date('Y-m-d H:i:s'))); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label"><?php echo $form->labelEx($model,'last_ip'); ?></td>
-                        <td class="value"><?php echo $form->textField($model,'last_ip',array('disabled' => 'disabled')); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="label"><?php echo $form->labelEx($model,'ip_list'); ?></td>
-                        <td class="value"><?php echo $form->textArea($model,'ip_list',array('disabled' => 'disabled')); ?></td>
-                    </tr>
+                    <?php if(!$model->isNewRecord): ?>
+                        <tr>
+                            <td class="line-separation label"><span></span></td>
+                            <td class="value"></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $form->labelEx($model,'last_visit_time'); ?></td>
+                            <?php $lastVisit = !empty($model->last_visit_time) ? date('Y-m-d H:i:s',$model->last_visit_time) : ''; ?>
+                            <td class="value"><?php echo $form->textField($model,'last_visit_time',array('disabled' => 'disabled', 'value' => $la)); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $form->labelEx($model,'last_ip'); ?></td>
+                            <td class="value"><?php echo $form->textField($model,'last_ip',array('disabled' => 'disabled')); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><?php echo $form->labelEx($model,'ip_list'); ?></td>
+                            <td class="value"><?php echo $form->textArea($model,'ip_list',array('disabled' => 'disabled')); ?></td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
                         <td class="label">&nbsp;</td>
                         <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>

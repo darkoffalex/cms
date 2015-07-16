@@ -23,12 +23,29 @@ class UserEx extends User
         return parent::model($className);
     }
 
+    /**
+     * Adding a new IP
+     * @param $ip
+     */
+    public function addVisitIp($ip)
+    {
+        $ipsStr = $this->ip_list;
+        $ipsArr = explode("\n",$ipsStr);
+
+        if(!in_array($ip,$ipsArr)){
+            $ipsArr[] = $ip;
+        }
+
+        $ipsStr = implode("\n",$ipsArr);
+        $this->ip_list = $ipsStr;
+    }
+
 
     /**
      * Get all users which role's permission level is weaker than specified
      * @param $level
-     * @param $forDropDowns
-     * @return array
+     * @param bool $forDropDowns
+     * @return array|UserEx[]
      */
     public function findAllWithPermissionLvlWeaker($level, $forDropDowns = false)
     {
@@ -46,6 +63,7 @@ class UserEx extends User
 
             //if user permission level weaker - add ti result array
             if(!empty($user->role) && $user->role->permission_level > $level){
+
                 $result[] = $user;
             }
         }

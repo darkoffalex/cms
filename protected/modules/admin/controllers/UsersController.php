@@ -79,6 +79,7 @@ class UsersController extends ControllerAdmin
                 //reassigning password
                 $user->password = !empty($post['password']) ? md5($post['password']) : $oldPassword;
                 $user->updated_time = time();
+                $user->updated_by_id = Yii::app()->getUser()->id;
 
                 //uploading avatar and photo
                 $user->avatar = CUploadedFile::getInstance($user,'avatar');
@@ -155,7 +156,9 @@ class UsersController extends ControllerAdmin
 
                 $user->password = md5($post['password']);
                 $user->created_time = time();
+                $user->created_by_id = Yii::app()->getUser()->id;
                 $user->updated_time = time();
+                $user->updated_by_id = Yii::app()->getUser()->id;
 
                 //uploading avatar and photo
                 $user->avatar = CUploadedFile::getInstance($user,'avatar');
@@ -522,8 +525,11 @@ class UsersController extends ControllerAdmin
         $this->render('comments_list',array('items' => $items, 'usr' => $usr, 'ip' => $ip, 'bid' => $bid, 'blocks' => $blocks));
     }
 
-
-    public function actionAddComment()
+    /**
+     * Adding new comment
+     * @param null $bid
+     */
+    public function actionAddComment($bid = null)
     {
         //register all necessary styles
         Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
@@ -541,14 +547,164 @@ class UsersController extends ControllerAdmin
         //get post request
         $post = Yii::app()->request->getPost('CommentEx',array());
 
+        //if got post
         if(!empty($post)){
-            debugvar($post);
-            //TODO: implement comment adding
-            exit();
+
+            //main attributes
+            $comment->attributes = $post;
+
+            //if valid form
+            if($comment->validate())
+            {
+                //get permission level and id of assignee-user
+                $ownerUserLevel = !empty($comment->user->role) ? $comment->user->role->permission_level : PHP_INT_MAX;
+                $ownerUserId = !empty($comment->user_id)? $comment->user_id : null;
+
+                //if user assigning comment to user, that have weaker priority, or if user assigning comment to himself
+                if(CurUser::get()->permissionLvl() < $ownerUserLevel || Yii::app()->getUser()->id == $ownerUserId)
+                {
+                    //stats attributes
+                    $comment->created_by_id = Yii::app()->getUser()->id;
+                    $comment->updated_by_id = Yii::app()->getUser()->id;
+                    $comment->user_ip = findUserIP();
+                    $comment->created_time = time();
+                    $comment->updated_time = time();
+                    $ok = $comment->save();
+
+                    if($ok)
+                    {
+                        //success message
+                        Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+
+                        //back to comment list
+                        $params = array();
+                        $params['bid'] = $comment->content_item_id;
+                        $this->redirect(Yii::app()->createUrl('admin/users/comments',$params));
+                    }
+                    else
+                    {
+                        //error message
+                        Yii::app()->user->setFlash('error',__a('Error : Unknown error'));
+                    }
+                }else{
+                    //error message
+                    Yii::app()->user->setFlash('error',__a('Error : Access denied'));
+                }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
         }
 
-        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks));
+        //render form
+        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks, 'selected' => $bid));
+    }
 
+    /**
+     * Comment editing
+     * @param $id
+     */
+    public function actionEditComment($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //new comment
+        $comment = CommentEx::model()->findByPk($id);
+
+        //users and blocks
+        $users = UserEx::model()->findAllWithPermissionLvlWeaker(CurUser::get()->permissionLvl(),true);
+        $users = array('' => __a('-Guest-'), Yii::app()->getUser()->id => __a('-Current user-')) + $users;
+        $blocks = ContentItemEx::model()->dropDownListOrderedByCats();
+
+        //get post request
+        $post = Yii::app()->request->getPost('CommentEx',array());
+
+        //if got post
+        if(!empty($post)){
+
+            //main attributes
+            $comment->attributes = $post;
+
+            //if valid form
+            if($comment->validate())
+            {
+                //get permission level and id of assignee-user
+                $ownerUserLevel = !empty($comment->user->role) ? $comment->user->role->permission_level : PHP_INT_MAX;
+                $ownerUserId = !empty($comment->user_id)? $comment->user_id : null;
+
+                //if user assigning comment to user, that have weaker priority, or if user assigning comment to himself
+                if(CurUser::get()->permissionLvl() < $ownerUserLevel || Yii::app()->getUser()->id == $ownerUserId)
+                {
+                    //stats attributes
+                    $comment->updated_by_id = Yii::app()->getUser()->id;
+                    $comment->updated_time = time();
+                    $comment->user_ip = findUserIP();
+                    $ok = $comment->update();
+
+                    if($ok)
+                    {
+                        //success message
+                        Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+                    }
+                    else
+                    {
+                        //error message
+                        Yii::app()->user->setFlash('error',__a('Error : Unknown error'));
+                    }
+                }else{
+                    //error message
+                    Yii::app()->user->setFlash('error',__a('Error : Access denied'));
+                }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
+        }
+
+        //render form
+        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks));
+    }
+
+    /**
+     * Deleting comments (and back to filtered list)
+     * @param $id
+     * @param null $usr
+     * @param null $ip
+     * @param null $bid
+     * @throws CHttpException
+     */
+    public function actionDeleteComment($id, $usr = null, $ip = null, $bid = null)
+    {
+        $comment = CommentEx::model()->findByPk((int)$id);
+
+        //if comment not found, or we trying delete comments of higher priority, our self level users
+        if(empty($comment) || $comment->permissionLevel() < CurUser::get()->permissionLvl()){
+
+            //exception
+            throw new CHttpException(404);
+
+        }
+        //and if self-level user is not a current user
+        elseif($comment->permissionLevel() == CurUser::get()->permissionLvl() && $comment->user_id != Yii::app()->getUser()->id)
+        {
+            //exception
+            throw new CHttpException(404);
+        }
+
+        //filtration params
+        $params = array();
+        if(!empty($usr)): $params['usr'] = $usr; endif;
+        if(!empty($ip)): $params['ip'] = $ip; endif;
+        if(!empty($bid)) : $params['bid'] = $bid; endif;
+
+        //delete
+        $comment->delete();
+
+        //back to list
+        $this->redirect(Yii::app()->createUrl('admin/users/comments',$params));
     }
 
 }
