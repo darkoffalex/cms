@@ -38,7 +38,7 @@
 
             <ul class="user-open">
                 <li><a href="<?php echo Yii::app()->createUrl('admin/main/logout'); ?>"><?php echo __a('Logout'); ?></a><span class="icon out"></span></li>
-                <li><a href="#"><?php echo __a('User info'); ?></a><span class="icon pencil"></span></li>
+                <li><a href="<?php echo Yii::app()->createUrl('admin/users/edit',array('id' => Yii::app()->getUser()->id)); ?>"><?php echo __a('User info'); ?></a><span class="icon pencil"></span></li>
             </ul>
             <?php $this->widget('admin.widgets.Lang'); ?>
         </div><!--/wrapper-->
