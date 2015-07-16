@@ -134,7 +134,7 @@ class UserEx extends User
 
 
     /**
-     * Override for file validation
+     * Override for validation
      * @return array
      */
     public function rules()

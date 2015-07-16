@@ -707,4 +707,44 @@ class UsersController extends ControllerAdmin
         $this->redirect(Yii::app()->createUrl('admin/users/comments',$params));
     }
 
+    /******************************************* S U B S C R I P T I O N **********************************************/
+
+    /**
+     * List all subscriptions
+     * @param int $page
+     * @param null $email
+     */
+    public function actionSubscription($page = 1, $email = null)
+    {
+        //get all subscriptions
+        $subscriptions = SubscriptionEx::model()->findAll(array('order' => 'created_time DESC'));
+
+        //paginate items
+        $perPage = Constants::PER_PAGE;
+        $items = CPager::getInstance($subscriptions,$perPage,$page)->getPreparedArray();
+
+        $this->render('subscription_list',array('items' => $items, 'email' => $email));
+    }
+
+    public function actionSubscribe()
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $sub = new Subscription();
+        $statuses = Constants::statusList();
+
+        $post = Yii::app()->request->getPost('Subscription',array());
+
+        if(!empty($post)){
+            debugvar($post);
+            exit();
+            //TODO: validate and subscribe
+        }
+
+        $this->render('subscription_edit',array('model' => $sub, 'statuses' => $statuses));
+    }
+
 }
