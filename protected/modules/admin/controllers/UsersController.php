@@ -665,7 +665,7 @@ class UsersController extends ControllerAdmin
         }
 
         //render form
-        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks));
+        $this->render('comments_edit',array('model' => $comment, 'users' => $users, 'blocks' => $blocks, 'selected' => null));
     }
 
     /**

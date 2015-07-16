@@ -12,6 +12,7 @@
     <link href="<?php echo $this->assets; ?>/css/jquery-ui.css" rel="stylesheet">
 
     <link href="<?php echo $this->assets; ?>/js/imperavi-redactor/redactor.css" rel="stylesheet">
+    <link href="<?php echo $this->assets; ?>/js/emojiarea/jquery.emojiarea.css" rel="stylesheet">
 
     <script src="<?php echo $this->assets; ?>/js/jquery-1.11.2.min.js"></script>
     <script src="<?php echo $this->assets; ?>/js/jquery-ui.min.js"></script>
@@ -57,6 +58,11 @@
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
+
+<script src="<?php echo $this->assets; ?>/js/emojiarea/jquery.emojiarea.js"></script>
+<script src="<?php echo $this->assets; ?>/js/emojiarea/smiles.js"></script>
+<script>$.emojiarea.path = '<?php echo Yii::app()->baseUrl.'/smiles'; ?>';</script>
+<script>$('.smile-area').emojiarea({wysiwyg: false, buttonLabel:'<?php echo __a('Smiles'); ?>'});</script>
 
 <script src="<?php echo $this->assets; ?>/js/imperavi-redactor/redactor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/imperavi-redactor/plugins/fontsize/fontsize.js"></script>

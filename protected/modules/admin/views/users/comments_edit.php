@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'text'); ?></td>
-                    <td class="value"><?php echo $form->textArea($model,'text'); ?></td>
+                    <td class="value"><?php echo $form->textArea($model,'text',array('class' => 'smile-area')); ?></td>
                 </tr>
                 <tr>
                     <td class="line-separation label"><span></span></td>

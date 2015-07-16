@@ -164,7 +164,7 @@
                         <tr>
                             <td class="label"><?php echo $form->labelEx($model,'last_visit_time'); ?></td>
                             <?php $lastVisit = !empty($model->last_visit_time) ? date('Y-m-d H:i:s',$model->last_visit_time) : ''; ?>
-                            <td class="value"><?php echo $form->textField($model,'last_visit_time',array('disabled' => 'disabled', 'value' => $la)); ?></td>
+                            <td class="value"><?php echo $form->textField($model,'last_visit_time',array('disabled' => 'disabled', 'value' => $lastVisit)); ?></td>
                         </tr>
                         <tr>
                             <td class="label"><?php echo $form->labelEx($model,'last_ip'); ?></td>
