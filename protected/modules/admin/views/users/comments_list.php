@@ -14,7 +14,7 @@
                 <form method="get" action="<?php echo Yii::app()->createUrl('admin/users/comments'); ?>" class="special-filter-form w750">
                     <button type="submit" class="filter-submit"></button>
                     <select name="bid" class="float-left filter-drop-down">
-                        <option value="0"><?php echo __a('Content block'); ?></option>
+                        <option value="0"><?php echo __a('All content'); ?></option>
                         <?php foreach($blocks as $id => $name): ?>
                             <option <?php if($bid == $id): ?> selected <?php endif; ?> <?php if(!is_numeric($id)): ?> disabled <?php endif; ?> <?php if(!is_numeric($id)): ?> style="font-weight: bolder;" <?php endif; ?> value="<?php echo $id; ?>"><?php echo $name; ?></option>
                         <?php endforeach; ?>
