@@ -67,6 +67,16 @@
                         <td class="label"><?php echo $form->labelEx($model,'user_ip'); ?></td>
                         <td class="value"><?php echo $form->textField($model,'user_ip', array('disabled' => 'disabled')); ?></td>
                     </tr>
+                    <tr>
+                        <td class="label"><?php echo __a('Created') ?></td>
+                        <td class="value"><?php echo $form->textField($model,'created_time', array('disabled' => 'disabled', 'value' => date('Y-m-d H:i:s',$model->created_time))); ?></td>
+                    </tr>
+                    <?php if(!empty($model->updated_time) && $model->updated_time != $model->created_time): ?>
+                        <tr>
+                            <td class="label"><?php echo __a('Modified') ?></td>
+                            <td class="value"><?php echo $form->textField($model,'updated_time', array('disabled' => 'disabled', 'value' => date('Y-m-d H:i:s',$model->updated_time))); ?></td>
+                        </tr>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <tr>
                     <td class="label">&nbsp;</td>

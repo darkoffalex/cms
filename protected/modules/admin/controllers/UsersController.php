@@ -835,4 +835,14 @@ class UsersController extends ControllerAdmin
         $this->render('subscription_edit',array('model' => $sub, 'statuses' => $statuses));
     }
 
+    /**
+     * Delete subscription and back to list
+     * @param $id
+     */
+    public function actionSubscribeDelete($id)
+    {
+        SubscriptionEx::model()->deleteByPk((int)$id);
+        $this->redirect(Yii::app()->getRequest()->urlReferrer);
+    }
+
 }
