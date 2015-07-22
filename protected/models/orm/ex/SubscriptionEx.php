@@ -21,6 +21,7 @@ class SubscriptionEx extends Subscription
     public function attributeLabels()
     {
         $labels = parent::attributeLabels();
+        $labels['period_in_seconds'] = 'Period (days)';
 
         foreach($labels as $label => $value)
         {
@@ -28,6 +29,11 @@ class SubscriptionEx extends Subscription
         }
 
         return $labels;
+    }
+
+    public function periodInDays()
+    {
+        return ($this->period_in_seconds / 86400);
     }
 
     /**
@@ -40,6 +46,9 @@ class SubscriptionEx extends Subscription
 
         //email validation
         $rules[] = array('email', 'email');
+
+        //email must be unique (ignoring this item while updating)
+        $rules[] = array('email', 'unique', 'caseSensitive' => true);
 
         return $rules;
     }

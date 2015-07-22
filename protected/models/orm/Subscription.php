@@ -12,6 +12,9 @@
  * @property integer $status_id
  * @property string $subscriber_ip
  * @property integer $created_time
+ * @property integer $updated_time
+ * @property integer $created_by_id
+ * @property integer $updated_by_id
  */
 class Subscription extends CActiveRecord
 {
@@ -31,12 +34,12 @@ class Subscription extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email', 'required'),
-			array('period_in_seconds, last_time_send, status_id, created_time', 'numerical', 'integerOnly'=>true),
+			array('email, period_in_seconds', 'required'),
+			array('period_in_seconds, last_time_send, status_id, created_time, updated_time, created_by_id, updated_by_id', 'numerical', 'integerOnly'=>true),
 			array('special_attributes, subscriber_ip', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, email, period_in_seconds, special_attributes, last_time_send, status_id, subscriber_ip, created_time', 'safe', 'on'=>'search'),
+			array('id, email, period_in_seconds, special_attributes, last_time_send, status_id, subscriber_ip, created_time, updated_time, created_by_id, updated_by_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +68,9 @@ class Subscription extends CActiveRecord
 			'status_id' => 'Status',
 			'subscriber_ip' => 'Subscriber Ip',
 			'created_time' => 'Created Time',
+			'updated_time' => 'Updated Time',
+			'created_by_id' => 'Created By',
+			'updated_by_id' => 'Updated By',
 		);
 	}
 
@@ -94,6 +100,9 @@ class Subscription extends CActiveRecord
 		$criteria->compare('status_id',$this->status_id);
 		$criteria->compare('subscriber_ip',$this->subscriber_ip,true);
 		$criteria->compare('created_time',$this->created_time);
+		$criteria->compare('updated_time',$this->updated_time);
+		$criteria->compare('created_by_id',$this->created_by_id);
+		$criteria->compare('updated_by_id',$this->updated_by_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

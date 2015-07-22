@@ -716,16 +716,25 @@ class UsersController extends ControllerAdmin
      */
     public function actionSubscription($page = 1, $email = null)
     {
-        //get all subscriptions
-        $subscriptions = SubscriptionEx::model()->findAll(array('order' => 'created_time DESC'));
+        $conditionAttr = array();
+        if(!empty($email)){
+            $conditionAttr['email'] = $email;
+        }
+
+        //get all subscriptions (filter by email if needed)
+        $subscriptions = SubscriptionEx::model()->findAllByAttributes($conditionAttr,array('order' => 'created_time DESC'));
 
         //paginate items
         $perPage = Constants::PER_PAGE;
         $items = CPager::getInstance($subscriptions,$perPage,$page)->getPreparedArray();
 
+        //render subscription list
         $this->render('subscription_list',array('items' => $items, 'email' => $email));
     }
 
+    /**
+     * Add new subscription
+     */
     public function actionSubscribe()
     {
         //register all necessary styles
@@ -733,15 +742,94 @@ class UsersController extends ControllerAdmin
         //register all necessary scripts
         Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
 
-        $sub = new Subscription();
+        $sub = new SubscriptionEx();
         $statuses = Constants::statusList();
 
-        $post = Yii::app()->request->getPost('Subscription',array());
+        //try get post-request
+        $post = Yii::app()->request->getPost('SubscriptionEx',array());
+
+        //if got something from post-request
+        if(!empty($post)){
+            //set main attributes
+            $sub->attributes = $post;
+
+            //if data is valid
+            if($sub->validate())
+            {
+                //save new subscription
+                $sub->period_in_seconds = (abs((int)$post['period_in_seconds']) * 86400);
+                $sub->subscriber_ip = findUserIP();
+                $sub->created_time = time();
+                $sub->updated_time = time();
+                $sub->created_by_id = Yii::app()->getUser()->id;
+                $sub->updated_by_id = Yii::app()->getUser()->id;
+                $sub->last_time_send = time(); //start counting from this moment
+                $ok = $sub->save();
+
+                //out success message if saved
+                if($ok){
+                    //success message
+                    Yii::app()->user->setFlash('success',__a('Success : All data saved'));
+                    //back to list
+                    $this->redirect(Yii::app()->createUrl('admin/users/subscription'));
+                }else{
+                    //error message
+                    Yii::app()->user->setFlash('error',__a('Error : Unknown error'));
+                }
+            }else{
+                //error message
+                Yii::app()->user->setFlash('error',__a('Error : Some of fields not valid'));
+            }
+        }
+
+        $this->render('subscription_edit',array('model' => $sub, 'statuses' => $statuses));
+    }
+
+    /**
+     * Subscription edit
+     * @param $id
+     * @throws CDbException
+     * @throws CHttpException
+     */
+    public function actionSubscribeEdit($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $sub = SubscriptionEx::model()->findByPk((int)$id);
+
+        if(empty($sub)){
+            throw new CHttpException(404);
+        }
+
+        $statuses = Constants::statusList();
+
+        //try get post-request
+        $post = Yii::app()->request->getPost('SubscriptionEx',array());
 
         if(!empty($post)){
-            debugvar($post);
-            exit();
-            //TODO: validate and subscribe
+            //set main attributes
+            $sub->attributes = $post;
+
+            if($sub->validate())
+            {
+                //save new subscription
+                $sub->period_in_seconds = (abs((int)$post['period_in_seconds']) * 86400);
+                $sub->updated_time = time();
+                $sub->updated_by_id = Yii::app()->getUser()->id;
+                $ok = $sub->update();
+
+                //out success message if saved
+                if($ok){
+                    //success message
+                    Yii::app()->user->setFlash('success',__a('Success : All data saved'));
+                }else{
+                    //error message
+                    Yii::app()->user->setFlash('error',__a('Error : Unknown error'));
+                }
+            }
         }
 
         $this->render('subscription_edit',array('model' => $sub, 'statuses' => $statuses));

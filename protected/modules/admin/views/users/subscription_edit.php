@@ -29,8 +29,8 @@
                     <td class="value"><?php echo $form->dropDownList($model,'status_id',$statuses); ?></td>
                 </tr>
                 <tr>
-                    <td class="label"><?php echo __a('Period (days)'); ?></td>
-                    <td class="value"><?php echo $form->textField($model,'period_in_seconds'); ?></td>
+                    <td class="label"><?php echo $form->labelEx($model,'period_in_seconds'); ?></td>
+                    <td class="value"><?php echo $form->textField($model,'period_in_seconds', array('value' => !$model->isNewRecord ? $model->periodInDays() : '', 'class' => 'numeric-input-block')); ?></td>
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'last_time_send'); ?></td>
@@ -49,6 +49,7 @@
                     <td class="label">&nbsp;</td>
                     <td class="value">
                         <?php echo $form->error($model,'email',array('class'=>'error')); ?>
+                        <?php echo $form->error($model,'period_in_seconds',array('class'=>'error')); ?>
                     </td>
                 </tr>
             </table>

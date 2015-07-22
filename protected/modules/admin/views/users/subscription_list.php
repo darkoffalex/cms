@@ -7,7 +7,7 @@
         <h1><?php echo __a('Subscription'); ?></h1>
         <ul class="actions">
             <li>
-                <form method="get" action="<?php echo Yii::app()->createUrl('admin/users/list'); ?>" class="special-filter-form">
+                <form method="get" action="<?php echo Yii::app()->createUrl('admin/users/subscription'); ?>" class="special-filter-form">
                     <button type="submit" class="filter-submit"></button>
                     <input type="text" name="email" class="float-left filter-drop-down" value="<?php echo $email; ?>" placeholder="<?php echo __a('Email'); ?>">
                 </form>
@@ -21,7 +21,7 @@
             <div class="list-row title">
                 <div class="cell"><?php echo __a('ID'); ?></div>
                 <div class="cell"><?php echo __a('Email'); ?></div>
-                <div class="cell"><?php echo __a('Period'); ?></div>
+                <div class="cell"><?php echo __a('Period (days)'); ?></div>
                 <div class="cell"><?php echo __a('IP address'); ?></div>
                 <div class="cell action"><?php echo __a('Actions'); ?></div>
             </div><!--/list-row-->
@@ -30,7 +30,7 @@
                 <div class="list-row h60">
                     <div class="cell"><?php echo $item->id; ?></div>
                     <div class="cell"><?php echo $item->email; ?></div>
-                    <div class="cell"><?php echo $item->period_in_seconds; ?></div>
+                    <div class="cell"><?php echo $item->periodInDays(); ?></div>
                     <div class="cell"><?php echo $item->subscriber_ip; ?></div>
                     <div class="cell action">
                         <a href="<?php echo Yii::app()->createUrl('admin/users/subscribeedit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
