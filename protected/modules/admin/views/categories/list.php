@@ -15,6 +15,7 @@
         <div class="title-table">
             <div class="cell drag-drop"><?php echo __a('Drag and Drop'); ?></div>
             <div class="cell"><?php echo __a('Label'); ?></div>
+            <div class="cell sequen"><?php echo __a('Items'); ?></div>
             <div class="cell sequen"><?php echo __a('Order'); ?></div>
             <div class="cell type"><?php echo __a('Template'); ?></div>
             <div class="cell action"><?php echo __a('Actions');?></div>

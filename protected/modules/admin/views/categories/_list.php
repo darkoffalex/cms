@@ -12,7 +12,10 @@
                 <?php foreach($items as $item): ?>
                     <?php if($item->id == $index): ?>
                         <div class="row root" data-id="<?php echo $item->id; ?>">
-                            <div class="name"><?php echo $item->label; ?></div>
+                            <div class="name">
+                                <a href="<?php echo Yii::app()->createUrl('admin/blocks/list',array('cid' => $item->id)); ?>"><?php echo $item->label; ?></a>
+                            </div>
+                            <div class="sequen"><?php echo count($item->contentItems); ?></div>
                             <div class="sequen"></div>
                             <div class="type"><?php echo $item->template_name; ?></div>
                             <div class="action">
@@ -22,7 +25,10 @@
                         </div><!--/row root-->
                     <?php else:?>
                         <div class="row" data-id="<?php echo $item->id; ?>" data-parent="<?php echo $item->parent_id; ?>">
-                            <div class="name"><?php echo $item->label; ?></div>
+                            <div class="name">
+                                <a href="<?php echo Yii::app()->createUrl('admin/blocks/list',array('cid' => $item->id)); ?>"><?php echo $item->label; ?></a>
+                            </div>
+                            <div class="sequen"><?php echo count($item->contentItems); ?></div>
                             <div class="sequen">
                                 <?php if(!empty($item->parent) && count($item->parent->children) > 1): ?>
                                     <a href="<?php echo Yii::app()->createUrl('admin/categories/move',array('id' => $item->id, 'dir' => 'up')); ?>" class="go-up ajax"><span class="ficoned arrow-up"></span></a>

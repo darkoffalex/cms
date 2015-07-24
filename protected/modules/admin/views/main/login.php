@@ -16,7 +16,7 @@
                     <div class="errorMessage"><?php echo $form->error($form_mdl,'password'); ?></div>
                 </div>
                 <input type="submit" value="<?php echo __a("Enter"); ?>" />
-                <a href="#"><?php echo __a('I forgot my password'); ?></a>
+<!--                <a href="#">--><?php //echo __a('I forgot my password'); ?><!--</a>-->
             <?php $this->endWidget(); ?>
         </div><!--/login-box-->
     </div><!--/login-middle-->
