@@ -85,6 +85,18 @@ class AdminModule extends CWebModule
             ),
 
             array(
+                'url' => Yii::app()->createUrl('admin/store/orders'),
+                'icon' => '',
+                'html_class' => 'icon products',
+                'title' => 'Store',
+
+                'sub' => array(
+                    array('title' => 'Orders', 'url' => Yii::app()->createUrl('admin/store/orders')),
+                    array('title' => 'Settings', 'url' => Yii::app()->createUrl('admin/store/settings'))
+                ),
+            ),
+
+            array(
                 'url' => Yii::app()->createUrl('admin/users/index'),
                 'icon' => '',
                 'html_class' => 'icon user',
