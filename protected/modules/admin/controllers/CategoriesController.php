@@ -341,7 +341,7 @@ class CategoriesController extends ControllerAdmin
                     $transaction->commit();
 
                     //success message
-                    Yii::app()->user->setFlash('success',__a('Success: All data saved'));
+                    Yii::app()->user->setFlash('success',__a('Success : All data saved'));
                 }
                 catch(Exception $ex)
                 {

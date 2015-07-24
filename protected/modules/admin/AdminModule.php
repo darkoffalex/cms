@@ -92,6 +92,7 @@ class AdminModule extends CWebModule
 
                 'sub' => array(
                     array('title' => 'Orders', 'url' => Yii::app()->createUrl('admin/store/orders')),
+                    array('title' => 'Delivery', 'url' => Yii::app()->createUrl('admin/store/delivery')),
                     array('title' => 'Settings', 'url' => Yii::app()->createUrl('admin/store/settings'))
                 ),
             ),

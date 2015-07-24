@@ -1345,6 +1345,10 @@ body
     background-color: #ff0000;
 }
 
+.popup-box > .popup-content .message.red-warn {
+    color: #D73636;
+}
+
 .filter-drop-down
 {
     min-width: 220px;

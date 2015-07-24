@@ -51,6 +51,46 @@ $(document).on("click", ".confirm-box", function(){
 });
 
 /**
+ * Shows modal block box (when you need to show block message, to avoid deleting of related items)
+ */
+$(document).on("click", ".block-box", function(){
+    var href = $(this).attr('href');
+
+    var message = 'This option is blocked';
+    var msg = $('#blocking-message').val();
+
+    if(typeof msg !== 'undefined'){
+        message = msg;
+    }
+
+    //random id part
+    var randDialogIndex = Math.floor((Math.random() * 9999) + 1);
+
+    //if should use ajax link
+    var ajax_class = $(this).hasClass('ajax') ? 'ajax' : '';
+
+    //block preset
+    var markup = [
+        '<div class="popup-box">',
+        '<div class="popup-content">',
+        '<a class="popup-close" href="#"></a><span class="message red-warn">'+message+'</span>',
+        '<a id="'+'cancel_'+randDialogIndex+'" href="#" class="button cancel">OK</a>',
+        '</div></div>'
+    ].join('');
+
+    //append hidden
+    $(markup).hide().appendTo('body');
+
+    //show
+    $("body").css({"overflow":"hidden"});
+    $('.popup-box').fadeIn();
+    var top = ($(window).height())/2-$(".popup-box > .popup-content").height() - 150;
+    $(".popup-box > .popup-content").animate({"margin-top":top+"px"},300);
+
+    return false;
+});
+
+/**
  * Hides dialog-box
  */
 var hide_dialog = function(){

@@ -39,6 +39,19 @@ class OrderDeliveryEx extends OrderDelivery
         return $trl;
     }
 
+    /**
+     * Override for validation
+     * @return array
+     */
+    public function rules()
+    {
+        return array(
+            array('label', 'required'),
+            array('status_id, created_by_id, updated_by_id, created_time, updated_time', 'numerical', 'integerOnly'=>true),
+            array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time', 'safe', 'on'=>'search'),
+            array('price','numerical','integerOnly' => false)
+        );
+    }
 
     /**
      * Override to translate all labels

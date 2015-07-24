@@ -17,9 +17,10 @@
  * @property integer $updated_time
  *
  * The followings are the available model relations:
- * @property ImageOfTree[] $imageOfTrees
- * @property ImageOfValue[] $imageOfValues
  * @property ImageTrl[] $imageTrls
+ * @property ImageOfValue[] $imageOfValues
+ * @property ImageOfTree[] $imageOfTrees
+ * @property OrderItem[] $orderItems
  */
 class Image extends CActiveRecord
 {
@@ -55,9 +56,10 @@ class Image extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'imageOfTrees' => array(self::HAS_MANY, 'ImageOfTree', 'image_id'),
-			'imageOfValues' => array(self::HAS_MANY, 'ImageOfValue', 'image_id'),
 			'imageTrls' => array(self::HAS_MANY, 'ImageTrl', 'image_id'),
+			'imageOfValues' => array(self::HAS_MANY, 'ImageOfValue', 'image_id'),
+			'imageOfTrees' => array(self::HAS_MANY, 'ImageOfTree', 'image_id'),
+			'orderItems' => array(self::HAS_MANY, 'OrderItem', 'image_id'),
 		);
 	}
 

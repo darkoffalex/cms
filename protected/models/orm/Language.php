@@ -12,16 +12,16 @@
  * @property integer $priority
  *
  * The followings are the available model relations:
- * @property ContentItemFieldTrl[] $contentItemFieldTrls
- * @property ContentItemFieldValueTrl[] $contentItemFieldValueTrls
- * @property ContentItemTrl[] $contentItemTrls
- * @property FileTrl[] $fileTrls
- * @property ImageTrl[] $imageTrls
- * @property MenuTrl[] $menuTrls
  * @property RoleTrl[] $roleTrls
- * @property TranslationTrl[] $translationTrls
  * @property TreeTrl[] $treeTrls
+ * @property ContentItemFieldValueTrl[] $contentItemFieldValueTrls
+ * @property ImageTrl[] $imageTrls
+ * @property FileTrl[] $fileTrls
+ * @property ContentItemFieldTrl[] $contentItemFieldTrls
  * @property WidgetTrl[] $widgetTrls
+ * @property ContentItemTrl[] $contentItemTrls
+ * @property TranslationTrl[] $translationTrls
+ * @property OrderDeliveryTrl[] $orderDeliveryTrls
  */
 class Language extends CActiveRecord
 {
@@ -59,16 +59,16 @@ class Language extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'contentItemFieldTrls' => array(self::HAS_MANY, 'ContentItemFieldTrl', 'lng_id'),
-			'contentItemFieldValueTrls' => array(self::HAS_MANY, 'ContentItemFieldValueTrl', 'lng_id'),
-			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'lng_id'),
-			'fileTrls' => array(self::HAS_MANY, 'FileTrl', 'lng_id'),
-			'imageTrls' => array(self::HAS_MANY, 'ImageTrl', 'lng_id'),
-			'menuTrls' => array(self::HAS_MANY, 'MenuTrl', 'lng_id'),
 			'roleTrls' => array(self::HAS_MANY, 'RoleTrl', 'lng_id'),
-			'translationTrls' => array(self::HAS_MANY, 'TranslationTrl', 'lng_id'),
 			'treeTrls' => array(self::HAS_MANY, 'TreeTrl', 'lng_id'),
+			'contentItemFieldValueTrls' => array(self::HAS_MANY, 'ContentItemFieldValueTrl', 'lng_id'),
+			'imageTrls' => array(self::HAS_MANY, 'ImageTrl', 'lng_id'),
+			'fileTrls' => array(self::HAS_MANY, 'FileTrl', 'lng_id'),
+			'contentItemFieldTrls' => array(self::HAS_MANY, 'ContentItemFieldTrl', 'lng_id'),
 			'widgetTrls' => array(self::HAS_MANY, 'WidgetTrl', 'lng_id'),
+			'contentItemTrls' => array(self::HAS_MANY, 'ContentItemTrl', 'lng_id'),
+			'translationTrls' => array(self::HAS_MANY, 'TranslationTrl', 'lng_id'),
+			'orderDeliveryTrls' => array(self::HAS_MANY, 'OrderDeliveryTrl', 'lng_id'),
 		);
 	}
 

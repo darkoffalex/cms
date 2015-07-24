@@ -89,6 +89,7 @@
 <input type="hidden" id="confirmation-question" value="<?php echo __a('Are you sure ?'); ?>">
 <input type="hidden" id="confirmation-yes" value="<?php echo __a('Yes');?>">
 <input type="hidden" id="confirmation-no" value="<?php echo __a('Cancel');?>">
+<input type="hidden" id="blocking-message" value="<?php echo __a('This item is used, direct deleting is not save. Please delete related data first.') ?>">
 
 <?php $success = Yii::app()->user->getFlash('success',null); ?>
 <?php $error = Yii::app()->user->getFlash('error',null); ?>
