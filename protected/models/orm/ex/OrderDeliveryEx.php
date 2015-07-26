@@ -47,8 +47,8 @@ class OrderDeliveryEx extends OrderDelivery
     {
         return array(
             array('label', 'required'),
-            array('status_id, created_by_id, updated_by_id, created_time, updated_time', 'numerical', 'integerOnly'=>true),
-            array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time', 'safe', 'on'=>'search'),
+            array('status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'numerical', 'integerOnly'=>true),
+            array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'safe', 'on'=>'search'),
             array('price','numerical','integerOnly' => false)
         );
     }

@@ -26,7 +26,6 @@
         </div><!--/tab-line-->
 
         <div class="inner-content">
-            <div class="form-zone">
             <?php $form=$this->beginWidget('CActiveForm', array('id' =>'add-form','enableAjaxValidation'=>false,'htmlOptions'=>array('enctype' => 'multipart/form-data'),'clientOptions' => array('validateOnSubmit'=>true))); ?>
                 <div class="tabs">
                     <?php foreach($languages as $index => $lng): ?>
@@ -50,7 +49,28 @@
                     </tr>
                     <tr>
                         <td class="label"><?php echo $form->labelEx($model,'price'); ?></td>
-                        <td class="value"><?php echo $form->textField($model,'price', array('placeholder' => __('0.00'), 'class' => 'numeric-input-price', 'value' => centsToPrice($model->price)));?></td>
+                        <td class="value"><?php echo $form->textField($model,'price', array('placeholder' => __('0.00'), 'class' => 'numeric-input-price', 'value' => !empty($model->price) ? centsToPrice($model->price) : ''));?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $form->labelEx($model,'price_weight_dependency'); ?></td>
+                        <td class="value"><?php echo $form->checkBox($model,'price_weight_dependency');?></td>
+                    </tr>
+                    <tr>
+                        <td class="label top-aligned"><?php echo __a('Weight depending prices'); ?></td>
+                        <td class="value">
+                            <div class="content list smaller">
+                                <div class="list-row title h36">
+                                    <div class="cell"><?php echo __a('Weight') ?></div>
+                                    <div class="cell"><?php echo __a('Price'); ?></div>
+                                    <div class="cell"></div>
+                                </div><!--/list-row-->
+                                <div class="list-row h36">
+                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][0][weight]"></div>
+                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][0][price]"></div>
+                                    <div class="cell no-padding smallest"><a href="#" class="spec-icon delete"></a></div>
+                                </div><!--/list-row-->
+                            </div><!--/content-->
+                        </td>
                     </tr>
                     <tr>
                         <td class="label">&nbsp;</td>
@@ -64,7 +84,6 @@
                     </tr>
                 </table>
             <?php $this->endWidget(); ?>
-            </div>
         </div><!--/inner-content-->
 
     </div><!--/content translate-->
