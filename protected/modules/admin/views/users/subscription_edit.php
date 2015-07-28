@@ -32,6 +32,7 @@
                     <td class="label"><?php echo $form->labelEx($model,'period_in_seconds'); ?></td>
                     <td class="value"><?php echo $form->textField($model,'period_in_seconds', array('value' => !$model->isNewRecord ? $model->periodInDays() : '', 'class' => 'numeric-input-block')); ?></td>
                 </tr>
+                <?php if(!$model->isNewRecord): ?>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'last_time_send'); ?></td>
                     <?php $lts = !empty($model->last_time_send) ? date('Y-m-d H:i:s',$model->last_time_send) : ''; ?>
@@ -41,6 +42,7 @@
                     <td class="label"><?php echo $form->labelEx($model,'subscriber_ip'); ?></td>
                     <td class="value"><?php echo $form->textField($model,'subscriber_ip', array('disabled' => 'disabled')); ?></td>
                 </tr>
+                <?php endif; ?>
                 <tr>
                     <td class="label">&nbsp;</td>
                     <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
