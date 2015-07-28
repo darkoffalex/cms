@@ -15,6 +15,36 @@ class OrderDeliveryEx extends OrderDelivery
         return parent::model($className);
     }
 
+    /**
+     * Sets an array with weight-price dependencies from form table-fields
+     * @param $array
+     */
+    public function setWeightDependencies($array)
+    {
+        $result = array();
+
+        $keys = array_keys($array);
+
+        $weights = !empty($array[$keys[0]]) ? $array[$keys[0]] : array();
+        $prices = !empty($array[$keys[1]]) ? $array[$keys[1]] : array();
+
+        foreach($weights as $index => $weight){
+            if(priceToCents($weight) > 0 && !empty($prices[$index]) && priceToCents($prices[$index]) > 0){
+                $result[priceToCents($weight)] = priceToCents($prices[$index]);
+            }
+        }
+
+        $this->dependency_array = serialize($result);
+    }
+
+    /**
+     * Returns stored dependency array
+     * @return mixed
+     */
+    public function getWeightDependencies()
+    {
+        return is_serialized($this->dependency_array) ? unserialize($this->dependency_array) : array();
+    }
 
     /**
      * Returns or creates trl object
@@ -45,12 +75,15 @@ class OrderDeliveryEx extends OrderDelivery
      */
     public function rules()
     {
-        return array(
-            array('label', 'required'),
-            array('status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'numerical', 'integerOnly'=>true),
-            array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'safe', 'on'=>'search'),
-            array('price','numerical','integerOnly' => false)
-        );
+        $rules = parent::rules();
+
+        foreach($rules as $index => $ruleArr){
+            if(!empty($ruleArr['integerOnly'])){
+                $rules[$index]['integerOnly'] = false;
+            }
+        }
+
+        return $rules;
     }
 
     /**

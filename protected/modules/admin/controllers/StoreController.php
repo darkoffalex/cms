@@ -78,6 +78,7 @@ class StoreController extends ControllerAdmin
                 //try to save all data
                 try{
                     $delivery->price = priceToCents($form['price']);
+                    $delivery->setWeightDependencies($form['wp']);
                     $delivery->created_by_id = Yii::app()->getUser()->id;
                     $delivery->created_time = time();
                     $delivery->updated_by_id = Yii::app()->getUser()->id;
@@ -145,9 +146,6 @@ class StoreController extends ControllerAdmin
         //if got something from post
         if(!empty($form)){
 
-            debugvar($form);
-            exit();
-
             //set main attributes
             $delivery->attributes = $form;
 
@@ -160,6 +158,7 @@ class StoreController extends ControllerAdmin
                 //try to save all data
                 try{
                     $delivery->price = priceToCents($form['price']);
+                    $delivery->setWeightDependencies($form['wp']);
                     $delivery->updated_by_id = Yii::app()->getUser()->id;
                     $delivery->updated_time = time();
                     $delivery-> update();

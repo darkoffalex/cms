@@ -13,6 +13,7 @@
  * @property integer $created_time
  * @property integer $updated_time
  * @property integer $price_weight_dependency
+ * @property string $dependency_array
  *
  * The followings are the available model relations:
  * @property Order[] $orders
@@ -38,9 +39,10 @@ class OrderDelivery extends CActiveRecord
 		return array(
 			array('label', 'required'),
 			array('price, status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'numerical', 'integerOnly'=>true),
+			array('dependency_array', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency', 'safe', 'on'=>'search'),
+			array('id, label, price, status_id, created_by_id, updated_by_id, created_time, updated_time, price_weight_dependency, dependency_array', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +74,7 @@ class OrderDelivery extends CActiveRecord
 			'created_time' => 'Created Time',
 			'updated_time' => 'Updated Time',
 			'price_weight_dependency' => 'Price Weight Dependency',
+			'dependency_array' => 'Dependency Array',
 		);
 	}
 
@@ -102,6 +105,7 @@ class OrderDelivery extends CActiveRecord
 		$criteria->compare('created_time',$this->created_time);
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('price_weight_dependency',$this->price_weight_dependency);
+		$criteria->compare('dependency_array',$this->dependency_array,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -64,13 +64,24 @@
                                     <div class="cell"><?php echo __a('Price'); ?></div>
                                     <div class="cell"></div>
                                 </div><!--/list-row-->
-                                <div class="list-row h36 editable-row">
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][weight][]"></div>
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][price][]"></div>
-                                    <div class="cell no-padding smallest"><a href="#" class="spec-icon delete"></a></div>
-                                </div><!--/list-row-->
+                                <?php $dependencies = $model->getWeightDependencies(); ?>
+                                <?php if(empty($dependencies)): ?>
+                                    <div class="list-row h36 editable-row">
+                                        <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][weight][]"></div>
+                                        <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][price][]"></div>
+                                        <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
+                                    </div><!--/list-row-->
+                                <?php else: ?>
+                                    <?php foreach($dependencies as $weight => $price): ?>
+                                        <div class="list-row h36 editable-row">
+                                            <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="<?php echo centsToPrice($weight); ?>" name="OrderDeliveryEx[wp][weight][]"></div>
+                                            <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="<?php echo centsToPrice($price); ?>" name="OrderDeliveryEx[wp][price][]"></div>
+                                            <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
+                                        </div><!--/list-row-->
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div><!--/content-->
-                            <a href="#" class="spec-icon add table-manage row-add" data-table="#dependency-table"></a>
+                            <a href="#" class="spec-icon add editable-table row-add" data-table="#dependency-table" data-action="yes" data-names="OrderDeliveryEx[wp][weight],OrderDeliveryEx[wp][price]" data-classes="numeric-input-price" data-placeholders="0.00"></a>
                         </td>
                     </tr>
                     <tr>
