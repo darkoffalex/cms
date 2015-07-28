@@ -141,8 +141,12 @@ class StoreController extends ControllerAdmin
         $statuses = Constants::statusList(); //statuses
         $form = Yii::app()->request->getPost('OrderDeliveryEx',null); //get form data
 
+
         //if got something from post
         if(!empty($form)){
+
+            debugvar($form);
+            exit();
 
             //set main attributes
             $delivery->attributes = $form;

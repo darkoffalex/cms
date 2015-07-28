@@ -58,18 +58,19 @@
                     <tr>
                         <td class="label top-aligned"><?php echo __a('Weight depending prices'); ?></td>
                         <td class="value">
-                            <div class="content list smaller">
+                            <div class="content list smaller" id="dependency-table">
                                 <div class="list-row title h36">
                                     <div class="cell"><?php echo __a('Weight') ?></div>
                                     <div class="cell"><?php echo __a('Price'); ?></div>
                                     <div class="cell"></div>
                                 </div><!--/list-row-->
-                                <div class="list-row h36">
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][0][weight]"></div>
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][0][price]"></div>
+                                <div class="list-row h36 editable-row">
+                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][weight][]"></div>
+                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="0.00" value="" name="OrderDeliveryEx[wp][price][]"></div>
                                     <div class="cell no-padding smallest"><a href="#" class="spec-icon delete"></a></div>
                                 </div><!--/list-row-->
                             </div><!--/content-->
+                            <a href="#" class="spec-icon add table-manage row-add" data-table="#dependency-table"></a>
                         </td>
                     </tr>
                     <tr>

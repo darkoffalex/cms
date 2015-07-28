@@ -1320,8 +1320,7 @@ body
 
 
 
-
-
+/*M O D I F I C A T I O N S*/
 
 
 
@@ -1623,4 +1622,12 @@ body
     background-image: url(../images/icon-delete.png);
     background-position: center center;
     background-repeat: no-repeat;
+}
+.spec-icon.add
+{
+    background-image: url(../images/icon-add-dark.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    float: right;
 }

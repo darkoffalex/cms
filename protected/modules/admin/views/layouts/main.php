@@ -58,6 +58,7 @@
 <script src="<?php echo $this->assets; ?>/js/vendor.preloader.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.js"></script>
 <script src="<?php echo $this->assets; ?>/js/vendor.dialog-box.js"></script>
+<script src="<?php echo $this->assets; ?>/js/vendor.table-manager.js"></script>
 
 <script src="<?php echo $this->assets; ?>/js/emojiarea/jquery.emojiarea.js"></script>
 <script src="<?php echo $this->assets; ?>/js/emojiarea/smiles.js"></script>
