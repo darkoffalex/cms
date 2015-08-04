@@ -17,9 +17,9 @@ class OrderDeliveryEx extends OrderDelivery
 
     /**
      * Returns price of delivery (depending on weight, if needed)
-     * @param null $weight
-     * @param bool $format
-     * @param bool $smaller
+     * @param null $weight - weight
+     * @param bool $format - format output price
+     * @param bool $smaller - get price of smaller weight, if weight is between two variants
      * @return int|string
      */
     public function getPrice($weight = null, $format = false, $smaller = false)
