@@ -157,7 +157,7 @@ class ContentItemEx extends ContentItem
                         case Constants::FIELD_TYPE_NUMERIC:
                         case Constants::FIELD_TYPE_PRICE:
                         case Constants::FIELD_TYPE_DATE:
-                            $value = $valueObj->numeric_value;
+                            $value = (int)$valueObj->numeric_value;
                             break;
 
                         case Constants::FIELD_TYPE_TEXT_TRL:

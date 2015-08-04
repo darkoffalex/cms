@@ -15,20 +15,18 @@ class Filtration
         /* @var $result ContentItemEx[] */
         /* @var $temp ContentItemEx[] */
 
-        $result = array();
-        $temp = array();
+        $result = $items;
 
         //by content type if needed
         if(!empty($contentTypeId)){
 
-            //pas through all items
-            foreach($items as $item){
-                //add just needed type item
-                if($item ->content_type_id == $contentTypeId){
-                    $temp[] = $item;
+            //remove all items which are not of specified type
+            foreach($result as $index => $item){
+                if($item->content_type_id != $contentTypeId){
+                    unset($result[$index]);
                 }
             }
-
+            
             //by conditions
             foreach($conditions as $fieldId => $params)
             {
@@ -37,49 +35,41 @@ class Filtration
 
                 if($conditionTerm != Constants::FILTER_CONDITION_IGNORE)
                 {
-                    foreach($temp as $item)
+                    foreach($result as $index => $item)
                     {
                         $itemValue = $item->getDynamicFieldValueById($fieldId);
 
                         switch($conditionTerm){
                             case Constants::FILTER_CONDITION_EQUAL:
-                                if($conditionValue == $itemValue){
-                                    $result[] = $item;
+                                if($conditionValue != $itemValue){
+                                    unset($result[$index]);
                                 }
                                 break;
                             case Constants::FILTER_CONDITION_MORE:
-                                if($itemValue > $conditionValue){
-                                    $result[] = $item;
+                                if($itemValue <= $conditionValue){
+                                    unset($result[$index]);
                                 }
                                 break;
                             case Constants::FILTER_CONDITION_LESS:
-                                if($itemValue < $conditionValue){
-                                    $result[] = $item;
+                                if($itemValue >= $conditionValue){
+                                    unset($result[$index]);
                                 }
                                 break;
                             case Constants::FILTER_CONDITION_SET:
-                                if(!empty($itemValue)){
-                                    $result[] = $item;
+                                if(empty($itemValue)){
+                                    unset($result[$index]);
                                 }
                                 break;
                             case Constants::FILTER_CONDITION_UNSET:
-                                if(empty($itemValue)){
-                                    $result[] = $item;
+                                if(!empty($itemValue)){
+                                    unset($result[$index]);
                                 }
                         }
                     }
 
-                    $temp = $result;
-                    $result = array();
                 }
             }
-
-        //if not need - just add all items
-        }else{
-            $temp = $items;
         }
-
-        $result = $temp;
 
         return $result;
     }
