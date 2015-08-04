@@ -55,6 +55,11 @@
             </div><!--/content-->
         <?php endforeach; ?>
     <?php else: ?>
+
+        <div class="title-bar">
+            <h1><?php echo __a('Widget registrations') ?></h1>
+        </div>
+
         <div class="content list">
             <div class="list-row">
                 <div class="cell"><?php echo __a('No positions are declared. Please declare at least one position'); ?></div>

@@ -26,7 +26,7 @@
                     <div class="cell type"><?php echo Constants::getStatusName($item->status_id); ?></div>
                     <div class="cell action">
                         <a href="<?php echo Yii::app()->createUrl('admin/widgets/positionedit',array('id' => $item->id)); ?>" class="action edit"></a>
-                        <a href="<?php echo Yii::app()->createUrl('admin/widgets/positionelete',array('id' => $item->id)); ?>" class="action delete confirm-box"></a>
+                        <a href="<?php echo Yii::app()->createUrl('admin/widgets/positiondelete',array('id' => $item->id)); ?>" class="action delete confirm-box"></a>
                     </div>
                 </div><!--/list-row-->
             <?php endforeach;?>
