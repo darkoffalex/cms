@@ -16,6 +16,39 @@ class OrderDeliveryEx extends OrderDelivery
     }
 
     /**
+     * Returns price of delivery (depending on weight, if needed)
+     * @param null $weight
+     * @param bool $format
+     * @param bool $smaller
+     * @return int|string
+     */
+    public function getPrice($weight = null, $format = false, $smaller = false)
+    {
+        $price = $this->price;
+
+        if($this->price_weight_dependency){
+            $dependencies = $this->getWeightDependencies();
+            $w = priceToCents($weight);
+
+            $oldW = 0;
+            foreach($dependencies as $currW => $pr){
+
+                if($w == $currW) {
+                    $price = !empty($pr) ? $pr : $this->price;
+                    break;
+                }
+                elseif($w >= $oldW && $w <= $currW){
+                    $price = $smaller ? (!empty($dependencies[$oldW]) ? $dependencies[$oldW]:  $this->price) : (!empty($pr) ? $pr : $this->price);
+                }
+
+                $oldW = $currW;
+            }
+        }
+
+        return $format ? centsToPrice($price) : $price;
+    }
+
+    /**
      * Sets an array with weight-price dependencies from form table-fields
      * @param $array
      */
