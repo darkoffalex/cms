@@ -28,6 +28,18 @@
             <td class="value"><textarea class="editor-area" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]"><?php echo $field->getValueFor($item->id)->text_value; ?></textarea></td>
         </tr>
     <?php endif; ?>
+<?php elseif($field->field_type_id == Constants::FIELD_TYPE_SELECTABLE): ?>
+    <tr>
+        <td class="label"><?php echo __a($field->label); ?></td>
+        <td class="value">
+            <?php $selected = $field->getValueFor($item->id)->text_value; ?>
+            <select name="ContentItemEx[dynamic][<?php echo $field->id; ?>]">
+                <?php foreach($field->getSelectableVariants() as $value => $title): ?>
+                <option <?php if($selected == $value): ?> selected <?php endif; ?>  value="<?php echo $value; ?>"><?php echo $title; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_BOOLEAN): ?>
     <tr>
         <td class="label"><?php echo __a($field->label); ?></td>

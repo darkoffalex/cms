@@ -88,6 +88,29 @@ class ContentItemFieldEx extends ContentItemField
     }
 
     /**
+     * Sets an array with selectable variants from form table-fields
+     * @param $array
+     */
+    public function setSelectableVariants($array)
+    {
+        $result = array();
+
+        $keys = array_keys($array);
+
+        $values = !empty($array[$keys[0]]) ? $array[$keys[0]] : array();
+        $titles = !empty($array[$keys[1]]) ? $array[$keys[1]] : array();
+
+        foreach($values as $index => $value){
+
+            if(!empty($value)){
+                $result[$value] = !empty($titles[$index]) ? $titles[$index] : '';
+            }
+        }
+
+        $this->selecatble_variants = serialize($result);
+    }
+
+    /**
      * Returns all selectable variants for a table
      * @return array|mixed
      */

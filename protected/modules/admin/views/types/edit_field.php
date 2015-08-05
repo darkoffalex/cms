@@ -59,6 +59,35 @@
                     <td class="value"><?php echo $form->checkBox($model,'use_wysiwyg')?></td>
                 </tr>
                 <tr>
+                    <td class="label top-aligned"><?php echo __a('Selectable variants'); ?></td>
+                    <td class="value">
+                        <div class="content list smaller" id="variant-table">
+                            <div class="list-row title h36">
+                                <div class="cell"><?php echo __a('Value') ?></div>
+                                <div class="cell"><?php echo __a('Title'); ?></div>
+                                <div class="cell"></div>
+                            </div><!--/list-row-->
+                            <?php $variants = $model->getSelectableVariants(); ?>
+                            <?php if(empty($variants)): ?>
+                                <div class="list-row h36 editable-row">
+                                    <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your value'); ?>" value="" name="ContentItemFieldEx[vars][value][]"></div>
+                                    <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your title'); ?>" value="" name="ContentItemFieldEx[vars][title][]"></div>
+                                    <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
+                                </div><!--/list-row-->
+                            <?php else: ?>
+                                <?php foreach($variants as $value => $title): ?>
+                                    <div class="list-row h36 editable-row">
+                                        <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your value'); ?>" value="<?php echo $value; ?>" name="ContentItemFieldEx[vars][value][]"></div>
+                                        <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your title'); ?>" value="<?php echo $title; ?>" name="ContentItemFieldEx[vars][title][]"></div>
+                                        <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
+                                    </div><!--/list-row-->
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div><!--/content-->
+                        <a href="#" class="spec-icon add editable-table row-add" data-table="#variant-table" data-action="yes" data-names="ContentItemFieldEx[vars][value],ContentItemFieldEx[vars][title]" data-placeholders="<?php echo __a('Your value'); ?>,<?php echo __a('Your title'); ?>"></a>
+                    </td>
+                </tr>
+                <tr>
                     <td class="label">&nbsp;</td>
                     <td class="value"><?php echo CHtml::submitButton(__a('Save')); ?></td>
                 </tr>

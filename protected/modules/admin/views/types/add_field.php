@@ -67,24 +67,13 @@
                                 <div class="cell"><?php echo __a('Title'); ?></div>
                                 <div class="cell"></div>
                             </div><!--/list-row-->
-                            <?php $variants = $model->getSelectableVariants(); ?>
-                            <?php if(empty($variants)): ?>
-                                <div class="list-row h36 editable-row">
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="<?php echo __a('Your value'); ?>" value="" name="ContentItemFieldEx[vars][value][]"></div>
-                                    <div class="cell no-padding"><input class="in-table-input numeric-input-price" type="text" placeholder="<?php echo __a('Your title'); ?>" value="" name="ContentItemFieldEx[vars][title][]"></div>
-                                    <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
-                                </div><!--/list-row-->
-                            <?php else: ?>
-                                <?php foreach($variants as $value => $title): ?>
-                                    <div class="list-row h36 editable-row">
-                                        <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your value'); ?>" value="<?php echo $value; ?>" name="ContentItemFieldEx[vars][value][]"></div>
-                                        <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your title'); ?>" value="<?php echo $title; ?>" name="ContentItemFieldEx[vars][title][]"></div>
-                                        <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
-                                    </div><!--/list-row-->
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <div class="list-row h36 editable-row">
+                                <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your value'); ?>" value="" name="ContentItemFieldEx[vars][value][]"></div>
+                                <div class="cell no-padding"><input class="in-table-input" type="text" placeholder="<?php echo __a('Your title'); ?>" value="" name="ContentItemFieldEx[vars][title][]"></div>
+                                <div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>
+                            </div><!--/list-row-->
                         </div><!--/content-->
-                        <a href="#" class="spec-icon add editable-table row-add" data-table="#variant-table" data-action="yes" data-names="ContentItemFieldEx[vars][value],ContentItemFieldEx[vars][title]" data-placeholders="<?php echo __a('Your value'); ?>, <?php echo __a('Your title'); ?>"></a>
+                        <a href="#" class="spec-icon add editable-table row-add" data-table="#variant-table" data-action="yes" data-names="ContentItemFieldEx[vars][value],ContentItemFieldEx[vars][title]" data-placeholders="<?php echo __a('Your value'); ?>,<?php echo __a('Your title'); ?>"></a>
                     </td>
                 </tr>
                 <tr>

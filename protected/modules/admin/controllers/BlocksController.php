@@ -283,6 +283,9 @@ class BlocksController extends ControllerAdmin
                                     case Constants::FIELD_TYPE_LINKED_BLOCK:
                                         $objValue->numeric_value = $valueContent;
                                         break;
+                                    case Constants::FIELD_TYPE_SELECTABLE:
+                                        $objValue->text_value = $valueContent;
+                                        break;
                                 }
 
                                 //save or update field's value of current content item

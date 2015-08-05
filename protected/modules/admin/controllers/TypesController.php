@@ -184,6 +184,7 @@ class TypesController extends ControllerAdmin
         if(!empty($formParams)){
 
             $model->attributes = $formParams;
+            $model->setSelectableVariants(!empty($formParams['vars']) ? $formParams['vars'] : array());
 
             if($model->validate()){
 
@@ -277,6 +278,7 @@ class TypesController extends ControllerAdmin
         if(!empty($formParams)){
 
             $model->attributes = $formParams;
+            $model->setSelectableVariants(!empty($formParams['vars']) ? $formParams['vars'] : array());
 
             if($model->validate()){
 
