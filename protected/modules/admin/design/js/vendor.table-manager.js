@@ -10,9 +10,9 @@ $(document).on("click", ".editable-table.row-add", function(){
     var action = $(this).data('action');
     var table_selector = $(this).data('table');
 
-    var namesArr = names.split(',');
-    var classArr = classes.split(',');
-    var placeArr = placeholders.split(',');
+    var namesArr = names != undefined ? names.split(',') : [];
+    var classArr = classes != undefined ? classes.split(',') : [];
+    var placeArr = placeholders != undefined ? placeholders.split(',') : [];
 
     var rowHTML = '<div class="list-row h36 editable-row">';
 

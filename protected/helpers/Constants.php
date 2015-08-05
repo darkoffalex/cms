@@ -27,6 +27,7 @@ class Constants
     const FIELD_TYPE_BOOLEAN = 7;
     const FIELD_TYPE_PRICE = 8;
     const FIELD_TYPE_LINKED_BLOCK = 9;
+    const FIELD_TYPE_SELECTABLE = 10;
 
     //widget types
     const WIDGET_TYPE_MENU = 1;
@@ -115,7 +116,8 @@ class Constants
             self::FIELD_TYPE_IMAGE => __a('Image'),
             self::FIELD_TYPE_FILE => __a('File'),
             self::FIELD_TYPE_BOOLEAN  => __a('Checkbox'),
-            self::FIELD_TYPE_LINKED_BLOCK => __a('Linked block')
+            self::FIELD_TYPE_LINKED_BLOCK => __a('Linked block'),
+            self::FIELD_TYPE_SELECTABLE => __a('Selectable')
         );
     }
 

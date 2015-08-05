@@ -87,6 +87,14 @@ class ContentItemFieldEx extends ContentItemField
         return $labels;
     }
 
+    /**
+     * Returns all selectable variants for a table
+     * @return array|mixed
+     */
+    public function getSelectableVariants()
+    {
+        return is_serialized($this->selecatble_variants) ? unserialize($this->selecatble_variants) : array();
+    }
 
     /**
      * Override, relate with extended models

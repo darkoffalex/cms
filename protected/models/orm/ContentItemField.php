@@ -16,11 +16,12 @@
  * @property integer $updated_time
  * @property integer $readonly
  * @property integer $use_wysiwyg
+ * @property string $selecatble_variants
  *
  * The followings are the available model relations:
- * @property ContentType $contentType
  * @property ContentItemFieldTrl[] $contentItemFieldTrls
  * @property ContentItemFieldValue[] $contentItemFieldValues
+ * @property ContentType $contentType
  */
 class ContentItemField extends CActiveRecord
 {
@@ -41,10 +42,10 @@ class ContentItemField extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly, use_wysiwyg', 'numerical', 'integerOnly'=>true),
-			array('label, field_name', 'safe'),
+			array('label, field_name, selecatble_variants', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, field_name, content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly, use_wysiwyg', 'safe', 'on'=>'search'),
+			array('id, label, field_name, content_type_id, field_type_id, priority, created_by_id, updated_by_id, created_time, updated_time, readonly, use_wysiwyg, selecatble_variants', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,9 +57,9 @@ class ContentItemField extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'contentType' => array(self::BELONGS_TO, 'ContentType', 'content_type_id'),
 			'contentItemFieldTrls' => array(self::HAS_MANY, 'ContentItemFieldTrl', 'field_id'),
 			'contentItemFieldValues' => array(self::HAS_MANY, 'ContentItemFieldValue', 'field_id'),
+			'contentType' => array(self::BELONGS_TO, 'ContentType', 'content_type_id'),
 		);
 	}
 
@@ -80,6 +81,7 @@ class ContentItemField extends CActiveRecord
 			'updated_time' => 'Updated Time',
 			'readonly' => 'Readonly',
 			'use_wysiwyg' => 'Use Wysiwyg',
+			'selecatble_variants' => 'Selecatble Variants',
 		);
 	}
 
@@ -113,6 +115,7 @@ class ContentItemField extends CActiveRecord
 		$criteria->compare('updated_time',$this->updated_time);
 		$criteria->compare('readonly',$this->readonly);
 		$criteria->compare('use_wysiwyg',$this->use_wysiwyg);
+		$criteria->compare('selecatble_variants',$this->selecatble_variants,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
