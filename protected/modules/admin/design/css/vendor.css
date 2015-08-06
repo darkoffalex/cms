@@ -1631,3 +1631,8 @@ body
     background-color: transparent;
     float: right;
 }
+
+.force-hide
+{
+    display: none !important;
+}

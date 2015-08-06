@@ -52,13 +52,13 @@
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'field_type_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'field_type_id',$fieldTypes);?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'field_type_id',$fieldTypes,array('id' => 'type-selector', 'class' => 'trigger-field'));?></td>
                 </tr>
-                <tr>
+                <tr class="triggered" data-trigger="type-selector" data-condition="<?php echo Constants::FIELD_TYPE_TEXT; ?>,<?php echo Constants::FIELD_TYPE_TEXT_TRL; ?>">
                     <td class="label"><?php echo $form->labelEx($model,'use_wysiwyg'); ?></td>
                     <td class="value"><?php echo $form->checkBox($model,'use_wysiwyg')?></td>
                 </tr>
-                <tr>
+                <tr class="triggered" data-trigger="type-selector" data-condition="<?php echo Constants::FIELD_TYPE_SELECTABLE ?>">
                     <td class="label top-aligned"><?php echo __a('Selectable variants'); ?></td>
                     <td class="value">
                         <div class="content list smaller" id="variant-table">
