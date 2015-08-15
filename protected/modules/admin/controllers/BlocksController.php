@@ -286,6 +286,17 @@ class BlocksController extends ControllerAdmin
                                     case Constants::FIELD_TYPE_SELECTABLE:
                                         $objValue->text_value = $valueContent;
                                         break;
+                                    case Constants::FIELD_TYPE_MULTIPLE_CHECKBOX:
+                                        $result = array();
+
+                                        if(is_array($valueContent)){
+                                            foreach($valueContent as $value => $state){
+                                                $result[] = $value;
+                                            }
+                                        }
+
+                                        $objValue->text_value = json_encode($result);
+                                        break;
                                 }
 
                                 //save or update field's value of current content item

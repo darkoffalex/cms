@@ -58,7 +58,7 @@
                     <td class="label"><?php echo $form->labelEx($model,'use_wysiwyg'); ?></td>
                     <td class="value"><?php echo $form->checkBox($model,'use_wysiwyg')?></td>
                 </tr>
-                <tr class="triggered" data-trigger="type-selector" data-condition="<?php echo Constants::FIELD_TYPE_SELECTABLE ?>">
+                <tr class="triggered" data-trigger="type-selector" data-condition="<?php echo Constants::FIELD_TYPE_SELECTABLE ?>,<?php echo Constants::FIELD_TYPE_MULTIPLE_CHECKBOX ?>">
                     <td class="label top-aligned"><?php echo __a('Selectable variants'); ?></td>
                     <td class="value">
                         <div class="content list smaller" id="variant-table">

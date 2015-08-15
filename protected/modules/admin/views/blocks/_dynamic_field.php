@@ -40,6 +40,31 @@
             </select>
         </td>
     </tr>
+<?php elseif($field->field_type_id == Constants::FIELD_TYPE_MULTIPLE_CHECKBOX): ?>
+    <tr>
+        <td class="label top-aligned"><?php echo __a($field->label); ?></td>
+        <td class="value">
+            <?php $selectedStr = $field->getValueFor($item->id)->text_value; ?>
+            <?php $selectedArr = isJson($selectedStr) ? json_decode($selectedStr) : array(); ?>
+
+            <div class="content list smaller">
+                <div class="list-row title h36">
+                    <div class="cell"><?php echo __a('Option') ?></div>
+                    <div class="cell"></div>
+                </div><!--/list-row-->
+                <input type="hidden" name="ContentItemEx[dynamic][<?php echo $field->id; ?>]" value="">
+                <?php $options = $field->getSelectableVariants();  ?>
+                <?php foreach($options as $value => $title): ?>
+                    <div class="list-row h36 editable-row">
+                        <div class="cell"><label for="check_<?php echo $field->id; ?>"><?php echo $title; ?></label></div>
+                        <div class="cell smallest-alt">
+                            <input <?php if(in_array($value,$selectedArr)): ?> checked <?php endif; ?> id="check_<?php echo $field->id; ?>" type="checkbox" name="ContentItemEx[dynamic][<?php echo $field->id; ?>][<?php echo $value ?>]">
+                        </div>
+                    </div><!--/list-row-->
+                <?php endforeach; ?>
+            </div><!--/content-->
+        </td>
+    </tr>
 <?php elseif($field->field_type_id == Constants::FIELD_TYPE_BOOLEAN): ?>
     <tr>
         <td class="label"><?php echo __a($field->label); ?></td>
