@@ -50,6 +50,7 @@ class ContentTypeEx extends ContentType
         return false;
     }
 
+
     /**
      * Returns filterable fields (which can be used in filter conditions)
      * @return ContentItemFieldEx[]
@@ -69,6 +70,32 @@ class ContentTypeEx extends ContentType
             foreach($this->contentItemFields as $field){
 
                 if(in_array($field->field_type_id,$filterableFieldTypes)){
+                    $result[] = $field;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns types that can be configured for front filtration
+     * @return ContentItemFieldEx[]
+     */
+    public function getFilterConfigurableFields()
+    {
+        $result = array();
+
+        $availableTypes = array(
+            Constants::FIELD_TYPE_NUMERIC,
+            Constants::FIELD_TYPE_PRICE,
+            Constants::FIELD_TYPE_TEXT
+        );
+
+        if(!empty($this->contentItemFields)){
+            foreach($this->contentItemFields as $field){
+
+                if(in_array($field->field_type_id,$availableTypes)){
                     $result[] = $field;
                 }
             }

@@ -173,7 +173,7 @@ class WidgetsController extends ControllerAdmin
     }
 
     /**
-     * Edit filtration
+     * Edit filtration for block widget
      * @param $id
      * @throws CHttpException
      */
@@ -233,6 +233,35 @@ class WidgetsController extends ControllerAdmin
         }
 
         $this->render('widget_edit_blocks_filter',array('model' => $item));
+    }
+
+    /**
+     * Settings for filter widget
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionFilterSettings($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $item = WidgetEx::model()->findByPk((int)$id);
+
+        if(empty($item) || empty($item->filtrationByType)){
+            throw new CHttpException(404);
+        }
+
+        $settings = Yii::app()->getRequest()->getPost('FilterSettings',array());
+
+        if(!empty($settings)){
+            debugvar($settings);
+            exit();
+            //TODO: perform updating
+        }
+
+        $this->render('widget_edit_filter_settings',array('model' => $item));
     }
 
     /******************************************** P O S I T I O N S ****************************************************/

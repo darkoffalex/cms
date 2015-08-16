@@ -26,7 +26,7 @@ $(document).ready(function(){
         }
 
         if(action == 'yes'){
-            rowHTML+='<div class="cell no-padding smallest"><a href="#" class="spec-icon delete editable-table row-del"></a></div>';
+            rowHTML+='<div class="cell no-padding smallest-min"><a href="#" class="spec-icon delete editable-table row-del"></a></div>';
         }
 
         rowHTML+='</div>';
@@ -44,7 +44,7 @@ $(document).ready(function(){
      * Removing row of editable inputs table
      */
     $(document).on("click", ".editable-table.row-del", function(){
-        if($('.editable-row').length > 1){
+        if($(this).parent().parent().parent().find('.editable-row').length > 1){
             $(this).parent().parent().remove();
         }
         return false;

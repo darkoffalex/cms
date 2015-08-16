@@ -1530,6 +1530,7 @@ body
 .content > .list-row.title.h36 { height: 36px; }
 .content > .list-row > .cell.action.smallest{width: 80px}
 .content > .list-row > .cell.smallest-alt{width: 50px}
+.content > .list-row > .cell.smallest-min{width: 30px}
 
 .content.menu-content .inner-content .label.top-aligned, .content .inner-content .form-zone .label.top-aligned
 {

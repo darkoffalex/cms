@@ -45,6 +45,7 @@ class Constants
     const FILTER_CONDITION_LESS = 4;
     const FILTER_CONDITION_EQUAL = 5;
     const FILTER_CONDITION_BETWEEN = 6;
+    const FILTER_CONDITION_SIMILAR = 7;
 
     //client types
     const SHOP_CLIENT_PHYSICAL = 1;
