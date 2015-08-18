@@ -334,3 +334,47 @@ function findUserIP($behindProxy = true){
     return $user_ip;
 }
 
+/**
+ * Reformat array structure, for more comfortable use
+ * @param $source array
+ * @return array
+ */
+function reformatArray($source)
+{
+    $result = array();
+    $keys = array_keys($source);
+
+    $firstKeyContents = $source[$keys[0]];
+
+    foreach($firstKeyContents as $index => $value)
+    {
+        $temp = array();
+        foreach($keys as $key){
+            $temp[$key] = isset($source[$key][$index]) ? $source[$key][$index] : '';
+        }
+        $result[] = $temp;
+    }
+
+    return $result;
+}
+
+/**
+ * Checks if array has only empty keys
+ * @param $array
+ * @return bool
+ */
+function hasJustEmptyKeys($array)
+{
+    $empty = true;
+
+    foreach($array as $key => $value){
+        if(!is_array($value) && !empty($value)){
+            $empty = false;
+        }elseif(is_array($value)){
+            $empty = hasJustEmptyKeys($value);
+        }
+    }
+
+    return $empty;
+}
+

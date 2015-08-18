@@ -247,18 +247,43 @@ class WidgetsController extends ControllerAdmin
         //register all necessary scripts
         Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
 
+        //find widget item
         $item = WidgetEx::model()->findByPk((int)$id);
 
+        //fail if not found
         if(empty($item) || empty($item->filtrationByType)){
             throw new CHttpException(404);
         }
 
+        //get settings from request
         $settings = Yii::app()->getRequest()->getPost('FilterSettings',array());
 
+        //if not empty settings
         if(!empty($settings)){
-            debugvar($settings);
-            exit();
-            //TODO: perform updating
+
+            //prepared array for storage
+            $result = array();
+
+            //for each field
+            foreach($settings as $fieldId => $params){
+
+                //get all settings
+                $type = !empty($params['filter_type']) ? $params['filter_type'] : Constants::FILTER_CONDITION_EQUAL;
+                $variants = !empty($params['variants']) ? reformatArray($params['variants']) : array();
+                $intervals = !empty($params['intervals']) ? reformatArray($params['intervals']) : array();
+
+                //prepare them
+                $result[$fieldId]['type'] = $type;
+                $result[$fieldId]['variants'] = !hasJustEmptyKeys($variants) ? $variants : array();
+                $result[$fieldId]['intervals'] = !hasJustEmptyKeys($intervals) ? $intervals : array();
+            }
+
+            //convert to json
+            $jsonEncodedResult = json_encode($result);
+
+            //set to widget
+            $item->filtration_array_json = $jsonEncodedResult;
+            $item->update();
         }
 
         $this->render('widget_edit_filter_settings',array('model' => $item));

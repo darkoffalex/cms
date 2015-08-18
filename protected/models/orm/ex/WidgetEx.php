@@ -31,6 +31,28 @@ class WidgetEx extends Widget
     }
 
     /**
+     * Used for widget of filter type - returns filtration type
+     * @param $field_id
+     * @return null|int
+     */
+    public function filterTypeFor($field_id)
+    {
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id]['type']) ? $array[$field_id]['type'] : null;
+    }
+
+    /**
+     * Used for widget of filter type - checks if field filtrated by specified type
+     * @param $field_id
+     * @param $type
+     * @return bool
+     */
+    public function filterTypeForIs($field_id,$type)
+    {
+        return $this->filterTypeFor($field_id) == $type;
+    }
+
+    /**
      * Filtration settings - returns key value
      * @param $field_id
      * @return null

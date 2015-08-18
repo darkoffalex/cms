@@ -1,6 +1,8 @@
 <?php /* @var $model WidgetEx */ ?>
 <?php /* @var $this WidgetsController */ ?>
 
+<?php //debugvar($model->getFiltrationArr()); ?>
+
 <main>
     <div class="title-bar world">
         <h1><?php echo __a('Widgets');?></h1>
@@ -35,10 +37,10 @@
                                     <td class="label"><label for="field_<?php echo $field->id; ?>_type_select"><?php echo __a('Filtration type'); ?></label></td>
                                     <td>
                                         <select class="trigger-field" name="FilterSettings[<?php echo $field->id; ?>][filter_type]" id="field_<?php echo $field->id; ?>_type_select">
-                                            <option value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
-                                            <option value="<?php echo Constants::FILTER_CONDITION_MORE; ?>"><?php echo __a('More than'); ?></option>
-                                            <option value="<?php echo Constants::FILTER_CONDITION_LESS; ?>"><?php echo __a('Less than'); ?></option>
-                                            <option value="<?php echo Constants::FILTER_CONDITION_BETWEEN ?>"><?php echo __a('Interval') ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_EQUAL)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_MORE)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_MORE; ?>"><?php echo __a('More than'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_LESS)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_LESS; ?>"><?php echo __a('Less than'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_BETWEEN)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_BETWEEN ?>"><?php echo __a('Interval') ?></option>
                                         </select>
                                     </td>
                                 </tr>
@@ -51,7 +53,7 @@
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][variants]',
                                             'fields' => array(
-                                                array('name' => 'numeric_variant','title' => 'Variant', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
+                                                array('name' => 'variant','title' => 'Variant', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
                                             ),
                                         )); ?>
                                     </td>
@@ -65,8 +67,8 @@
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][intervals]',
                                             'fields' => array(
-                                                array('name' => 'numeric_min','title' => 'Min', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
-                                                array('name' => 'numeric_max','title' => 'Max', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
+                                                array('name' => 'min','title' => 'Min', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
+                                                array('name' => 'max','title' => 'Max', 'placeholder' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? '0.00' : '0', 'numeric' => $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'price' : 'numeric'),
                                             ),
                                         )); ?>
                                     </td>
@@ -83,8 +85,8 @@
                                     <td class="label"><label for="field_<?php echo $field->id; ?>_type_select"><?php echo __a('Filtration type'); ?></label></td>
                                     <td>
                                         <select class="trigger-field" name="FilterSettings[<?php echo $field->id; ?>][type]" id="field_<?php echo $field->id; ?>_type_select">
-                                            <option value="<?php echo Constants::FILTER_CONDITION_SIMILAR ?>"><?php echo __a('Similar') ?></option>
-                                            <option value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_SIMILAR)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_SIMILAR ?>"><?php echo __a('Similar') ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_EQUAL)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
                                         </select>
                                     </td>
                                 </tr>
@@ -97,7 +99,7 @@
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][variants]',
                                             'fields' => array(
-                                                array('name' => 'text_variant', 'title' => 'Variant', 'placeholder' => 'Text')
+                                                array('name' => 'variant', 'title' => 'Variant', 'placeholder' => 'Text')
                                             ),
                                         )); ?>
                                     </td>
