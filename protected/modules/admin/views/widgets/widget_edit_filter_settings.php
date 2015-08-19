@@ -1,7 +1,7 @@
 <?php /* @var $model WidgetEx */ ?>
 <?php /* @var $this WidgetsController */ ?>
 
-<?php //debugvar($model->getFiltrationArr()); ?>
+<?php debugvar($model->getFiltrationArr()); ?>
 
 <main>
     <div class="title-bar world">
