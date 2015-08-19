@@ -49,7 +49,7 @@
                                     <td>
                                         <?php $this->renderPartial('/common/_dynamic_js_table',array(
                                             'tableId' => 'variants_'.$field->id,
-                                            'data' => array(),
+                                            'data' => $model->getVariantsForField($field->id),
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][variants]',
                                             'fields' => array(
@@ -63,7 +63,7 @@
                                     <td>
                                         <?php $this->renderPartial('/common/_dynamic_js_table',array(
                                             'tableId' => 'intervals_'.$field->id,
-                                            'data' => array(),
+                                            'data' => $model->getIntervalsForField($field->id),
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][intervals]',
                                             'fields' => array(
@@ -84,7 +84,7 @@
                                 <tr>
                                     <td class="label"><label for="field_<?php echo $field->id; ?>_type_select"><?php echo __a('Filtration type'); ?></label></td>
                                     <td>
-                                        <select class="trigger-field" name="FilterSettings[<?php echo $field->id; ?>][type]" id="field_<?php echo $field->id; ?>_type_select">
+                                        <select class="trigger-field" name="FilterSettings[<?php echo $field->id; ?>][filter_type]" id="field_<?php echo $field->id; ?>_type_select">
                                             <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_SIMILAR)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_SIMILAR ?>"><?php echo __a('Similar') ?></option>
                                             <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_EQUAL)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
                                         </select>
@@ -95,7 +95,7 @@
                                     <td>
                                         <?php $this->renderPartial('/common/_dynamic_js_table',array(
                                             'tableId' => 'text_variants_'.$field->id,
-                                            'data' => array(),
+                                            'data' => $model->getVariantsForField($field->id),
                                             'actions' => true,
                                             'fieldBaseName' => 'FilterSettings['.$field->id.'][variants]',
                                             'fields' => array(

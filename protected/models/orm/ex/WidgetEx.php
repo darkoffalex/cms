@@ -31,6 +31,28 @@ class WidgetEx extends Widget
     }
 
     /**
+     * Returns all filtration variants for specified field
+     * @param $field_id
+     * @return array
+     */
+    public function getVariantsForField($field_id)
+    {
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id]['variants']) ? $array[$field_id]['variants'] : array();
+    }
+
+    /**
+     * Returns all filtration variants-intervals for specified field
+     * @param $field_id
+     * @return array
+     */
+    public function getIntervalsForField($field_id)
+    {
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id]['intervals']) ? $array[$field_id]['intervals'] : array();
+    }
+
+    /**
      * Used for widget of filter type - returns filtration type
      * @param $field_id
      * @return null|int

@@ -284,6 +284,9 @@ class WidgetsController extends ControllerAdmin
             //set to widget
             $item->filtration_array_json = $jsonEncodedResult;
             $item->update();
+
+            //success message
+            Yii::app()->user->setFlash('success',__a('Success: All data saved'));
         }
 
         $this->render('widget_edit_filter_settings',array('model' => $item));
