@@ -107,7 +107,15 @@ class Filtration
 
                     //if price filtered - convert entered value to cents
                     if($field->field_type_id == Constants::FIELD_TYPE_PRICE){
-                        $conditionValue = priceToCents($conditionValue);
+                        if($conditionCond != Constants::FILTER_CONDITION_BETWEEN){
+                            $conditionValue = priceToCents($conditionValue);
+                        }else{
+                            $range = explode(':',$conditionValue);
+                            $min = !empty($range[0]) ? priceToCents($range[0]) : 0;
+                            $max = !empty($range[1]) ? priceToCents($range[1]) : 0;
+                            $conditionValue = array($min,$max);
+                        }
+
                     //if date entered - convert to timestamp
                     }elseif($field->field_type_id == Constants::FIELD_TYPE_DATE){
                         $conditionValue = DateTime::createFromFormat('m/d/Y',$conditionValue)->getTimestamp();
@@ -134,11 +142,7 @@ class Filtration
                                     unset($result[$index]);
                                 }
                             }elseif($conditionCond == Constants::FILTER_CONDITION_BETWEEN){
-                                $range = explode(':',$conditionValue);
-                                $min = !empty($range[0]) ? $range[0] : 0;
-                                $max = !empty($range[1]) ? $range[1] : 0;
-
-                                if(!($itemValue >= $min && $itemValue <= $max)){
+                                if(!($itemValue >= $conditionValue[0] && $itemValue <= $conditionValue[1])){
                                     unset($result[$index]);
                                 }
                             }
