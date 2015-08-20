@@ -14,6 +14,7 @@ class ContentItemFieldEx extends ContentItemField
 {
     //filtration field name group
     const FILTER_FIELDS_GROUP = 'FrontFiltration';
+    const FILTER_CLEAN_BUTTON_NAME = 'FrontFiltration[clean]';
     const FILTER_LESS_SIGN = '<';
     const FILTER_MORE_SIGN = '>';
 

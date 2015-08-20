@@ -12,6 +12,8 @@ class MainController extends Controller
 
         __widgets('Filter');
 
+        debugvar(Yii::app()->session['filtration']);
+
         $this->renderText("Hello world!");
     }
 }

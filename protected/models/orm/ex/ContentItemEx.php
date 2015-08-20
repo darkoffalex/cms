@@ -138,6 +138,8 @@ class ContentItemEx extends ContentItem
      */
     public function getDynamicFieldValueById($fieldId)
     {
+        /* @var $valueObj ContentItemFieldValueEx */
+
         $value = null;
 
         if(!empty($this->contentType->contentItemFields))
@@ -150,6 +152,7 @@ class ContentItemEx extends ContentItem
                     switch($field->field_type_id){
 
                         case Constants::FIELD_TYPE_TEXT:
+                        case Constants::FIELD_TYPE_SELECTABLE:
                             $value = $valueObj->text_value;
                             break;
 
@@ -174,6 +177,10 @@ class ContentItemEx extends ContentItem
 
                         case Constants::FIELD_TYPE_LINKED_BLOCK:
                             $value = ContentItemEx::model()->findByPk((int)$valueObj->id);
+                            break;
+
+                        case Constants::FIELD_TYPE_MULTIPLE_CHECKBOX:
+                            $value = isJson($valueObj->text_value) ? json_decode($valueObj->text_value) : array();
                             break;
                     }
                 }
@@ -200,23 +207,37 @@ class ContentItemEx extends ContentItem
                     $valueObj = $field->getValueFor($this->id);
 
                     switch($field->field_type_id){
+
                         case Constants::FIELD_TYPE_TEXT:
+                        case Constants::FIELD_TYPE_SELECTABLE:
                             $value = $valueObj->text_value;
                             break;
+
                         case Constants::FIELD_TYPE_BOOLEAN:
                         case Constants::FIELD_TYPE_NUMERIC:
                         case Constants::FIELD_TYPE_PRICE:
                         case Constants::FIELD_TYPE_DATE:
-                            $value = $valueObj->numeric_value;
+                            $value = (int)$valueObj->numeric_value;
                             break;
+
                         case Constants::FIELD_TYPE_TEXT_TRL:
                             $value = !empty($valueObj->trl->text) ? $valueObj->trl->text : '';
                             break;
+
                         case Constants::FIELD_TYPE_IMAGE:
                             $value = $valueObj->imageOfValues;
                             break;
+
                         case Constants::FIELD_TYPE_FILE:
                             $value = $valueObj->fileOfValues;
+                            break;
+
+                        case Constants::FIELD_TYPE_LINKED_BLOCK:
+                            $value = ContentItemEx::model()->findByPk((int)$valueObj->id);
+                            break;
+
+                        case Constants::FIELD_TYPE_MULTIPLE_CHECKBOX:
+                            $value = isJson($valueObj->text_value) ? json_decode($valueObj->text_value) : array();
                             break;
                     }
                 }

@@ -81,6 +81,16 @@ function __widgets($positionName, $return = false)
 }
 
 /**
+ * Returns value preserved in session
+ * @param $field_id
+ * @return mixed|null
+ */
+function __in_filter($field_id)
+{
+    return !empty(Yii::app()->session['filtration'][$field_id]['value']) ? Yii::app()->session['filtration'][$field_id]['value'] : null;
+}
+
+/**
  * Converts price specified in cents to human-readable format
  * @param int $cents
  * @return string

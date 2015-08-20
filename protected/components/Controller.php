@@ -34,7 +34,8 @@ class Controller extends CController
         //initialize dynamic widgets
         DynamicWidget::getInstance()->initialize($this,$this->themeName);
 
-        $this->preFiltration();
+        //handle filtration requests
+        $this->preSetFiltration();
 
         //before action - parent call
         return parent::beforeAction($action);
@@ -78,14 +79,20 @@ class Controller extends CController
         }
     }
 
-    public function preFiltration()
+    /**
+     * If got filtration request from form - set it to session
+     */
+    public function preSetFiltration()
     {
         $params = Yii::app()->getRequest()->getParam(ContentItemFieldEx::FILTER_FIELDS_GROUP);
 
         if(!empty($params)){
 
-            debugvar($params);
+            Yii::app()->session['filtration'] = $params;
 
+            if(isset($params['clean'])){
+                unset(Yii::app()->session['filtration']);
+            }
         }
     }
 }
