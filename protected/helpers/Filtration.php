@@ -157,7 +157,7 @@ class Filtration
                                     unset($result[$index]);
                                 }
                             }elseif($conditionCond == Constants::FILTER_CONDITION_SIMILAR){
-                                if(strpos($itemValue,$conditionValue) === false){
+                                if(stripos($itemValue,$conditionValue) === false){
                                     unset($result[$index]);
                                 }
                             }
