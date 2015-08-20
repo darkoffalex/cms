@@ -1,7 +1,7 @@
 <?php /* @var $model WidgetEx */ ?>
 <?php /* @var $this WidgetsController */ ?>
 
-<?php debugvar($model->getFiltrationArr()); ?>
+<?php //debugvar($model->getFiltrationArr()); ?>
 
 <main>
     <div class="title-bar world">
@@ -29,7 +29,7 @@
                     <?php $fields = $model->filtrationByType->getFilterConfigurableFields();?>
                     <?php if(!empty($fields)): ?>
                         <?php foreach($fields as $field): ?>
-                            <?php if($field->field_type_id != Constants::FIELD_TYPE_TEXT): ?>
+                            <?php if($field->field_type_id != Constants::FIELD_TYPE_TEXT && $field->field_type_id != Constants::FIELD_TYPE_DATE): ?>
                                 <tr>
                                     <td class="label"><label><strong><?php echo $field->label; ?></strong></label></td>
                                 </tr>
@@ -77,7 +77,7 @@
                                     <td class="line-separation label"><span></span></td>
                                     <td class="value"></td>
                                 </tr>
-                            <?php else: ?>
+                            <?php elseif($field->field_type_id == Constants::FIELD_TYPE_TEXT): ?>
                                 <tr>
                                     <td class="label"><label><strong><?php echo $field->label; ?></strong></label></td>
                                 </tr>
@@ -102,6 +102,24 @@
                                                 array('name' => 'variant', 'title' => 'Variant', 'placeholder' => 'Text')
                                             ),
                                         )); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="line-separation label"><span></span></td>
+                                    <td class="value"></td>
+                                </tr>
+                            <?php else: ?>
+                                <tr>
+                                    <td class="label"><label><strong><?php echo $field->label; ?></strong></label></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="field_<?php echo $field->id; ?>_type_select"><?php echo __a('Filtration type'); ?></label></td>
+                                    <td>
+                                        <select class="trigger-field" name="FilterSettings[<?php echo $field->id; ?>][filter_type]" id="field_<?php echo $field->id; ?>_type_select">
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_EQUAL)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_EQUAL; ?>"><?php echo __a('Equal'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_MORE)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_MORE; ?>"><?php echo __a('More than'); ?></option>
+                                            <option <?php if($model->filterTypeForIs($field->id, Constants::FILTER_CONDITION_LESS)): ?> selected <?php endif; ?> value="<?php echo Constants::FILTER_CONDITION_LESS; ?>"><?php echo __a('Less than'); ?></option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>

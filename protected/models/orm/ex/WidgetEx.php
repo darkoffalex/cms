@@ -4,10 +4,16 @@
  * @property TreeEx $tree
  * @property WidgetRegistrationEx[] $widgetRegistrations
  * @property ContentTypeEx $filtrationByType
+ * @property ContentItemFieldEx[]|array $preparedFilterableFields
  * @property WidgetTrl $trl
  */
 class WidgetEx extends Widget
 {
+    /**
+     * @var array
+     */
+    public $preparedFilterableFields = array();
+
     /**
      * @param string $className
      * @return self
@@ -15,6 +21,24 @@ class WidgetEx extends Widget
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+    /**
+     * Returns filtration field - field object from already prepared/initialised array
+     * @param $fieldName
+     * @return ContentItemFieldEx|null
+     */
+    public function getFilterField($fieldName)
+    {
+        if(!empty($this->preparedFilterableFields)){
+            foreach($this->preparedFilterableFields as $field){
+                if($field->field_name == $fieldName){
+                    return $field;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

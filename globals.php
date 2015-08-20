@@ -69,6 +69,18 @@ function __lng()
 }
 
 /**
+ * Short equivalent of widget renderer
+ * @param $positionName
+ * @param bool|false $return
+ * @return null|string
+ */
+function __widgets($positionName, $return = false)
+{
+    $result = DynamicWidget::getInstance()->render($positionName,$return);
+    return $return ? $result : null;
+}
+
+/**
  * Converts price specified in cents to human-readable format
  * @param int $cents
  * @return string

@@ -111,6 +111,11 @@ class DynamicWidget
         return null;
     }
 
+    /**
+     * Gets content for widget, that will be used in template
+     * @param $widget
+     * @return array|ContentItemEx[]|ContentItemFieldEx[]|TreeEx[]
+     */
     private function getContent($widget)
     {
         /* @var $widget WidgetEx */
@@ -205,7 +210,20 @@ class DynamicWidget
 
                 //if widget has type 'filter'
                 case Constants::WIDGET_TYPE_FILTER:
-                    //TODO: implement here filter stuff
+
+                    /* @var $fields ContentItemFieldEx[] */
+                    $fields = !empty($widget->filtrationByType) ? $widget->filtrationByType->getFilterableFields(true) : array();
+
+                    //init field's filtration parameters (variants, field names and etc.)
+                    foreach($fields as $field){
+                        $field->initFiltrationParams($widget);
+                    }
+
+                    //content is fields
+                    $content = $fields;
+
+                    //set also to widget (to use easy field selection by name)
+                    $widget->preparedFilterableFields = $content;
                     break;
 
                 //if widget has type 'text'

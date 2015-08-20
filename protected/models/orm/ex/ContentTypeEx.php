@@ -2,6 +2,7 @@
 /**
  * Class ContentTypeEx
  * @property ContentItemFieldEx[] $contentItemFields
+ * @property WidgetEx[] $widgets
  */
 class ContentTypeEx extends ContentType
 {
@@ -53,9 +54,10 @@ class ContentTypeEx extends ContentType
 
     /**
      * Returns filterable fields (which can be used in filter conditions)
+     * @param bool|false $extended
      * @return ContentItemFieldEx[]
      */
-    public function getFilterableFields()
+    public function getFilterableFields($extended = false)
     {
         $result = array();
 
@@ -65,6 +67,12 @@ class ContentTypeEx extends ContentType
             Constants::FIELD_TYPE_DATE,
             Constants::FIELD_TYPE_NUMERIC,
         );
+
+        if($extended){
+            $filterableFieldTypes[] = Constants::FIELD_TYPE_TEXT;
+            $filterableFieldTypes[] = Constants::FIELD_TYPE_SELECTABLE;
+            $filterableFieldTypes[] = Constants::FIELD_TYPE_MULTIPLE_CHECKBOX;
+        }
 
         if(!empty($this->contentItemFields)){
             foreach($this->contentItemFields as $field){
@@ -89,7 +97,8 @@ class ContentTypeEx extends ContentType
         $availableTypes = array(
             Constants::FIELD_TYPE_NUMERIC,
             Constants::FIELD_TYPE_PRICE,
-            Constants::FIELD_TYPE_TEXT
+            Constants::FIELD_TYPE_TEXT,
+            Constants::FIELD_TYPE_DATE
         );
 
         if(!empty($this->contentItemFields)){

@@ -34,6 +34,8 @@ class Controller extends CController
         //initialize dynamic widgets
         DynamicWidget::getInstance()->initialize($this,$this->themeName);
 
+        $this->preFiltration();
+
         //before action - parent call
         return parent::beforeAction($action);
     }
@@ -73,6 +75,17 @@ class Controller extends CController
         }
         elseif (isset($request->cookies['language'])) {
             Yii::app()->language = $request->cookies['language']->value;
+        }
+    }
+
+    public function preFiltration()
+    {
+        $params = Yii::app()->getRequest()->getParam(ContentItemFieldEx::FILTER_FIELDS_GROUP);
+
+        if(!empty($params)){
+
+            debugvar($params);
+
         }
     }
 }

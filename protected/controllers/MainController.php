@@ -10,8 +10,7 @@ class MainController extends Controller
         $this->title = "Site";
         $this->description = "Index";
 
-        echo DynamicWidget::getInstance()->render('Banner',true);
-        exit();
+        __widgets('Filter');
 
         $this->renderText("Hello world!");
     }
