@@ -19,7 +19,7 @@
             <span><?php echo __a($title); ?></span>
 
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbacksincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
-            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbacksettings',array('id' => $model->id)); ?>"><?php echo __a('Settings'); ?></a>
+            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackfields',array('id' => $model->id)); ?>" ><?php echo __a('Form fields'); ?></a>
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/edit',array('id' => $model->id)); ?>" class="active"><?php echo __a('General'); ?></a>
         </div><!--/header-->
 

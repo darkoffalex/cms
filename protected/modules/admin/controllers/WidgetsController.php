@@ -293,6 +293,34 @@ class WidgetsController extends ControllerAdmin
         $this->render('widget_edit_filter_settings',array('model' => $item));
     }
 
+    public function actionFeedbackFields($id)
+    {
+
+
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //find widget item
+        $item = WidgetEx::model()->findByPk((int)$id);
+
+        //fail if not found
+        if(empty($item)){
+            throw new CHttpException(404);
+        }
+
+        //get settings from request
+        $settings = Yii::app()->getRequest()->getPost('FeedbackFields',array());
+
+        if(!empty($settings)){
+
+            //TODO: perform saving data
+        }
+
+        $this->render('widget_edit_feedback_fields', array('model' => $item));
+    }
+
     /******************************************** P O S I T I O N S ****************************************************/
 
     /**

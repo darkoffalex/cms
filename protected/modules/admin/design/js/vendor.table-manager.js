@@ -8,12 +8,14 @@ $(document).ready(function(){
         var names = String($(this).data('names'));
         var classes = String($(this).data('classes'));
         var placeholders = String($(this).data('placeholders'));
+        var options = String($(this).data('options'));
         var action = String($(this).data('action'));
         var table_selector = String($(this).data('table'));
 
         var namesArr = names != undefined ? names.split(',') : [];
         var classArr = classes != undefined ? classes.split(',') : [];
         var placeArr = placeholders != undefined ? placeholders.split(',') : [];
+        var optionsArr = options != undefined ? options.split('|') : [];
 
         var rowHTML = '<div class="list-row h36 editable-row">';
 
@@ -21,8 +23,20 @@ $(document).ready(function(){
             var curName = namesArr[i] !== undefined ? namesArr[i] : (namesArr[0] !== undefined ? namesArr[0] : '');
             var curClass = classArr[i] !== undefined ? classArr[i] : (classArr[0] !== undefined ? classArr[0] : '');
             var curPlaceholder = placeArr[i] !== undefined ? placeArr[i] : (placeArr[0] !== undefined ? placeArr[0] : '');
+            var curOptions = optionsArr[i] !== undefined ? optionsArr[i] : (optionsArr[0] !== undefined ? optionsArr[0] : '');
 
-            rowHTML+='<div class="cell no-padding"><input class="in-table-input '+curClass+'" type="text" placeholder="'+curPlaceholder+'" value="" name="'+curName+'[]"></div>';
+            if(curOptions == ''){
+                rowHTML+='<div class="cell no-padding"><input class="in-table-input '+curClass+'" type="text" placeholder="'+curPlaceholder+'" value="" name="'+curName+'[]"></div>';
+            }else{
+                var optionsCurArr = JSON.parse(curOptions);
+                rowHTML+='<div class="cell no-padding"><select name="'+curName+'[]" class="in-table-input '+curClass+'">';
+
+                $.each(optionsCurArr,function(index,value){
+                    rowHTML+='<option value="'+index+'">'+value+'</option>'
+                });
+
+                rowHTML+='</select></div>'
+            }
         }
 
         if(action == 'yes'){

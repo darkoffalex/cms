@@ -1604,7 +1604,9 @@ body
     padding: 0;
 }
 
-.content.menu-content .inner-content input[type="text"].in-table-input{
+.content.menu-content .inner-content input[type="text"].in-table-input,
+.content.menu-content .inner-content select.in-table-input
+{
     width: 100%;
     height: 100%;
     border: none;

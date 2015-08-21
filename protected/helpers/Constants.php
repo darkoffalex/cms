@@ -29,6 +29,10 @@ class Constants
     const FIELD_TYPE_LINKED_BLOCK = 9;
     const FIELD_TYPE_SELECTABLE = 10;
     const FIELD_TYPE_MULTIPLE_CHECKBOX = 11;
+    //used just for feedback
+    const FIELD_TYPE_TEXT_AREA = 12;
+    const FIELD_TYPE_EMAIL = 13;
+    const FIELD_TYPE_PHONE_NUMBER = 16;
 
     //widget types
     const WIDGET_TYPE_MENU = 1;
@@ -176,6 +180,22 @@ class Constants
             self::FEEDBACK_TYPE_INTERNAL => __a('To admin panel only'),
             self::FEEDBACK_TYPE_INTERNAL_AND_EMAIL => __a('To admin panel and email'),
             self::FEEDBACK_TYPE_EMAIL => __a('To email only')
+        );
+    }
+
+    /**
+     * Returns types for feedback form's fields
+     * @return array
+     */
+    public static function feedbackFieldTypes()
+    {
+        return array(
+            self::FIELD_TYPE_TEXT => __a('Text field'),
+            self::FIELD_TYPE_TEXT_AREA => __a('Text area'),
+            self::FIELD_TYPE_NUMERIC => __a('Numeric field'),
+            self::FIELD_TYPE_PHONE_NUMBER => __a('Phone'),
+            self::FIELD_TYPE_BOOLEAN => __a('Checkbox'),
+            self::FIELD_TYPE_SELECTABLE => __a('Selectable')
         );
     }
 
