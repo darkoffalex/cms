@@ -526,6 +526,24 @@ class BlocksController extends ControllerAdmin
     }
 
     /**
+     * Move item in list and go back
+     * @param $id
+     * @param $dir
+     */
+    public function actionMove($id,$dir)
+    {
+        /* @var $item ContentItemEx */
+        $item = ContentItemEx::model()->findByPk($id);
+
+        if(!empty($item)){
+            Sort::Move($item,$dir,'ContentItemEx',array('tree_id' => $item->tree_id));
+        }
+
+        //go back
+        $this->redirect(Yii::app()->request->urlReferrer);
+    }
+
+    /**
      * Deletes image directly (image record and file)
      * @param $id
      * @throws CHttpException

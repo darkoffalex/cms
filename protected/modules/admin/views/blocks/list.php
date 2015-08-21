@@ -46,11 +46,15 @@
             </div><!--/list-row-->
 
             <?php foreach($items as $item): ?>
-                <div class="list-row">
+                <div class="list-row h60">
                     <div class="cell"><?php echo $item->label; ?></div>
                     <div class="cell type"><?php echo $item->contentType->label; ?></div>
                     <div class="cell type"><?php echo $item->tree->label; ?></div>
-                    <div class="cell action">
+                    <div class="cell action <?php if(!empty($selectedCategory)): ?> bigger <?php endif; ?>">
+                        <?php if(!empty($selectedCategory)): ?>
+                            <a href="<?php echo Yii::app()->createUrl('admin/blocks/move',array('id' => $item->id, 'dir' => 'up')); ?>" class="action to-top"></a>
+                            <a href="<?php echo Yii::app()->createUrl('admin/blocks/move',array('id' => $item->id, 'dir' => 'down')); ?>" class="action to-bottom"></a>
+                        <?php endif; ?>
                         <a href="<?php echo Yii::app()->createUrl('admin/blocks/edit',array('id' => $item->id)); ?>" class="action edit edit-page"></a>
                         <a href="<?php echo Yii::app()->createUrl('admin/blocks/delete',array('id' => $item->id)); ?>" class="action delete delete-page confirm-box"></a>
                     </div>
