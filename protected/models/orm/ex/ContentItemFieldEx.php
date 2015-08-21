@@ -8,6 +8,7 @@
  * @property string|null $filter_field_name
  * @property string|null $filter_field_name_group
  * @property string|null $filter_condition_field_name
+ * @property string|null $filter_order_button_name
  * @property ContentItemFieldValueEx[] $contentItemFieldValues
  */
 class ContentItemFieldEx extends ContentItemField
@@ -18,11 +19,23 @@ class ContentItemFieldEx extends ContentItemField
     const FILTER_LESS_SIGN = '<';
     const FILTER_MORE_SIGN = '>';
 
+    //filtration condition type (equal, more, less and etc.)
     public $filter_condition_id = null;
+
+    //filtration variants (for select boxes or checkboxes)
     public $filter_variants = null;
+
+    //field name for inputs (filter handler will catch this name)
     public $filter_field_name = null;
+
+    //field name for recurring inputs (for example checkboxes which can be handled as single value)
     public $filter_field_name_group = null;
+
+    //field name for hidden input with condition type (not necessary to use, if you using filter essentials method)
     public $filter_condition_field_name = null;
+
+    //name for ordering button (if array should be ordered)
+    public $filter_order_button_name;
 
     /**
      * @param string $className
@@ -103,6 +116,7 @@ class ContentItemFieldEx extends ContentItemField
         $this->filter_field_name = self::FILTER_FIELDS_GROUP.'['.$this->id.'][value]';
         $this->filter_field_name_group = self::FILTER_FIELDS_GROUP.'['.$this->id.'][value][]';
         $this->filter_condition_field_name = self::FILTER_FIELDS_GROUP.'['.$this->id.'][condition]';
+        $this->filter_order_button_name = self::FILTER_FIELDS_GROUP.'['.$this->id.'][order]';
     }
 
     /**

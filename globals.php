@@ -400,3 +400,15 @@ function hasJustEmptyKeys($array)
     return $empty;
 }
 
+/**
+ * Analog of 'strcmp' for integer numbers
+ * @param $a
+ * @param $b
+ * @return int
+ */
+function intcmp($a,$b)
+{
+    if((int)$a  > (int)$b)return 1;
+    else if((int)$a  < (int)$b)return -1;
+    return 0;
+}

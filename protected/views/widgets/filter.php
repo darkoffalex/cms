@@ -72,6 +72,11 @@
 
     <br>
 
+    <button type="submit" name="<?php echo $price->filter_order_button_name; ?>" value="asc"><?php echo __('Sort ascending by price'); ?></button>
+    <button type="submit" name="<?php echo $price->filter_order_button_name; ?>" value="desc"><?php echo __('Sort ascending by price'); ?></button>
+
+    <br>
+
     <input type="submit" name="<?php echo ContentItemFieldEx::FILTER_CLEAN_BUTTON_NAME; ?>" value="<?php echo __('Clean'); ?>">
 
     <br>

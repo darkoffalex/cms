@@ -86,6 +86,11 @@ class Filtration
 
         $result = $items;
 
+        //if filtration not set
+        if(empty($conditions) || hasJustEmptyKeys($conditions)){
+            return $result;
+        }
+
         //pass through all items
         foreach($result as $index => $item)
         {
@@ -217,4 +222,58 @@ class Filtration
 
         return $result;
     }
+
+
+    /**
+     * Sorts all items by specified in condition dynamic field
+     * @param $items
+     * @param $conditions
+     * @return ContentItemEx[]
+     */
+    public static function complexDynamicOrdering($items,$conditions)
+    {
+        /* @var $result ContentItemEx[] */
+        /* @var $items  ContentItemEx[] */
+
+        $result = $items;
+
+        if(!empty($conditions) || !hasJustEmptyKeys($conditions)){
+
+            //pass through all field-conditions
+            foreach($conditions as $fieldId => $condition)
+            {
+                if(!empty($condition['order'])){
+                    $order = $condition['order'];
+
+                    usort($result,function($a,$b) use ($fieldId, $order){
+
+                        /* @var $a ContentItemEx */
+                        /* @var $b ContentItemEx */
+
+                        if($order == 'asc'){
+                            $valA = $a->getDynamicFieldValueById($fieldId);
+                            $valB = $b->getDynamicFieldValueById($fieldId);
+                        }else{
+                            $valA = $b->getDynamicFieldValueById($fieldId);
+                            $valB = $a->getDynamicFieldValueById($fieldId);
+                        }
+
+                        if((!is_array($valA) && !is_numeric($valA)) && (!array($valB) && !is_numeric($valB))){
+                            return strcmp((string)$valA,(string)$valB);
+                        }elseif(!is_array($valA) && !is_array($valB)){
+                            return intcmp($valA,$valB);
+                        }
+
+                        return 0;
+
+                    });
+                }
+            }
+
+        }
+        
+        return $result;
+    }
+
+
 }
