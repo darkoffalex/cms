@@ -19,10 +19,15 @@
  * @property integer $include_from_nested
  * @property integer $filtration_by_type_id
  * @property string $filtration_array_json
+ * @property string $feedback_fields_json
+ * @property string $feedback_email
+ * @property integer $feedback_type_id
+ * @property integer $feedback_captcha
  *
  * The followings are the available model relations:
  * @property WidgetTrl[] $widgetTrls
  * @property WidgetRegistration[] $widgetRegistrations
+ * @property Feedback[] $feedbacks
  * @property ContentType $filtrationByType
  * @property Tree $tree
  */
@@ -45,11 +50,11 @@ class Widget extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('label', 'required'),
-			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id', 'numerical', 'integerOnly'=>true),
-			array('template_name, filtration_array_json', 'safe'),
+			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, feedback_type_id, feedback_captcha', 'numerical', 'integerOnly'=>true),
+			array('template_name, filtration_array_json, feedback_fields_json, feedback_email', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, filtration_array_json', 'safe', 'on'=>'search'),
+			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, filtration_array_json, feedback_fields_json, feedback_email, feedback_type_id, feedback_captcha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +68,7 @@ class Widget extends CActiveRecord
 		return array(
 			'widgetTrls' => array(self::HAS_MANY, 'WidgetTrl', 'widget_id'),
 			'widgetRegistrations' => array(self::HAS_MANY, 'WidgetRegistration', 'widget_id'),
+			'feedbacks' => array(self::HAS_MANY, 'Feedback', 'widget_id'),
 			'filtrationByType' => array(self::BELONGS_TO, 'ContentType', 'filtration_by_type_id'),
 			'tree' => array(self::BELONGS_TO, 'Tree', 'tree_id'),
 		);
@@ -89,6 +95,10 @@ class Widget extends CActiveRecord
 			'include_from_nested' => 'Include From Nested',
 			'filtration_by_type_id' => 'Filtration By Type',
 			'filtration_array_json' => 'Filtration Array Json',
+			'feedback_fields_json' => 'Feedback Fields Json',
+			'feedback_email' => 'Feedback Email',
+			'feedback_type_id' => 'Feedback Type',
+			'feedback_captcha' => 'Feedback Captcha',
 		);
 	}
 
@@ -125,6 +135,10 @@ class Widget extends CActiveRecord
 		$criteria->compare('include_from_nested',$this->include_from_nested);
 		$criteria->compare('filtration_by_type_id',$this->filtration_by_type_id);
 		$criteria->compare('filtration_array_json',$this->filtration_array_json,true);
+		$criteria->compare('feedback_fields_json',$this->feedback_fields_json,true);
+		$criteria->compare('feedback_email',$this->feedback_email,true);
+		$criteria->compare('feedback_type_id',$this->feedback_type_id);
+		$criteria->compare('feedback_captcha',$this->feedback_captcha);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

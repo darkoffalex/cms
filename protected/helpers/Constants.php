@@ -36,6 +36,7 @@ class Constants
     const WIDGET_TYPE_BLOCKS = 4;
     const WIDGET_TYPE_FILTER = 5;
     const WIDGET_TYPE_TEXT = 6;
+    const WIDGET_TYPE_FEEDBACK = 7;
 
     //filter conditions
     const FILTER_CONDITION_IGNORE = 0;
@@ -50,6 +51,11 @@ class Constants
     //client types
     const SHOP_CLIENT_PHYSICAL = 1;
     const SHOP_CLIENT_JURIDICAL = 2;
+
+    //feedback form types
+    const FEEDBACK_TYPE_INTERNAL = 1;
+    const FEEDBACK_TYPE_INTERNAL_AND_EMAIL = 2;
+    const FEEDBACK_TYPE_EMAIL = 3;
 
 
     /**
@@ -136,6 +142,7 @@ class Constants
             self::WIDGET_TYPE_BLOCKS  => __a('Blocks'),
             self::WIDGET_TYPE_FILTER => __a('Filter'),
             self::WIDGET_TYPE_TEXT => __a('Custom text'),
+            self::WIDGET_TYPE_FEEDBACK => __a('Feedback form')
         );
     }
 
@@ -152,12 +159,25 @@ class Constants
             self::WIDGET_TYPE_BREADCRUMBS => 'Breadcrumbs',
             self::WIDGET_TYPE_BLOCKS  => 'Blocks',
             self::WIDGET_TYPE_FILTER => 'Filter',
-            self::WIDGET_TYPE_TEXT => 'CustomText'
+            self::WIDGET_TYPE_TEXT => 'CustomText',
+            self::WIDGET_TYPE_FEEDBACK => 'Feedback'
         );
 
         return !empty($arr[$type_id]) ? $arr[$type_id] : $default;
     }
 
+    /**
+     * Returns array of feedback types
+     * @return array
+     */
+    public static function feedbackTypeList()
+    {
+        return array(
+            self::FEEDBACK_TYPE_INTERNAL => __a('To admin panel only'),
+            self::FEEDBACK_TYPE_INTERNAL_AND_EMAIL => __a('To admin panel and email'),
+            self::FEEDBACK_TYPE_EMAIL => __a('To email only')
+        );
+    }
 
     /**
      * Returns name of filed type by ID

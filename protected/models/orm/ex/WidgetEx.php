@@ -6,6 +6,7 @@
  * @property ContentTypeEx $filtrationByType
  * @property ContentItemFieldEx[]|array $preparedFilterableFields
  * @property WidgetTrl $trl
+ * @property FeedbackEx[] $feedbacks
  */
 class WidgetEx extends Widget
 {
