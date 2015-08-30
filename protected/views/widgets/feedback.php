@@ -2,7 +2,7 @@
 
 <?php
 /*
- * TemplateType:Feedback
- * TemplateName:Feedback form
+ * TemplateType:Form
+ * TemplateName:Feedback
  */
 ?>

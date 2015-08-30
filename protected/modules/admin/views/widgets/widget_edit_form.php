@@ -3,6 +3,7 @@
 <?php /* @var $categories array */ ?>
 <?php /* @var $form CActiveForm */ ?>
 <?php /* @var $model WidgetEx */ ?>
+<?php /* @var $types array */ ?>
 
 <main>
     <div class="title-bar world">
@@ -18,8 +19,10 @@
             <?php $title = $model->isNewRecord ? 'Add feedback form' : 'Edit feedback form'; ?>
             <span><?php echo __a($title); ?></span>
 
+            <?php if($model->form_type_id == Constants::FORM_WIDGET_FEEDBACK): ?>
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbacksincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
-            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackfields',array('id' => $model->id)); ?>" ><?php echo __a('Form fields'); ?></a>
+            <?php endif; ?>
+
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/edit',array('id' => $model->id)); ?>" class="active"><?php echo __a('General'); ?></a>
         </div><!--/header-->
 
@@ -32,16 +35,24 @@
                     <td class="value"><?php echo $form->textField($model,'label',array('placeholder' => __a('Label'))); ?></td>
                 </tr>
                 <tr>
+                    <td class="label"><?php echo $form->labelEx($model,'form_type_id'); ?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'form_type_id',Constants::formTypeList(),array('id' => 'form_type_id', 'class' => 'trigger-field'));?></td>
+                </tr>
+                <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">
+                    <td class="label"><?php echo $form->labelEx($model,'form_feedback_type_id'); ?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'form_feedback_type_id',Constants::feedbackTypeList(), array('id' => 'form_feedback_type_id', 'class' => 'trigger-field'));?></td>
+                </tr>
+                <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">
+                    <td class="label"><?php echo __a('Custom fields'); ?></td>
+                    <td class="value"><?php echo $form->dropDownList($model,'filtration_by_type_id',$types);?></td>
+                </tr>
+                <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">
                     <td class="label"><?php echo $form->labelEx($model,'feedback_email'); ?></td>
                     <td class="value"><?php echo $form->textField($model,'feedback_email',array('placeholder' => __a('Email for feedback'))); ?></td>
                 </tr>
                 <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'feedback_type_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'feedback_type_id',Constants::feedbackTypeList());?></td>
-                </tr>
-                <tr>
-                    <td class="label"><?php echo $form->labelEx($model,'feedback_captcha'); ?></td>
-                    <td class="value"><?php echo $form->checkBox($model,'feedback_captcha');?></td>
+                    <td class="label"><?php echo $form->labelEx($model,'form_captcha'); ?></td>
+                    <td class="value"><?php echo $form->checkBox($model,'form_captcha');?></td>
                 </tr>
                 <tr>
                     <td class="label"><?php echo $form->labelEx($model,'template_name'); ?></td>

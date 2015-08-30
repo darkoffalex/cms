@@ -29,10 +29,6 @@ class Constants
     const FIELD_TYPE_LINKED_BLOCK = 9;
     const FIELD_TYPE_SELECTABLE = 10;
     const FIELD_TYPE_MULTIPLE_CHECKBOX = 11;
-    //used just for feedback
-    const FIELD_TYPE_TEXT_AREA = 12;
-    const FIELD_TYPE_EMAIL = 13;
-    const FIELD_TYPE_PHONE_NUMBER = 16;
 
     //widget types
     const WIDGET_TYPE_MENU = 1;
@@ -40,7 +36,7 @@ class Constants
     const WIDGET_TYPE_BLOCKS = 4;
     const WIDGET_TYPE_FILTER = 5;
     const WIDGET_TYPE_TEXT = 6;
-    const WIDGET_TYPE_FEEDBACK = 7;
+    const WIDGET_TYPE_FORM = 7;
 
     //filter conditions
     const FILTER_CONDITION_IGNORE = 0;
@@ -56,10 +52,14 @@ class Constants
     const SHOP_CLIENT_PHYSICAL = 1;
     const SHOP_CLIENT_JURIDICAL = 2;
 
-    //feedback form types
-    const FEEDBACK_TYPE_INTERNAL = 1;
-    const FEEDBACK_TYPE_INTERNAL_AND_EMAIL = 2;
-    const FEEDBACK_TYPE_EMAIL = 3;
+    //form widget types
+    const FORM_WIDGET_FEEDBACK = 1;
+    const FORM_WIDGET_LOGIN = 2;
+    const FORM_WIDGET_REGISTRATION = 3;
+
+    //form widget feedback types
+    const FEEDBACK_TYPE_DEFAULT = 1;
+    const FEEDBACK_TYPE_AND_CUSTOM = 2;
 
 
     /**
@@ -121,7 +121,7 @@ class Constants
     {
         return array(
             self::FIELD_TYPE_NUMERIC => __a('Numeric'),
-            self::FIELD_TYPE_PRICE => __('Price'),
+            self::FIELD_TYPE_PRICE => __a('Price'),
             self::FIELD_TYPE_TEXT => __a('Text'),
             self::FIELD_TYPE_TEXT_TRL  => __a('Translatable text'),
             self::FIELD_TYPE_DATE => __a('Date-Time'),
@@ -142,11 +142,11 @@ class Constants
     {
         return array(
             self::WIDGET_TYPE_MENU  => __a('Menu'),
-            self::WIDGET_TYPE_BREADCRUMBS => __('Breadcrumbs'),
+            self::WIDGET_TYPE_BREADCRUMBS => __a('Breadcrumbs'),
             self::WIDGET_TYPE_BLOCKS  => __a('Blocks'),
             self::WIDGET_TYPE_FILTER => __a('Filter'),
             self::WIDGET_TYPE_TEXT => __a('Custom text'),
-            self::WIDGET_TYPE_FEEDBACK => __a('Feedback form')
+            self::WIDGET_TYPE_FORM => __a('Form')
         );
     }
 
@@ -164,7 +164,7 @@ class Constants
             self::WIDGET_TYPE_BLOCKS  => 'Blocks',
             self::WIDGET_TYPE_FILTER => 'Filter',
             self::WIDGET_TYPE_TEXT => 'CustomText',
-            self::WIDGET_TYPE_FEEDBACK => 'Feedback'
+            self::WIDGET_TYPE_FORM => 'Form'
         );
 
         return !empty($arr[$type_id]) ? $arr[$type_id] : $default;
@@ -174,30 +174,23 @@ class Constants
      * Returns array of feedback types
      * @return array
      */
-    public static function feedbackTypeList()
+    public static function formTypeList()
     {
         return array(
-            self::FEEDBACK_TYPE_INTERNAL => __a('To admin panel only'),
-            self::FEEDBACK_TYPE_INTERNAL_AND_EMAIL => __a('To admin panel and email'),
-            self::FEEDBACK_TYPE_EMAIL => __a('To email only')
+            self::FORM_WIDGET_FEEDBACK => __a('Feedback form'),
+            self::FORM_WIDGET_LOGIN => __a('Login form'),
+            self::FORM_WIDGET_REGISTRATION => __a('Registration form')
         );
     }
 
-    /**
-     * Returns types for feedback form's fields
-     * @return array
-     */
-    public static function feedbackFieldTypes()
+    public static function feedbackTypeList()
     {
         return array(
-            self::FIELD_TYPE_TEXT => __a('Text field'),
-            self::FIELD_TYPE_TEXT_AREA => __a('Text area'),
-            self::FIELD_TYPE_NUMERIC => __a('Numeric field'),
-            self::FIELD_TYPE_PHONE_NUMBER => __a('Phone'),
-            self::FIELD_TYPE_BOOLEAN => __a('Checkbox'),
-            self::FIELD_TYPE_SELECTABLE => __a('Selectable')
+            self::FEEDBACK_TYPE_DEFAULT => __a('Default fields'),
+            self::FEEDBACK_TYPE_AND_CUSTOM => __a('Default and custom fields'),
         );
     }
+
 
     /**
      * Returns name of filed type by ID

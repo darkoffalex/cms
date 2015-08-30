@@ -159,7 +159,7 @@ class WidgetsController extends ControllerAdmin
             Constants::WIDGET_TYPE_BREADCRUMBS => 'widget_edit_crumbs',
             Constants::WIDGET_TYPE_BLOCKS => 'widget_edit_blocks',
             Constants::WIDGET_TYPE_FILTER => 'widget_edit_filter',
-            Constants::WIDGET_TYPE_FEEDBACK => 'widget_edit_feedback',
+            Constants::WIDGET_TYPE_FORM => 'widget_edit_form',
         );
 
         //render form

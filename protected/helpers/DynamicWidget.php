@@ -226,6 +226,11 @@ class DynamicWidget
                     $widget->preparedFilterableFields = $content;
                     break;
 
+                //if widget has type 'form'
+                case Constants::WIDGET_TYPE_FORM:
+                    //TODO: prepare fields for outputting
+                    break;
+
                 //if widget has type 'text'
                 case Constants::WIDGET_TYPE_TEXT:
                     $content = array(
