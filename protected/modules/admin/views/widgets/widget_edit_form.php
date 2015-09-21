@@ -20,7 +20,7 @@
             <span><?php echo __a($title); ?></span>
 
             <?php if($model->form_type_id == Constants::FORM_WIDGET_FEEDBACK): ?>
-            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbacksincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
+            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
             <?php endif; ?>
 
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/edit',array('id' => $model->id)); ?>" class="active"><?php echo __a('General'); ?></a>
@@ -39,11 +39,7 @@
                     <td class="value"><?php echo $form->dropDownList($model,'form_type_id',Constants::formTypeList(),array('id' => 'form_type_id', 'class' => 'trigger-field'));?></td>
                 </tr>
                 <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">
-                    <td class="label"><?php echo $form->labelEx($model,'form_feedback_type_id'); ?></td>
-                    <td class="value"><?php echo $form->dropDownList($model,'form_feedback_type_id',Constants::feedbackTypeList(), array('id' => 'form_feedback_type_id', 'class' => 'trigger-field'));?></td>
-                </tr>
-                <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">
-                    <td class="label"><?php echo __a('Custom fields'); ?></td>
+                    <td class="label"><?php echo __a('Fields'); ?></td>
                     <td class="value"><?php echo $form->dropDownList($model,'filtration_by_type_id',$types);?></td>
                 </tr>
                 <tr class="triggered" data-trigger="form_type_id" data-condition="<?php echo Constants::FORM_WIDGET_FEEDBACK; ?>">

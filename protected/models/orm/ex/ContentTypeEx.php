@@ -53,6 +53,34 @@ class ContentTypeEx extends ContentType
 
 
     /**
+     * Returns fields which can be used for frontend forms (like contacts, feedback and etc.)
+     * @return ContentItemFieldEx[]
+     */
+    public function getFrontEditableField()
+    {
+        $result = array();
+
+        $frontEditableFieldTyped = array(
+            Constants::FIELD_TYPE_BOOLEAN,
+            Constants::FIELD_TYPE_PRICE,
+            Constants::FIELD_TYPE_NUMERIC,
+            Constants::FIELD_TYPE_TEXT,
+            Constants::FIELD_TYPE_SELECTABLE,
+            Constants::FIELD_TYPE_MULTIPLE_CHECKBOX
+        );
+
+        if(!empty($this->contentItemFields)){
+            foreach($this->contentItemFields as $field){
+                if(in_array($field->field_type_id,$frontEditableFieldTyped)){
+                    $result[] = $field;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns filterable fields (which can be used in filter conditions)
      * @param bool|false $extended
      * @return ContentItemFieldEx[]

@@ -22,7 +22,6 @@
  * @property string $feedback_email
  * @property integer $form_type_id
  * @property integer $form_captcha
- * @property integer $form_feedback_type_id
  *
  * The followings are the available model relations:
  * @property WidgetTrl[] $widgetTrls
@@ -50,11 +49,11 @@ class Widget extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('label', 'required'),
-			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, form_type_id, form_captcha, form_feedback_type_id', 'numerical', 'integerOnly'=>true),
+			array('type_id, tree_id, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, form_type_id, form_captcha', 'numerical', 'integerOnly'=>true),
 			array('template_name, filtration_array_json, feedback_email', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, filtration_array_json, feedback_email, form_type_id, form_captcha, form_feedback_type_id', 'safe', 'on'=>'search'),
+			array('id, label, type_id, tree_id, template_name, created_by_id, updated_by_id, created_time, updated_time, readonly, breadcrumbs_root_level, block_limit, include_from_nested, filtration_by_type_id, filtration_array_json, feedback_email, form_type_id, form_captcha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,7 +97,6 @@ class Widget extends CActiveRecord
 			'feedback_email' => 'Feedback Email',
 			'form_type_id' => 'Form Type',
 			'form_captcha' => 'Form Captcha',
-			'form_feedback_type_id' => 'Form Feedback Type',
 		);
 	}
 
@@ -138,7 +136,6 @@ class Widget extends CActiveRecord
 		$criteria->compare('feedback_email',$this->feedback_email,true);
 		$criteria->compare('form_type_id',$this->form_type_id);
 		$criteria->compare('form_captcha',$this->form_captcha);
-		$criteria->compare('form_feedback_type_id',$this->form_feedback_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

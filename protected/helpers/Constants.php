@@ -57,11 +57,6 @@ class Constants
     const FORM_WIDGET_LOGIN = 2;
     const FORM_WIDGET_REGISTRATION = 3;
 
-    //form widget feedback types
-    const FEEDBACK_TYPE_DEFAULT = 1;
-    const FEEDBACK_TYPE_AND_CUSTOM = 2;
-
-
     /**
      * Returns list of basic statuses
      * @return array
@@ -182,15 +177,6 @@ class Constants
             self::FORM_WIDGET_REGISTRATION => __a('Registration form')
         );
     }
-
-    public static function feedbackTypeList()
-    {
-        return array(
-            self::FEEDBACK_TYPE_DEFAULT => __a('Default fields'),
-            self::FEEDBACK_TYPE_AND_CUSTOM => __a('Default and custom fields'),
-        );
-    }
-
 
     /**
      * Returns name of filed type by ID

@@ -228,7 +228,20 @@ class DynamicWidget
 
                 //if widget has type 'form'
                 case Constants::WIDGET_TYPE_FORM:
-                    //TODO: prepare fields for outputting
+
+                    /* @var $fields ContentItemFieldEx[] */
+                    $fields = !empty($widget->filtrationByType) ? $widget->filtrationByType->getFrontEditableField() : array();
+
+                    //init field's filtration parameters (variants)
+                    foreach($fields as $field){
+                        $field->initFrontFormParams();
+                    }
+
+                    //content is fields
+                    $content = $fields;
+
+                    //set also to widget (to use easy selection by name)
+                    $widget->preparedFormFields = $content;
                     break;
 
                 //if widget has type 'text'

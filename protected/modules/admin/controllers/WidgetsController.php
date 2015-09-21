@@ -95,7 +95,10 @@ class WidgetsController extends ControllerAdmin
 
         $categories = TreeEx::model()->listAllItemsForForms(0,'-');
         $form = Yii::app()->request->getPost('WidgetEx',null);
-        $types = ContentTypeEx::model()->listAllItemsForForms(__a('No filtration'));
+
+        $titleNone = $item->type_id == Constants::WIDGET_TYPE_FORM ? __a('Default fields (email, message)') : __a('None');
+        $types = ContentTypeEx::model()->listAllItemsForForms($titleNone);
+
 
         //if form
         if(!empty($form)){
@@ -171,6 +174,16 @@ class WidgetsController extends ControllerAdmin
                 'types' => $types
             )
         );
+    }
+
+    /**
+     * List of all incoming messages
+     * @param int $id
+     */
+    public function actionFeedbackIncoming($id)
+    {
+        debugvar($id);
+        exit('Work in progress');
     }
 
     /**
@@ -291,34 +304,6 @@ class WidgetsController extends ControllerAdmin
         }
 
         $this->render('widget_edit_filter_settings',array('model' => $item));
-    }
-
-    public function actionFeedbackFields($id)
-    {
-
-
-        //register all necessary styles
-        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
-        //register all necessary scripts
-        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
-
-        //find widget item
-        $item = WidgetEx::model()->findByPk((int)$id);
-
-        //fail if not found
-        if(empty($item)){
-            throw new CHttpException(404);
-        }
-
-        //get settings from request
-        $settings = Yii::app()->getRequest()->getPost('FeedbackFields',array());
-
-        if(!empty($settings)){
-
-            //TODO: perform saving data
-        }
-
-        $this->render('widget_edit_feedback_fields', array('model' => $item));
     }
 
     /******************************************** P O S I T I O N S ****************************************************/

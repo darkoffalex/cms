@@ -5,14 +5,14 @@
  * @property WidgetRegistrationEx[] $widgetRegistrations
  * @property ContentTypeEx $filtrationByType
  * @property ContentItemFieldEx[]|array $preparedFilterableFields
- * @property array $preparedFeedbackFields
+ * @property ContentItemFieldEx[]|array $preparedFormFields
  * @property WidgetTrl $trl
  * @property FeedbackEx[] $feedbacks
  */
 class WidgetEx extends Widget
 {
     public $preparedFilterableFields = array();
-    public $preparedFeedbackFields = array();
+    public $preparedFormFields = array();
 
     /**
      * @param string $className

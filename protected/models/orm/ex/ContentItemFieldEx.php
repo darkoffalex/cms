@@ -5,6 +5,7 @@
  * @property ContentItemFieldTrl $trl
  * @property int|null $filter_condition_id
  * @property array|null $filter_variants
+ * @property array|null $form_variants
  * @property string|null $filter_field_name
  * @property string|null $filter_field_name_group
  * @property string|null $filter_condition_field_name
@@ -13,7 +14,12 @@
  */
 class ContentItemFieldEx extends ContentItemField
 {
-    //filtration field name group
+
+    /**
+     * Filtration additional stuff
+     */
+
+    //filtration's special constants
     const FILTER_FIELDS_GROUP = 'FrontFiltration';
     const FILTER_CLEAN_BUTTON_NAME = 'FrontFiltration[clean]';
     const FILTER_LESS_SIGN = '<';
@@ -37,6 +43,25 @@ class ContentItemFieldEx extends ContentItemField
     //name for ordering button (if array should be ordered)
     public $filter_order_button_name;
 
+
+
+    /**
+     * Form's (feedback's and etc.) fields
+     */
+
+    //form group name
+    const FORM_FIELD_GROUP = 'FormFields';
+
+    //selectable variants for form fields
+    public $form_variants = null;
+
+    //field name for inputs (filter handler will catch this name)
+    public $form_field_name = null;
+
+    //field name for recurring inputs (for example checkboxes which can be handled as single value)
+    public $form_field_name_group = null;
+
+
     /**
      * @param string $className
      * @return self
@@ -46,8 +71,26 @@ class ContentItemFieldEx extends ContentItemField
         return parent::model($className);
     }
 
+
     /**
-     * Returns array of variants
+     * Initializes and prepares field for filter widget
+     */
+    public function initFrontFormParams()
+    {
+        $result = array();
+
+        if($this->field_type_id == Constants::FIELD_TYPE_SELECTABLE)
+        {
+            $result = $this->getSelectableVariants();
+        }
+
+        $this->form_variants = $result;
+        $this->form_field_name = self::FORM_FIELD_GROUP.'['.$this->id.'][value]';
+        $this->form_field_name_group = self::FORM_FIELD_GROUP.'['.$this->id.'][value][]';
+    }
+
+    /**
+     * Initializes and prepares field for filter widget
      * @param null $widget
      */
     public function initFiltrationParams($widget = null)
@@ -131,6 +174,16 @@ class ContentItemFieldEx extends ContentItemField
     }
 
     /**
+     * Returns array of variants
+     * @return array|null
+     */
+    public function getFormVariants()
+    {
+        $this->initFrontFormParams();
+        return $this->form_variants;
+    }
+
+    /**
      * Adds special hidden input for filtration condition
      * @param bool|false $return
      * @return null|string
@@ -141,6 +194,23 @@ class ContentItemFieldEx extends ContentItemField
 
         $result = "<input type='hidden' value='".$conditionId."' name='".$this->filter_condition_field_name."'>";
         $result .= "<input type='hidden' value='' name='".$this->filter_field_name."'>";
+
+        if($return){
+            return $result;
+        }
+
+        echo $result;
+        return null;
+    }
+
+    /**
+     * Adds special hidden input for form field
+     * @param bool|false $return
+     * @return null|string
+     */
+    public function formFieldEssentials($return = false){
+
+        $result = "<input type='hidden' value='' name='".$this->form_field_name."''>";
 
         if($return){
             return $result;
