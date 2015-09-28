@@ -48,6 +48,15 @@ class Constants
     const FILTER_CONDITION_BETWEEN = 6;
     const FILTER_CONDITION_SIMILAR = 7;
 
+    //form validation types
+    const FORM_VAL_FIELD_IGNORE = 0;
+    const FORM_VAL_FIELD_NOT_EMPTY = 1;
+    const FORM_VAL_FIELD_NOT_ZERO = 2;
+    const FORM_VAL_FIELD_POSITIVE = 3;
+    const FORM_VAL_FIELD_NEGATIVE = 4;
+    const FORM_VAL_FIELD_LENGTH = 5;
+    const FORM_VAL_FIELD_NUM_INTERVAL = 6;
+
     //client types
     const SHOP_CLIENT_PHYSICAL = 1;
     const SHOP_CLIENT_JURIDICAL = 2;

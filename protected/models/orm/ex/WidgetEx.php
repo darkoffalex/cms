@@ -42,6 +42,24 @@ class WidgetEx extends Widget
     }
 
     /**
+     * Returns dynamic form field - field object from already prepared/initialised array
+     * @param $fieldName
+     * @return ContentItemFieldEx|null
+     */
+    public function getFormField($fieldName)
+    {
+        if(!empty($this->preparedFormFields)){
+            foreach($this->preparedFormFields as $field){
+                if($field->field_name == $fieldName){
+                    return $field;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Returns array of conditions for item filtration
      * @return array|mixed
      */
@@ -96,6 +114,17 @@ class WidgetEx extends Widget
     public function filterTypeForIs($field_id,$type)
     {
         return $this->filterTypeFor($field_id) == $type;
+    }
+
+    /**
+     * Validation settings - return validation type for selected field
+     * @param $field_id
+     * @return null
+     */
+    public function validationConfigFor($field_id)
+    {
+        $array = $this->getFiltrationArr();
+        return !empty($array[$field_id]) ? $array[$field_id] : null;
     }
 
     /**

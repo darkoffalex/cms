@@ -35,7 +35,10 @@ class Controller extends CController
         DynamicWidget::getInstance()->initialize($this,$this->themeName);
 
         //handle filtration requests
-        $this->preSetFiltration();
+        $this->preSetFiltrationHandler();
+
+        //handle form's requests
+        $this->preSetFormHandler();
 
         //before action - parent call
         return parent::beforeAction($action);
@@ -82,7 +85,7 @@ class Controller extends CController
     /**
      * If got filtration request from form - set it to session
      */
-    public function preSetFiltration()
+    public function preSetFiltrationHandler()
     {
         $params = Yii::app()->getRequest()->getParam(ContentItemFieldEx::FILTER_FIELDS_GROUP);
 
@@ -93,6 +96,18 @@ class Controller extends CController
             if(isset($params['clean'])){
                 unset(Yii::app()->session['filtration']);
             }
+        }
+    }
+
+    /**
+     * If got feedback request from form - handle it
+     */
+    public function preSetFormHandler()
+    {
+        $params = Yii::app()->getRequest()->getParam(ContentItemFieldEx::FORM_FIELD_GROUP);
+
+        if(!empty($params)){
+            debugvar($params);
         }
     }
 }

@@ -230,11 +230,11 @@ class DynamicWidget
                 case Constants::WIDGET_TYPE_FORM:
 
                     /* @var $fields ContentItemFieldEx[] */
-                    $fields = !empty($widget->filtrationByType) ? $widget->filtrationByType->getFrontEditableField() : array();
+                    $fields = !empty($widget->filtrationByType) ? $widget->filtrationByType->getFrontEditableFields() : array();
 
                     //init field's filtration parameters (variants)
                     foreach($fields as $field){
-                        $field->initFrontFormParams();
+                        $field->initFrontFormParams($widget);
                     }
 
                     //content is fields

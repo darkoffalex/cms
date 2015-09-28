@@ -53,14 +53,15 @@ class ContentTypeEx extends ContentType
 
 
     /**
-     * Returns fields which can be used for frontend forms (like contacts, feedback and etc.)
+     * Returns fields which can be used for frontend forms (like contacts, feedback and etc.
+     * @param bool|false $configurableOnly
      * @return ContentItemFieldEx[]
      */
-    public function getFrontEditableField()
+    public function getFrontEditableFields($configurableOnly = false)
     {
         $result = array();
 
-        $frontEditableFieldTyped = array(
+        $frontEditableFieldTypes = array(
             Constants::FIELD_TYPE_BOOLEAN,
             Constants::FIELD_TYPE_PRICE,
             Constants::FIELD_TYPE_NUMERIC,
@@ -69,16 +70,29 @@ class ContentTypeEx extends ContentType
             Constants::FIELD_TYPE_MULTIPLE_CHECKBOX
         );
 
+        $frontEditableFieldTypesConfigurable = array(
+            Constants::FIELD_TYPE_PRICE,
+            Constants::FIELD_TYPE_NUMERIC,
+            Constants::FIELD_TYPE_TEXT,
+        );
+
         if(!empty($this->contentItemFields)){
             foreach($this->contentItemFields as $field){
-                if(in_array($field->field_type_id,$frontEditableFieldTyped)){
-                    $result[] = $field;
+                if(!$configurableOnly){
+                    if(in_array($field->field_type_id,$frontEditableFieldTypes)){
+                        $result[] = $field;
+                    }
+                }else{
+                    if(in_array($field->field_type_id,$frontEditableFieldTypesConfigurable)){
+                        $result[] = $field;
+                    }
                 }
             }
         }
 
         return $result;
     }
+
 
     /**
      * Returns filterable fields (which can be used in filter conditions)

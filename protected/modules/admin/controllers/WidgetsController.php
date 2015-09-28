@@ -96,9 +96,7 @@ class WidgetsController extends ControllerAdmin
         $categories = TreeEx::model()->listAllItemsForForms(0,'-');
         $form = Yii::app()->request->getPost('WidgetEx',null);
 
-        $titleNone = $item->type_id == Constants::WIDGET_TYPE_FORM ? __a('Default fields (email, message)') : __a('None');
-        $types = ContentTypeEx::model()->listAllItemsForForms($titleNone);
-
+        $types = ContentTypeEx::model()->listAllItemsForForms(__a('None'));
 
         //if form
         if(!empty($form)){
@@ -182,8 +180,36 @@ class WidgetsController extends ControllerAdmin
      */
     public function actionFeedbackIncoming($id)
     {
-        debugvar($id);
-        exit('Work in progress');
+        $this->renderText('In progress');
+    }
+
+
+    /**
+     * Validation settings for feedback fields
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionFeedbackValidation($id)
+    {
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        $item = WidgetEx::model()->findByPk((int)$id);
+
+        if(empty($item) || empty($item->filtrationByType)){
+            throw new CHttpException(404);
+        }
+
+        $validationConfigs = Yii::app()->request->getPost('ValidationParams',array());
+        if(!empty($validationConfigs)){
+            $item->filtration_array_json = json_encode($validationConfigs);
+            $item->updated_time = time();
+            $item->update();
+        }
+
+        $this->render('widget_edit_form_validation',array('model' => $item));
     }
 
     /**

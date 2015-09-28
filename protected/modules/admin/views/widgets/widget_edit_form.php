@@ -16,11 +16,14 @@
     <div class="content menu-content page-content">
 
         <div class="header">
-            <?php $title = $model->isNewRecord ? 'Add feedback form' : 'Edit feedback form'; ?>
+            <?php $title = $model->isNewRecord ? 'Add form widget' : 'Edit form widget'; ?>
             <span><?php echo __a($title); ?></span>
 
             <?php if($model->form_type_id == Constants::FORM_WIDGET_FEEDBACK): ?>
-            <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
+                <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackincoming',array('id' => $model->id)); ?>"><?php echo __a('Incoming messages'); ?></a>
+                <?php if(!empty($model->filtrationByType)): ?>
+                <a href="<?php echo Yii::app()->createUrl('admin/widgets/feedbackvalidation',array('id' => $model->id)); ?>"><?php echo __a('Field validation'); ?></a>
+                <?php endif; ?>
             <?php endif; ?>
 
             <a href="<?php echo Yii::app()->createUrl('admin/widgets/edit',array('id' => $model->id)); ?>" class="active"><?php echo __a('General'); ?></a>

@@ -74,9 +74,12 @@ class ContentItemFieldEx extends ContentItemField
 
     /**
      * Initializes and prepares field for filter widget
+     * @param null $widget
      */
-    public function initFrontFormParams()
+    public function initFrontFormParams($widget)
     {
+        /* @var $widget WidgetEx */
+
         $result = array();
 
         if($this->field_type_id == Constants::FIELD_TYPE_SELECTABLE)
@@ -85,8 +88,8 @@ class ContentItemFieldEx extends ContentItemField
         }
 
         $this->form_variants = $result;
-        $this->form_field_name = self::FORM_FIELD_GROUP.'['.$this->id.'][value]';
-        $this->form_field_name_group = self::FORM_FIELD_GROUP.'['.$this->id.'][value][]';
+        $this->form_field_name = self::FORM_FIELD_GROUP.'['.$widget->id.']['.$this->id.']';
+        $this->form_field_name_group = self::FORM_FIELD_GROUP.'['.$widget->id.']['.$this->id.'][]';
     }
 
     /**
