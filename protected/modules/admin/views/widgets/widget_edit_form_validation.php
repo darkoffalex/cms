@@ -33,17 +33,22 @@
                             <tr>
                                 <td class="label"><label for="field_<?php echo $field->id; ?>"><?php echo $field->label; ?></label></td>
                                 <td class="value filtration-conditions">
-                                    <?php $selected = $model->validationConfigFor($field->id); ?>
+
+                                    <?php $config = $model->validationConfigFor($field->id); ?>
+                                    <?php $selected = !empty($config['rule']) ? $config['rule'] : null; ?>
+                                    <?php $specified_value = !empty($config['specified']) ? $config['specified'] : null; ?>
+                                    <?php $interval = !empty($config['interval']) ? $config['interval'] : array(); ?>
+
                                     <?php if($field->field_type_id == Constants::FIELD_TYPE_NUMERIC || $field->field_type_id == Constants::FIELD_TYPE_PRICE): ?>
-                                        <select class="fcb" name="ValidationParams[<?php echo $field->id; ?>][rule]" id="field_<?php echo $field->id; ?>">
+                                        <select class="fcb trigger-field" name="ValidationParams[<?php echo $field->id; ?>][rule]" id="field_<?php echo $field->id; ?>_numeric">
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_IGNORE): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_IGNORE; ?>"><?php echo __a('Ignore'); ?></option>
-                                            <option <?php if($selected == Constants::FORM_VAL_FIELD_NOT_ZERO): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_NOT_ZERO; ?>"><?php echo __a('Not zero'); ?></option>
+                                            <option <?php if($selected == Constants::FORM_VAL_FIELD_NOT_ZERO): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_NOT_ZERO; ?>"><?php echo __a('Not zero / Not empty'); ?></option>
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_POSITIVE): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_POSITIVE; ?>"><?php echo __a('Just positive values'); ?></option>
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_NEGATIVE): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_NEGATIVE; ?>"><?php echo __a('Just negative values'); ?></option>
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_NUM_INTERVAL): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_NUM_INTERVAL; ?>"><?php echo __a('Specified interval'); ?></option>
                                         </select>
                                     <?php elseif($field->field_type_id == Constants::FIELD_TYPE_TEXT): ?>
-                                        <select class="fcb" name="ValidationParams[<?php echo $field->id; ?>][rule]" id="field_<?php echo $field->id; ?>">
+                                        <select class="fcb trigger-field" name="ValidationParams[<?php echo $field->id; ?>][rule]" id="field_<?php echo $field->id; ?>_text">
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_IGNORE): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_IGNORE; ?>"><?php echo __a('Ignore'); ?></option>
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_NOT_EMPTY): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_NOT_EMPTY; ?>"><?php echo __a('Not empty'); ?></option>
                                             <option <?php if($selected == Constants::FORM_VAL_FIELD_LENGTH): ?> selected <?php endif; ?> value="<?php echo Constants::FORM_VAL_FIELD_LENGTH ?>"><?php echo __a('Specified length'); ?></option>
@@ -51,17 +56,20 @@
                                     <?php endif;?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="label"></td>
+
+                            <?php $classInputStrict = $field->field_type_id == Constants::FIELD_TYPE_PRICE ? 'numeric-input-price' : 'numeric-input-block'; ?>
+
+                            <tr class="triggered" data-trigger="field_<?php echo $field->id; ?>_text" data-condition="<?php echo Constants::FORM_VAL_FIELD_LENGTH ?>">
+                                <td class="label"><?php echo __('Value'); ?></td>
                                 <td class="filtration-conditions">
-                                    <input type="text" placeholder="<?php echo __a('Value'); ?>" value="" name="ValidationParams[<?php echo $field->id; ?>][value_0]">
+                                    <input class="<?php echo $classInputStrict; ?>" type="text" placeholder="" value="<?php echo $specified_value; ?>" name="ValidationParams[<?php echo $field->id; ?>][specified]">
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="label"></td>
+                            <tr class="triggered" data-trigger="field_<?php echo $field->id; ?>_numeric" data-condition="<?php echo Constants::FORM_VAL_FIELD_NUM_INTERVAL ?>">
+                                <td class="label"><?php echo __('Interval') ?></td>
                                 <td class="filtration-conditions">
-                                    <input type="text" placeholder="<?php echo __a('From'); ?>" value="" name="ValidationParams[<?php echo $field->id; ?>][value_0]">
-                                    <input type="text" placeholder="<?php echo __a('To'); ?>" value="" name="ValidationParams[<?php echo $field->id; ?>][value_1]">
+                                    <input class="<?php echo $classInputStrict; ?>" type="text" placeholder="" value="<?php echo !empty($interval[0]) ? $interval[0] : ''; ?>" name="ValidationParams[<?php echo $field->id; ?>][interval][]">
+                                    <input class="<?php echo $classInputStrict; ?>" type="text" placeholder="" value="<?php echo !empty($interval[1]) ? $interval[1] : ''; ?>" name="ValidationParams[<?php echo $field->id; ?>][interval][]">
                                 </td>
                             </tr>
                         <?php endforeach; ?>

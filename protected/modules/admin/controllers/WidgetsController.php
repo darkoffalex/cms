@@ -203,7 +203,9 @@ class WidgetsController extends ControllerAdmin
         }
 
         $validationConfigs = Yii::app()->request->getPost('ValidationParams',array());
+
         if(!empty($validationConfigs)){
+
             $item->filtration_array_json = json_encode($validationConfigs);
             $item->updated_time = time();
             $item->update();

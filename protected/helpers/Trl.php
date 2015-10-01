@@ -50,14 +50,14 @@ class Trl
 
     /**
      * Translates label directly from DB
-     * @param $label
+     * @param $labelIn
      * @param string $noLabelMark
      * @param string $noTransMark
      * @return string
      */
-    public function translateEx($label,$noLabelMark = '',$noTransMark = '')
+    public function translateEx($labelIn,$noLabelMark = '',$noTransMark = '')
     {
-        $label = TranslationEx::model()->findByAttributes(array('label' => $label));
+        $label = TranslationEx::model()->findByAttributes(array('label' => $labelIn));
         if(!empty($label))
         {
             if(!empty($label->trl))
@@ -65,10 +65,10 @@ class Trl
                 return $label->trl->value;
             }
 
-            return $noTransMark.$label;
+            return $noTransMark.$labelIn;
         }
 
-        return $noLabelMark.$label;
+        return $noLabelMark.$labelIn;
     }
 
 }

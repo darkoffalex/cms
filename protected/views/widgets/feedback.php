@@ -18,7 +18,7 @@
             <?php echo $field->formFieldEssentials(); ?>
             <label for="<?php echo $field->id; ?>"><?php echo !empty($field->trl) ? $field->trl->name : ''; ?></label>
             <input name="<?php echo $field->form_field_name; ?>" id="<?php echo $field->id; ?>" type="checkbox" value="1"><br>
-        <?php elseif($field->field_type_id == Constants::FIELD_TYPE_NUMERIC): ?>
+        <?php elseif($field->field_type_id == Constants::FIELD_TYPE_NUMERIC || $field->field_type_id == Constants::FIELD_TYPE_PRICE): ?>
             <?php echo $field->formFieldEssentials(); ?>
             <label for="<?php echo $field->id; ?>"><?php echo !empty($field->trl) ? $field->trl->name : ''; ?></label>
             <input name="<?php echo $field->form_field_name; ?>" id="<?php echo $field->id; ?>" type="text" value="" placeholder="<?php echo !empty($field->trl) ? $field->trl->name : ''; ?>"><br>
