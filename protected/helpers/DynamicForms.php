@@ -5,7 +5,10 @@ class DynamicForms
     protected static $_instance;
     public $form_validation_errors = array();
     public $form_stored_values = array();
+    public $form_success = array();
+
     public $feedback_content = array();
+
 
     public static function getInstance()
     {
@@ -45,6 +48,17 @@ class DynamicForms
     public function getErrors($widgetId)
     {
         return !empty($this->form_validation_errors[$widgetId]) ? $this->form_validation_errors[$widgetId] : array();
+    }
+
+    /**
+     * Returns text or error for specified field
+     * @param $widgetId
+     * @param $fieldId
+     * @return string
+     */
+    public function getError($widgetId,$fieldId)
+    {
+        return !empty($this->form_validation_errors[$widgetId][$fieldId]) ? $this->form_validation_errors[$widgetId][$fieldId] : '';
     }
 
 
@@ -117,9 +131,8 @@ class DynamicForms
                         $fieldObject = ContentItemFieldEx::model()->findByPk((int)$fieldId);
                         $fieldTitle = !empty($fieldObject->trl->name) ? $fieldObject->trl->name : $fieldObject->label;
 
-
-                        //TODO: parse correctly all content, store it for saving
-                        //$this->feedback_content[$fieldObject->label] = $value;
+                        //obtain correct value for current field, and store it
+                        $this->feedback_content[$widget->id][$fieldObject->label] = $this->obtainFeedbackFieldValue($fieldObject,$value);
 
 
                         //if this is numeric field
@@ -222,10 +235,21 @@ class DynamicForms
                     }
 
                     //if have no errors
-                    else{
+                    else
+                    {
+                        //append site viewing language to options array
+                        $this->feedback_content[$widgetId]['Site viewing language'] = Yii::app()->language;
 
-                        //TODO: make a feedback
-
+                        //create feedback message and store it to database
+                        $feedback = new FeedbackEx();
+                        $feedback->widget_id = $widgetId;
+                        $feedback->email = $widget->feedback_email;
+                        $feedback->ip = findUserIP();
+                        $feedback->created_time = time();
+                        $feedback->updated_time = time();
+                        $feedback->sent = 0;
+                        $feedback->incoming_data_json = json_encode($this->feedback_content[$widgetId]);
+                        $this->form_success[$widgetId] = $feedback->save();
                     }
 
                 }
@@ -234,6 +258,16 @@ class DynamicForms
 
         }
 
+    }
+
+    /**
+     * Check if form successfully completed
+     * @param int $widgetId
+     * @return bool
+     */
+    public function isSuccessful($widgetId)
+    {
+        return !empty($this->form_success[$widgetId]) && $this->form_success[$widgetId] == true;
     }
 
     /**
@@ -246,21 +280,49 @@ class DynamicForms
     {
         switch($fieldObj->field_type_id){
 
+            //for simple value fields (text, numbers, prices)
             case Constants::FIELD_TYPE_PRICE:
             case Constants::FIELD_TYPE_NUMERIC:
             case Constants::FIELD_TYPE_TEXT:
                 return $value;
                 break;
 
+            //for selectable fields/radio-buttons
             case Constants::FIELD_TYPE_SELECTABLE:
                 return $fieldObj->getSelectableVariantTitle($value);
                 break;
 
+            //for multiple checkboxes
             case Constants::FIELD_TYPE_MULTIPLE_CHECKBOX:
-                $variants = $fieldObj->getSelectableVariants();
-                return $value;
-                break;
 
+                //titles of selected values
+                $result = array();
+
+                //get all selectable variants form field
+                $variants = $fieldObj->getSelectableVariants();
+
+                //if we got correct data
+                if(is_array($value)){
+                    //compare all values form POST with values from field
+                    foreach($value as $nr => $formVal){
+                        foreach($variants as $varVal => $title)
+                        {
+                            if($formVal == $varVal){
+                                $result[] = $title;
+                            }
+                        }
+                    }
+                }
+
+
+                if(!empty($result)){
+                    return implode(', ',$result);
+                }else{
+                    return "";
+                }
+
+                break;
+            //all other fields
             default:
                 return $value;
                 break;

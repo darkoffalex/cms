@@ -213,7 +213,8 @@ class ContentItemFieldEx extends ContentItemField
      */
     public function formFieldEssentials($return = false){
 
-        $result = "<input type='hidden' value='' name='".$this->form_field_name."''>";
+        $default_val = $this->field_type_id == Constants::FIELD_TYPE_BOOLEAN ? '0' : '';
+        $result = "<input type='hidden' value='".$default_val."' name='".$this->form_field_name."''>";
 
         if($return){
             return $result;
