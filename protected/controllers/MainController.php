@@ -14,6 +14,7 @@ class MainController extends Controller
 
         $items = ContentItemEx::model()->findAll();
         $conditions = !empty(Yii::app()->session['filtration']) ? Yii::app()->session['filtration'] : array();
+
         $result = Filtration::complexDynamicFiltrate($items,$conditions);
         $result = Filtration::complexDynamicOrdering($result,$conditions);
 

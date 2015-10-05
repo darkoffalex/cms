@@ -327,6 +327,17 @@ class ContentItemFieldEx extends ContentItemField
     }
 
     /**
+     * Returns variant name by selected value
+     * @param $value
+     * @return mixed
+     */
+    public function getSelectableVariantTitle($value)
+    {
+        $variants = $this->getSelectableVariants();
+        return !empty($variants[$value]) ? $variants[$value] : $value;
+    }
+
+    /**
      * Override, relate with extended models
      * @return array relational rules.
      */
