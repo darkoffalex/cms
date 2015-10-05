@@ -186,6 +186,7 @@ class WidgetsController extends ControllerAdmin
         //register all necessary styles
         Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
         Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.main-menu.css');
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.lightbox.css');
 
         //register all necessary scripts
         Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
@@ -201,6 +202,21 @@ class WidgetsController extends ControllerAdmin
 
         //render table
         $this->render('widget_edit_form_incoming',array('model' => $widget, 'items' => $items));
+    }
+
+
+    public function actionViewFeedback($id)
+    {
+        //find feedback
+        $feedback = FeedbackEx::model()->findByPk((int)$id);
+
+        //if not found - 404
+        if(empty($feedback)){
+            throw new CHttpException(404);
+        }
+
+        //render feedback's info
+        $this->renderPartial('_feedback_info',compact('feedback'));
     }
 
     /**

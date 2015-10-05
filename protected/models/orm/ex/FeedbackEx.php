@@ -53,4 +53,14 @@ class FeedbackEx extends Feedback
         //return modified relations
         return $relations;
     }
+
+    /**
+     * Returns entered by client information as array (field => value)
+     * @return array|mixed
+     */
+    public function getFieldsInfo()
+    {
+        $array = !empty($this->incoming_data_json) && isJson($this->incoming_data_json) ? json_decode($this->incoming_data_json,true) : array();
+        return $array;
+    }
 }

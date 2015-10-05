@@ -295,6 +295,10 @@ class DynamicForms
                 return $value;
                 break;
 
+            //for booleans (check-boxes)
+            case Constants::FIELD_TYPE_BOOLEAN:
+                return $value == 1  ? __('Yes') : __('No');
+
             //for selectable fields/radio-buttons
             case Constants::FIELD_TYPE_SELECTABLE:
                 return $fieldObj->getSelectableVariantTitle($value);
@@ -330,6 +334,7 @@ class DynamicForms
                 }
 
                 break;
+
             //all other fields
             default:
                 return $value;

@@ -196,4 +196,32 @@
         return false;
     });
 
+    $(document).on("click", ".load-to-light-box", function(e){
+
+        //show pre-loader
+        $.preLoader.show();
+
+        //clean content
+        $(".lightbox.add-box .content .in-content").html('');
+
+        //ajax request
+        var request = $.ajax({url: $(this).attr('href')});
+
+        //if success
+        request.done(function(data){
+
+            $(".lightbox.add-box .content .in-content").html(data);
+            $(".lightbox.add-box").fadeIn(300);
+
+            $.preLoader.hide();
+        });
+
+        request.fail(function(jqXHR,textStatus) {
+            alert( "Request failed: " + textStatus);
+            $.preLoader.hide();
+        });
+
+        return false;
+    });
+
 })(jQuery);
