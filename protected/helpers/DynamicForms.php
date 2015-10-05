@@ -240,10 +240,18 @@ class DynamicForms
                         //append site viewing language to options array
                         $this->feedback_content[$widgetId]['Site viewing language'] = Yii::app()->language;
 
+                        //obtain email
+                        $email = '-';
+                        foreach($this->feedback_content[$widgetId] as $title => $formEnteredVal){
+                            if(stripos($title,'email') !== false){
+                                $email = $this->feedback_content[$widgetId][$title];
+                            }
+                        }
+
                         //create feedback message and store it to database
                         $feedback = new FeedbackEx();
                         $feedback->widget_id = $widgetId;
-                        $feedback->email = $widget->feedback_email;
+                        $feedback->email = $email;
                         $feedback->ip = findUserIP();
                         $feedback->created_time = time();
                         $feedback->updated_time = time();

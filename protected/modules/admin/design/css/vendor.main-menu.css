@@ -113,3 +113,6 @@
 .ficoned.arrow-down:before { content: "\f063"; }
 .ficoned.pencil:before { content: "\f040"; }
 .ficoned.trash-can:before { content: "\f1f8"; }
+.ficoned.eye:before { content: "\f06e"; }
+.ficoned.refresh:before {content: "\f021";}
+.ficoned.email:before {content: "\f003";}

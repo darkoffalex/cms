@@ -174,13 +174,56 @@ class WidgetsController extends ControllerAdmin
         );
     }
 
+
     /**
-     * List of all incoming messages
-     * @param int $id
+     * List all incoming messages
+     * @param $id
+     * @param int $page
+     * @throws CHttpException
      */
-    public function actionFeedbackIncoming($id)
+    public function actionFeedbackIncoming($id, $page = 1)
     {
-        $this->renderText('In progress');
+        //register all necessary styles
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.add-menu.css');
+        Yii::app()->clientScript->registerCssFile($this->assets.'/css/vendor.main-menu.css');
+
+        //register all necessary scripts
+        Yii::app()->clientScript->registerScriptFile($this->assets.'/js/vendor.add-menu.js',CClientScript::POS_END);
+
+        //find widget
+        $widget = WidgetEx::model()->findByPk((int)$id);
+        if(empty($widget)){
+            throw new CHttpException(404);
+        }
+
+        //feedback items
+        $items = CPager::getInstance($widget->feedbacks,Constants::PER_PAGE,$page)->getPreparedArray();
+
+        //render table
+        $this->render('widget_edit_form_incoming',array('model' => $widget, 'items' => $items));
+    }
+
+    /**
+     * Delete feedback message
+     * @param $id
+     * @throws CDbException
+     * @throws CHttpException
+     */
+    public function actionDelFeedback($id)
+    {
+        //find feedback
+        $feedback = FeedbackEx::model()->findByPk((int)$id);
+
+        //if not found - 404
+        if(empty($feedback)){
+            throw new CHttpException(404);
+        }
+
+        //delete
+        $feedback->delete();
+
+        //back to prevous page
+        $this->redirect(Yii::app()->getRequest()->getUrlReferrer());
     }
 
 
